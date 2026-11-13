@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=750">
+<meta name="prototype-page-key" content="wealth-home-selected-normal">
+<title>精选推荐 · 正常列表线框稿</title>
+<link rel="stylesheet" href="./assets/design-tokens.css">
+<style>
+@font-face{font-family:GJType;src:url('./assets/GJType-Regular.ttf') format('truetype');font-weight:400;font-display:swap}
+*{box-sizing:border-box}html,body{margin:0;width:750px;height:100%;overflow-x:hidden;color:var(--CT1);font-family:var(--font-sans);background:transparent}
+button{font:inherit;color:inherit}button:focus-visible,[role=button]:focus-visible{outline:2px solid var(--CF3);outline-offset:3px}
+/* Reused base-mobile shell and module spacing; this is a focused module, without unrelated global chrome. */
+.shell{--pad1:var(--s-16);--pad2:var(--s-24);--gap1:var(--s-16);--gap2:var(--s-24);width:750px;height:100%;background:var(--CB2);position:relative;overflow:hidden;display:flex;flex-direction:column;border-radius:var(--r-32);border:1px solid var(--CL1)}
+.shell[data-level="1"]{--pad:var(--pad1);--gap:var(--gap1)}
+main{display:flex;flex-direction:column;gap:var(--gap,16px);padding:var(--s-16) var(--pad,16px) var(--s-24);overflow-y:auto;overflow-x:hidden;flex:1;min-height:0;scrollbar-width:none;overscroll-behavior:contain}
+main::-webkit-scrollbar{display:none}
+.gj-module{flex-shrink:0}.card{background:var(--CB1);border-radius:var(--r-16);padding:var(--s-20);border:1px solid var(--CL1);position:relative}
+/* C04 title-tab-bar: same class implementation, one current tab only. */
+.tabbar{display:flex;align-items:flex-start;position:relative;background:var(--CB1);flex-shrink:0}
+.tfix{gap:32px;padding:16px 0 16px 24px;overflow-x:auto}.tfix .tab{flex:0 0 auto}
+.tab{display:flex;flex-direction:column;align-items:center}.tab .x{white-space:nowrap}
+.tab.sel .x{color:var(--CT1);font-weight:500}.ul{width:24px;height:6px;border-radius:10px;background:var(--CP0);margin-top:2px}
+.l1 .tab.sel .x{font-size:36px;line-height:52px}.l1 .tab .x{font-size:32px;line-height:48px}
+/* Card structure is copied from the current PRD diagrams. These dimensions are wireframe-only. */
+.card-diagram{font-size:28px;line-height:1.5}.diagram-title{font-size:32px;font-weight:500;margin:0 0 var(--s-24);color:var(--CT1);padding-right:var(--s-48)}
+.diagram-columns{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-24);align-items:stretch}
+.diagram-copy{display:flex;flex-direction:column;justify-content:center;gap:var(--s-12);min-width:0}
+.diagram-copy small{font-size:24px;color:var(--CT4)}
+.diagram-image{min-height:176px;display:flex;align-items:center;justify-content:center;color:var(--CT4);background:var(--CB2);border:1px dashed var(--CL1)}
+.diagram-product{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:var(--s-16);border-top:1px solid var(--CL2);margin-top:var(--s-24);padding-top:var(--s-20);align-items:start}
+.diagram-name{font-size:28px;font-weight:500}.diagram-name small{display:block;font-size:24px;color:var(--CT3);font-weight:400;margin-top:var(--s-8)}
+.diagram-slot{text-align:center;font-size:28px}.diagram-slot small{display:block;font-size:24px;color:var(--CT4);margin-top:var(--s-8)}
+.diagram-board{display:grid;grid-template-columns:0.8fr 1.8fr;gap:var(--s-24);align-items:start;padding-bottom:var(--s-20)}
+.diagram-board strong{font-size:32px;font-weight:500}.diagram-board>div{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-20)}
+.diagram-board span{font-size:24px;color:var(--CT3);text-align:right}.diagram-board b{display:block;font-size:32px;line-height:1.5;color:var(--CT1);font-weight:400}
+.diagram-reason{background:var(--CB2);padding:var(--s-16);font-size:26px;margin-bottom:var(--s-16)}
+.diagram-funds{background:var(--CB2);border-radius:var(--r-16);padding:0 var(--s-16)}
+.diagram-fund{display:grid;grid-template-columns:1.35fr 1fr 1fr;align-items:center;gap:var(--s-12);padding:var(--s-16) 0;min-height:96px}
+.diagram-fund+.diagram-fund{border-top:1px solid var(--CL1)}.diagram-fund>span:not(:first-child){text-align:right}
+.diagram-fund small{display:block;color:var(--CT4);font-size:24px}.num{font-family:var(--font-num);font-variant-numeric:tabular-nums}
+[data-destination]{cursor:pointer}.diagram-title[data-destination]:hover,.diagram-fund:hover{color:var(--CF3)}
+.annotation-badge{position:absolute;top:var(--s-12);right:var(--s-12);width:44px;height:44px;border-radius:var(--r-pill);border:1px solid var(--CL5);background:var(--CB6);color:var(--CF3);font-size:24px;line-height:1;font-family:var(--font-num);font-variant-numeric:tabular-nums;cursor:pointer;z-index:2}
+.card.is-review-active{border:2px solid var(--CL5);padding:calc(var(--s-20) - 1px)}
+</style>
+</head>
+<body>
+<div class="shell" data-level="1" data-layout="flat">
+<div class="tabbar tfix l1"><div class="tab sel"><span class="x">精选推荐</span><span class="ul" aria-hidden="true"></span></div></div>
+<main id="selectedFeed" aria-label="精选推荐卡片列表"><section id="selected-product" class="gj-module card" data-annotation="ANN-selected-product" data-source-figure="product-display-figure"><div class="card-diagram" data-destination="product" role="button" tabindex="0" aria-label="产品图文卡，核对整卡点击去向"><div class="diagram-title">卡片标题</div>
+    <div class="diagram-columns"><div class="diagram-copy"><span>左侧介绍</span><small>按运营填写顺序逐条展示</small></div><div class="diagram-image">右侧图片</div></div>
+    <div class="diagram-product"><div class="diagram-name">产品名称</div><div class="diagram-slot"><span>展示内容 1</span><small>字段名称 1</small></div><div class="diagram-slot"><span>展示内容 2</span><small>字段名称 2</small></div></div></div></section>
+<section id="selected-advisory" class="gj-module card" data-annotation="ANN-selected-kyp" data-source-figure="product-display-figure"><div class="card-diagram" data-destination="product" role="button" tabindex="0" aria-label="普通基金投顾的 KYP，核对整卡点击去向"><div class="diagram-title">卡片标题</div>
+    <div class="diagram-columns"><div class="diagram-copy"><span>左侧介绍</span><small>按运营填写顺序逐条展示</small></div><div class="diagram-image">右侧图片</div></div>
+    <div class="diagram-product"><div class="diagram-name">产品名称<small>产品 KYP</small></div><div class="diagram-slot"><span>展示内容 1</span><small>字段名称 1</small></div><div class="diagram-slot"><span>展示内容 2</span><small>字段名称 2</small></div></div></div></section>
+<section id="selected-topic" class="gj-module card" data-annotation="ANN-selected-topic" data-source-figure="topic-display-figure"><div class="card-diagram" data-destination="topic" role="button" tabindex="0" aria-label="机动类专题，核对整卡点击去向"><div class="diagram-title">专题标题</div><div class="diagram-columns"><div class="diagram-copy"><span>左侧介绍</span><small>按填写顺序逐条展示</small></div><div class="diagram-image">右侧图片</div></div></div></section>
+<section id="selected-market" class="gj-module card" data-annotation="ANN-selected-market" data-source-figure="theme-market-display-figure"><div class="card-diagram"><div class="diagram-title" data-destination="board" role="button" tabindex="0" aria-label="查看板块详情">市场主线｜板块名称</div><div class="diagram-board" data-destination="board" role="button" tabindex="0" aria-label="查看板块详情"><strong>板块名称</strong><div><span>10日涨幅<b>指标值</b></span><span>当前涨幅<b>指标值</b></span></div></div><div class="diagram-reason" data-destination="board" role="button" tabindex="0" aria-label="查看板块详情">板块推荐理由</div><div class="diagram-funds"><div class="diagram-fund" data-destination="fund" role="button" tabindex="0" aria-label="查看基金 1 详情"><span>基金名称 1</span><span>指标值<small>持仓占比</small></span><span>指标值<small>近1年</small></span></div><div class="diagram-fund" data-destination="fund" role="button" tabindex="0" aria-label="查看基金 2 详情"><span>基金名称 2</span><span>指标值<small>持仓占比</small></span><span>指标值<small>近1年</small></span></div></div></div></section>
+<section id="selected-short" class="gj-module card" data-annotation="ANN-selected-short" data-source-figure="theme-short-display-figure"><div class="card-diagram"><div class="diagram-title" data-destination="board" role="button" tabindex="0" aria-label="查看板块详情">短期热点｜板块名称</div><div class="diagram-board" data-destination="board" role="button" tabindex="0" aria-label="查看板块详情"><strong>板块名称</strong><div><span>5日涨幅<b>指标值</b></span><span>当前涨幅<b>指标值</b></span></div></div><div class="diagram-reason" data-destination="board" role="button" tabindex="0" aria-label="查看板块详情">板块推荐理由</div><div class="diagram-funds"><div class="diagram-fund" data-destination="fund" role="button" tabindex="0" aria-label="查看基金 1 详情"><span>基金名称 1</span><span>指标值<small>持仓占比</small></span><span>指标值<small>近1年</small></span></div><div class="diagram-fund" data-destination="fund" role="button" tabindex="0" aria-label="查看基金 2 详情"><span>基金名称 2</span><span>指标值<small>持仓占比</small></span><span>指标值<small>近1年</small></span></div></div></div></section></main>
+</div>
+<script type="application/json" id="prototype-annotations-data">{"version":1,"projectId":"wealth-home-selected","workflowMode":"review-center-readonly","pages":[{"pageKey":"wealth-home-selected-normal","title":"精选推荐正常列表","path":"index.html"}],"reviewRequirementAnchors":["product-card-rules","product-kyp","topic-card-rules","theme-market-rules","theme-short-rules"],"annotations":[{"id":"ANN-selected-product","pageKey":"wealth-home-selected-normal","title":"产品图文卡","annotationType":"P","visible":true,"reviewSectionId":"product-card-rules","target":{"selector":"#selected-product","strategy":"id"},"reviewRegion":{"id":"region-selected-product","title":"产品图文卡","requirementAnchor":"product-card-rules","visibleLanding":true,"visibleText":"产品名称"},"contentMarkdown":"### 页面功能介绍\n展示产品图文卡。\n### 核心内容\n标题、左侧介绍、右侧图片、关联产品及两个展示位。\n### 业务流程\n运营配置并审核后，按发布状态、排期和展示条件参与推荐。\n### 主要操作\n整卡点击去向见右侧产品图文卡说明。\n### 待确认\n填写和数据对接要求保留在完整 PRD 待确认事项。","dimension":"Page overview","source":{"type":"prd","path":"wealth-feed-platform-prd.html","anchor":"product-card-rules"}},{"id":"ANN-selected-kyp","pageKey":"wealth-home-selected-normal","title":"普通基金投顾的 KYP","annotationType":"R","visible":true,"reviewSectionId":"product-kyp","target":{"selector":"#selected-advisory","strategy":"id"},"reviewRegion":{"id":"region-selected-kyp","title":"普通基金投顾的 KYP","requirementAnchor":"product-kyp","visibleLanding":true,"visibleText":"产品 KYP"},"contentMarkdown":"### 业务含义\n普通基金投顾在产品名称下方固定展示 KYP。","source":{"type":"prd","path":"wealth-feed-platform-prd.html","anchor":"product-kyp"}},{"id":"ANN-selected-topic","pageKey":"wealth-home-selected-normal","title":"机动类专题","annotationType":"J","visible":true,"reviewSectionId":"topic-card-rules","target":{"selector":"#selected-topic","strategy":"id"},"reviewRegion":{"id":"region-selected-topic","title":"机动类专题","requirementAnchor":"topic-card-rules","visibleLanding":true,"visibleText":"专题标题"},"contentMarkdown":"### 业务含义\n运营配置图文及落地页，点击整卡打开配置地址。","source":{"type":"prd","path":"wealth-feed-platform-prd.html","anchor":"topic-card-rules"}},{"id":"ANN-selected-market","pageKey":"wealth-home-selected-normal","title":"市场主线卡","annotationType":"R","visible":true,"reviewSectionId":"theme-market-rules","target":{"selector":"#selected-market","strategy":"id"},"reviewRegion":{"id":"region-selected-market","title":"市场主线卡","requirementAnchor":"theme-market-rules","visibleLanding":true,"visibleText":"市场主线｜板块名称"},"contentMarkdown":"### 业务含义\n市场主线卡的板块指标、关联基金和点击区域。","source":{"type":"prd","path":"wealth-feed-platform-prd.html","anchor":"theme-market-rules"}},{"id":"ANN-selected-short","pageKey":"wealth-home-selected-normal","title":"短期热点卡","annotationType":"R","visible":true,"reviewSectionId":"theme-short-rules","target":{"selector":"#selected-short","strategy":"id"},"reviewRegion":{"id":"region-selected-short","title":"短期热点卡","requirementAnchor":"theme-short-rules","visibleLanding":true,"visibleText":"短期热点｜板块名称"},"contentMarkdown":"### 业务含义\n短期热点卡的板块指标、关联基金和点击区域。","source":{"type":"prd","path":"wealth-feed-platform-prd.html","anchor":"theme-short-rules"}}]}</script>
+<script>
+const pageKey='wealth-home-selected-normal';
+const reviewMode=new URLSearchParams(location.search).get('review-center')==='m03';
+let records=[];
+function highlight(id,scroll=true){
+  const found=records.find(r=>r.id===id);if(!found)return;
+  const target=document.querySelector(found.target.selector);if(!target)return;
+  document.querySelectorAll('.is-review-active').forEach(n=>n.classList.remove('is-review-active'));
+  target.classList.add('is-review-active');
+  if(scroll){const feed=document.getElementById('selectedFeed');feed.scrollTo({top:target.offsetTop-feed.offsetTop-16,behavior:'auto'});}
+}
+async function mountAnnotations(){
+  if(!reviewMode)return;
+  let data=JSON.parse(document.getElementById('prototype-annotations-data').textContent);
+  if(location.protocol!=='file:'){try{const response=await fetch('./.prototype-annotations/annotations.json',{cache:'no-store'});if(response.ok)data=await response.json();}catch{}}
+  records=data.annotations.filter(r=>r.pageKey===pageKey&&r.visible!==false);
+  document.querySelectorAll('.annotation-badge').forEach(n=>n.remove());
+  records.forEach((record,i)=>{
+    const target=document.querySelector(record.target.selector);if(!target)return;
+    const badge=document.createElement('button');badge.type='button';badge.className='annotation-badge';badge.dataset.annotationId=record.id;
+    badge.textContent=String(i+1).padStart(2,'0');badge.setAttribute('aria-label',badge.textContent+' '+record.title+'，查看说明');
+    badge.addEventListener('click',e=>{e.stopPropagation();highlight(record.id,false);parent.postMessage({type:'review-center:annotation-selected',annotationId:record.id,pageKey},'*');});
+    target.appendChild(badge);
+  });
+  parent.postMessage({type:'review-center:ready',pageKey},'*');
+}
+window.addEventListener('message',event=>{
+  const data=event.data;if(!reviewMode||event.source!==parent||!data||data.pageKey!==pageKey)return;
+  if(data.type==='review-center:focus-annotation'&&records.some(r=>r.id===data.annotationId))highlight(data.annotationId);
+});
+function demonstrateDestination(el){
+  if(!reviewMode)return;
+  parent.postMessage({type:'review-center:destination',pageKey,destination:el.dataset.destination,annotationId:el.closest('.card').dataset.annotation},'*');
+}
+document.addEventListener('click',event=>{const target=event.target.closest('[data-destination]');if(target)demonstrateDestination(target);});
+document.addEventListener('keydown',event=>{if(event.target.matches('[data-destination]')&&(event.key==='Enter'||event.key===' ')){event.preventDefault();demonstrateDestination(event.target);}});
+mountAnnotations();
+</script>
+</body></html>

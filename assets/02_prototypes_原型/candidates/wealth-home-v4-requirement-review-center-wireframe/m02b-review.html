@@ -1,0 +1,556 @@
+<!doctype html>
+<html lang="zh-CN" data-review-mode="review-center-readonly">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>小宝服务区 · 常用理财服务宫格</title>
+  <style>:root {
+  color-scheme: light;
+  --bg: #f4f5f7;
+  --paper: #ffffff;
+  --ink: #17191d;
+  --muted: #6f7580;
+  --line: #e2e4e8;
+  --accent: #ff4040;
+  --accent-soft: #fff1f1;
+  --nav: #171819;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  overflow-x: hidden;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Microsoft YaHei", "PingFang SC", system-ui, sans-serif;
+}
+
+body {
+  display: grid;
+  grid-template-columns: minmax(220px, 272px) minmax(0, 1fr);
+}
+
+button,
+a {
+  font: inherit;
+}
+
+.project-nav {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  min-width: 0;
+  overflow: hidden;
+  background: var(--nav);
+  color: #ffffff;
+}
+
+.brand {
+  padding: 28px 24px 22px;
+  border-bottom: 1px solid rgba(255,255,255,.12);
+}
+
+.brand h1 {
+  margin: 6px 0 8px;
+  font-size: 22px;
+}
+
+.brand p {
+  margin: 0;
+  color: rgba(255,255,255,.62);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.brand .eyebrow {
+  letter-spacing: .12em;
+  font-size: 11px;
+}
+
+.module-nav {
+  height: calc(100vh - 142px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 18px 12px 36px;
+  scrollbar-width: none;
+}
+
+.module-nav::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.module-button {
+  width: 100%;
+  border: 0;
+  border-left: 3px solid transparent;
+  padding: 14px 16px;
+  background: transparent;
+  color: rgba(255,255,255,.78);
+  text-align: left;
+  cursor: pointer;
+}
+
+.module-button span {
+  display: block;
+  margin-top: 5px;
+  color: rgba(255,255,255,.45);
+  font-size: 12px;
+}
+
+.module-button.is-active {
+  border-left-color: var(--accent);
+  background: rgba(255,255,255,.1);
+  color: #ffffff;
+}
+
+.review-main {
+  min-width: 0;
+  min-height: 100vh;
+}
+
+.review-header {
+  min-height: 92px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 18px 28px;
+  border-bottom: 1px solid var(--line);
+  background: var(--paper);
+}
+
+.review-header h2 {
+  margin: 5px 0 0;
+  font-size: 24px;
+}
+
+.breadcrumb {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.status-chip {
+  padding: 7px 10px;
+  border: 1px solid #f2c98f;
+  background: #fff9ec;
+  color: #93651f;
+  font-size: 12px;
+}
+
+.review-workspace {
+  min-width: 0;
+  height: calc(100vh - 92px);
+  display: grid;
+  grid-template-columns: minmax(390px, 46%) minmax(480px, 54%);
+  overflow: hidden;
+}
+
+.prototype-column,
+.requirements-column {
+  min-width: 0;
+  min-height: 0;
+  background: var(--paper);
+}
+
+.prototype-column {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  border-right: 1px solid var(--line);
+}
+
+.column-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.column-head p {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.state-controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.state-button {
+  border: 1px solid #cfd2d8;
+  padding: 8px 12px;
+  background: #ffffff;
+  cursor: pointer;
+}
+
+.state-button + .state-button {
+  margin-left: -1px;
+}
+
+.state-button.is-active {
+  border-color: #1c1d20;
+  background: #1c1d20;
+  color: #ffffff;
+}
+
+.prototype-stage {
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background:
+    linear-gradient(#e7e8eb 1px, transparent 1px),
+    linear-gradient(90deg, #e7e8eb 1px, transparent 1px),
+    #f1f2f3;
+  background-size: 24px 24px;
+}
+
+#prototypeFrame {
+  display: block;
+  width: min(100%, 520px);
+  height: 100%;
+  min-height: 560px;
+  border: 0;
+  background: transparent;
+}
+
+.requirements-column {
+  display: grid;
+  grid-template-columns: minmax(170px, 210px) minmax(0, 1fr);
+  overflow: hidden;
+}
+
+.requirements-nav {
+  min-width: 0;
+  overflow-y: auto;
+  padding: 22px 12px;
+  border-right: 1px solid var(--line);
+  scrollbar-width: thin;
+}
+
+.requirements-nav button {
+  width: 100%;
+  border: 0;
+  border-left: 2px solid transparent;
+  padding: 10px 12px;
+  background: transparent;
+  color: #5e636c;
+  text-align: left;
+  cursor: pointer;
+}
+
+.requirements-nav button.is-active {
+  border-left-color: var(--accent);
+  background: #f5f5f5;
+  color: #111214;
+}
+
+.requirements-body {
+  min-width: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 28px clamp(24px, 4vw, 64px) 80px;
+  background: #fffefa;
+  line-height: 1.75;
+}
+
+.requirements-body h1,
+.requirements-body h2,
+.requirements-body h3 {
+  scroll-margin-top: 18px;
+  line-height: 1.35;
+}
+
+.requirements-body h1 {
+  margin: 0 0 28px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #1d1e20;
+  font-size: 30px;
+}
+
+.requirements-body h2 {
+  margin: 44px 0 18px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+  font-size: 24px;
+}
+
+.requirements-body h3 {
+  margin: 28px 0 12px;
+  font-size: 18px;
+}
+
+.requirements-body table {
+  width: 100%;
+  border-collapse: collapse;
+  display: block;
+  overflow-x: auto;
+}
+
+.requirements-body th,
+.requirements-body td {
+  min-width: 130px;
+  padding: 12px 14px;
+  border: 1px solid #d8d9dc;
+  vertical-align: top;
+  text-align: left;
+}
+
+.requirements-body th {
+  background: #f3f3f1;
+}
+
+.review-link {
+  float: right;
+  margin: 0 0 8px 14px;
+  border: 1px solid #ffb4b4;
+  padding: 4px 8px;
+  background: var(--accent-soft);
+  color: #c52929;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.review-linked.is-highlighted {
+  outline: 3px solid rgba(255,64,64,.2);
+  outline-offset: 6px;
+}
+
+@media (max-width: 1100px) {
+  body {
+    grid-template-columns: 210px minmax(0, 1fr);
+  }
+
+  .review-workspace {
+    grid-template-columns: minmax(360px, 48%) minmax(430px, 52%);
+  }
+
+  .requirements-column {
+    grid-template-columns: 1fr;
+  }
+
+  .requirements-nav {
+    display: none;
+  }
+}
+/* Embedded in the existing project navigation. */
+body{display:block;height:100vh;overflow:hidden}.project-nav,.review-header{display:none}.review-main{height:100vh;padding:0}.review-workspace{height:100vh;grid-template-columns:minmax(340px,.9fr) minmax(0,1.1fr)}.prototype-stage{padding:8px}.prototype-stage iframe{width:100%;height:100%;border:0;border-radius:0;box-shadow:none}.column-head p{font-size:12px}.requirements-column{grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr)}.requirements-nav{display:flex;flex-wrap:wrap;padding:12px;border-right:0;border-bottom:1px solid var(--line);gap:4px}.requirements-nav button{width:auto;padding:7px 10px;font-size:13px}.requirements-body{padding:24px 28px}.requirements-body h2{font-size:20px}
+</style>
+</head>
+<body>
+  <aside class="project-nav" aria-label="项目模块导航">
+    <div class="brand">
+      <p class="eyebrow">REQUIREMENT REVIEW</p>
+      <h1>小宝服务区 · 常用理财服务宫格</h1>
+      <p>左侧查看原型，右侧评审完整需求</p>
+    </div>
+    <nav class="module-nav"><button type="button" class="module-button" data-module-id="M02-B">常用理财服务宫格<span>已确认规则 · 待阅读</span></button></nav>
+  </aside>
+  <main class="review-main">
+    <header class="review-header">
+      <div>
+        <p id="moduleBreadcrumb" class="breadcrumb"></p>
+        <h2 id="moduleTitle"></h2>
+      </div>
+      <span id="moduleStatus" class="status-chip"></span>
+    </header>
+    <section class="review-workspace">
+      <section class="prototype-column" aria-label="聚焦原型">
+        <div class="column-head">
+          <div>
+            <strong>原型与状态</strong>
+            <p>只显示当前模块和必要页面框架</p>
+          </div>
+          <div id="stateControls" class="state-controls"></div>
+        </div>
+        <div class="prototype-stage">
+          <iframe id="prototypeFrame" title="当前模块原型"></iframe>
+        </div>
+      </section>
+      <section class="requirements-column" aria-label="完整需求说明">
+        <nav id="requirementsNav" class="requirements-nav" aria-label="需求章节"></nav>
+        <article id="requirementsBody" class="requirements-body"></article>
+      </section>
+    </section>
+  </main>
+  <script id="review-center-data" type="application/json">{"version":1,"mode":"review-center-readonly","projectTitle":"小宝服务区 · 常用理财服务宫格","modules":[{"id":"M02-B","title":"常用理财服务宫格","status":"已确认规则 · 待阅读","states":[{"id":"normal","label":"宫格展示示例","prototype":"../wealth-home-m02b-grid-v0.1/index.html?review=1","pageKey":"wealth-home-m02b-grid-normal"}],"requirementsHtml":"\u003ch2 id=\"service-grid\" data-annotation-id=\"ANN-m02b-service-grid\" class=\"review-linked\"\u003e\u003cbutton type=\"button\" class=\"review-link\" data-annotation-id=\"ANN-m02b-service-grid\"\u003e页面对应 01\u003c/button\u003e宫格展示\u003c/h2\u003e\n\u003cp\u003e改版首页只展示 \u003cstrong\u003e5 个宫格\u003c/strong\u003e，第 5 个固定为“全部”入口。\u003c/p\u003e\n\u003ctable\u003e\u003cthead\u003e\u003ctr\u003e\u003cth\u003e位置\u003c/th\u003e\u003cth\u003e展示规则\u003c/th\u003e\u003c/tr\u003e\u003c/thead\u003e\u003ctbody\u003e\u003ctr\u003e\u003ctd\u003e前 4 个\u003c/td\u003e\u003ctd\u003e沿用生产现有配置能力和生成逻辑，具体服务内容按配置展示。\u003c/td\u003e\u003c/tr\u003e\u003ctr\u003e\u003ctd\u003e第 5 个\u003c/td\u003e\u003ctd\u003e固定为“全部”入口，点击打开生产现有全部宫格列表。\u003c/td\u003e\u003c/tr\u003e\u003c/tbody\u003e\u003c/table\u003e\n\u003cp\u003e截图中的“我的自选、稳健理财、基金理财、基金投顾”仅为展示示例，不是固定服务清单。截图中的“全部功能”是现有入口文案；本次确认的是最后一项固定承担“全部”入口功能，不据此新增改名要求。\u003c/p\u003e\n\u003ch2 id=\"grid-click\"\u003e点击宫格\u003c/h2\u003e\n\u003cp\u003e点击前 4 个宫格，按生产现有配置打开对应页面；点击“全部”，打开生产现有全部宫格列表。\u003c/p\u003e\n\u003cp\u003e\u003cstrong\u003e点击宫格后打开的页面保持现状，本次不改版。\u003c/strong\u003e “全部”列表优化留到后续版本。\u003c/p\u003e\n\u003cp\u003e现有返回、登录前置、角标及异常处理继续沿用生产逻辑，本次不新增或修改这些规则。\u003c/p\u003e\n\u003ch2 id=\"acceptance\"\u003e验收要点\u003c/h2\u003e\n\u003cul\u003e\u003cli\u003e首页宫格总数为 5 个，第 5 个为“全部”入口。\u003c/li\u003e\u003cli\u003e前 4 个服务内容与生产现有配置生成结果一致，不固定为截图示例。\u003c/li\u003e\u003cli\u003e点击宫格按现有配置打开页面；“全部”打开现有全部宫格列表。\u003c/li\u003e\u003cli\u003e点击后打开的页面不因本次首页改版被改造。\u003c/li\u003e\u003c/ul\u003e","requirementsNav":"\u003cbutton type=\"button\" data-section-id=\"service-grid\"\u003e宫格展示\u003c/button\u003e\u003cbutton type=\"button\" data-section-id=\"grid-click\"\u003e点击宫格\u003c/button\u003e\u003cbutton type=\"button\" data-section-id=\"acceptance\"\u003e验收要点\u003c/button\u003e","annotationIndex":{"ANN-m02b-service-grid":{"pageKey":"wealth-home-m02b-grid-normal","reviewSectionId":"service-grid","number":"01","title":"常用理财服务宫格"}},"source":{"livingSpec":"project/03_product_docs_产品文档/02_modules_模块需求/WHV4-M02-B_常用理财服务宫格/living-spec.md","annotations":"project/02_prototypes_原型/candidates/wealth-home-m02b-grid-v0.1/.prototype-annotations/annotations.json"}}]}</script>
+  <script>(function () {
+  "use strict";
+
+  var dataNode = document.getElementById("review-center-data");
+  var reviewData = JSON.parse(dataNode.textContent);
+  var frame = document.getElementById("prototypeFrame");
+  var moduleTitle = document.getElementById("moduleTitle");
+  var moduleStatus = document.getElementById("moduleStatus");
+  var breadcrumb = document.getElementById("moduleBreadcrumb");
+  var stateControls = document.getElementById("stateControls");
+  var requirementsNav = document.getElementById("requirementsNav");
+  var requirementsBody = document.getElementById("requirementsBody");
+  var activeModule = null;
+  var activeState = null;
+  var pendingFocus = null;
+
+  function findModule(moduleId) {
+    return reviewData.modules.find(function (item) { return item.id === moduleId; });
+  }
+
+  function findState(module, pageKey) {
+    return module.states.find(function (item) { return item.pageKey === pageKey; }) || module.states[0];
+  }
+
+  function setActiveModuleButton(moduleId) {
+    document.querySelectorAll(".module-button").forEach(function (button) {
+      button.classList.toggle("is-active", button.getAttribute("data-module-id") === moduleId);
+    });
+  }
+
+  function renderRequirements(module) {
+    requirementsBody.innerHTML = module.requirementsHtml;
+    requirementsNav.innerHTML = module.requirementsNav;
+  }
+
+  function setState(state, focusAfterLoad) {
+    activeState = state;
+    pendingFocus = focusAfterLoad || null;
+    frame.setAttribute("src", state.prototype);
+    frame.setAttribute("data-page-key", state.pageKey);
+    stateControls.querySelectorAll(".state-button").forEach(function (button) {
+      button.classList.toggle("is-active", button.getAttribute("data-state-id") === state.id);
+    });
+  }
+
+  function renderStates(module) {
+    stateControls.innerHTML = "";
+    module.states.forEach(function (state) {
+      var button = document.createElement("button");
+      button.type = "button";
+      button.className = "state-button";
+      button.setAttribute("data-state-id", state.id);
+      button.textContent = state.label;
+      button.addEventListener("click", function () { setState(state); });
+      stateControls.appendChild(button);
+    });
+  }
+
+  function renderModule(moduleId) {
+    var module = findModule(moduleId);
+    if (!module) {
+      return;
+    }
+    activeModule = module;
+    moduleTitle.textContent = module.title + "｜需求说明";
+    moduleStatus.textContent = module.status;
+    breadcrumb.textContent = reviewData.projectTitle + " / " + module.title;
+    setActiveModuleButton(module.id);
+    renderStates(module);
+    renderRequirements(module);
+    setState(module.states[0]);
+  }
+
+  function focusRight(annotationId) {
+    requirementsBody.querySelectorAll(".review-linked").forEach(function (node) {
+      node.classList.toggle(
+        "is-highlighted",
+        (node.getAttribute("data-annotation-id") || "").split(/\s+/).indexOf(annotationId) >= 0
+      );
+    });
+    var target = requirementsBody.querySelector('[data-annotation-id~="' + CSS.escape(annotationId) + '"]');
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }
+
+  function sendFocus(annotationId) {
+    if (!activeModule) {
+      return;
+    }
+    var mapping = activeModule.annotationIndex[annotationId];
+    if (!mapping) {
+      return;
+    }
+    if (!activeState || activeState.pageKey !== mapping.pageKey) {
+      var targetState = findState(activeModule, mapping.pageKey);
+      setState(targetState, annotationId);
+      return;
+    }
+    frame.contentWindow.postMessage(
+      {
+        type: "review-center:focus-annotation",
+        annotationId: annotationId,
+        pageKey: activeState.pageKey
+      },
+      "*"
+    );
+  }
+
+  requirementsBody.addEventListener("click", function (event) {
+    var trigger = event.target.closest("[data-annotation-id]");
+    if (!trigger) {
+      return;
+    }
+    var annotationId = (trigger.getAttribute("data-annotation-id") || "").split(/\s+/)[0];
+    if (annotationId) {
+      focusRight(annotationId);
+      sendFocus(annotationId);
+    }
+  });
+
+  requirementsNav.addEventListener("click", function (event) {
+    var button = event.target.closest("[data-section-id]");
+    if (!button) {
+      return;
+    }
+    var target = requirementsBody.querySelector("#" + CSS.escape(button.getAttribute("data-section-id")));
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  });
+
+  frame.addEventListener("load", function () {
+    if (pendingFocus) {
+      var annotationId = pendingFocus;
+      pendingFocus = null;
+      sendFocus(annotationId);
+    }
+  });
+
+  window.addEventListener("message", function (event) {
+    if (event.source !== frame.contentWindow || !event.data) {
+      return;
+    }
+    if (event.data.type !== "review-center:annotation-selected") {
+      return;
+    }
+    if (!activeState || event.data.pageKey !== activeState.pageKey) {
+      return;
+    }
+    if (!activeModule.annotationIndex[event.data.annotationId]) {
+      return;
+    }
+    focusRight(event.data.annotationId);
+  });
+
+  document.querySelectorAll(".module-button").forEach(function (button) {
+    button.addEventListener("click", function () {
+      renderModule(button.getAttribute("data-module-id"));
+    });
+  });
+
+  renderModule(reviewData.modules[0].id);
+}());
+</script>
+</body>
+</html>

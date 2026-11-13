@@ -1,0 +1,1062 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="prototype-page-key" content="wealth-home-review-center-overview">
+  <title>理财首页改版｜需求与原型评审</title>
+  <style>
+    :root {
+      --ink: #161616;
+      --muted: #6f6f6f;
+      --soft: #9a9a9a;
+      --line: #d9d9d6;
+      --line-strong: #b7b7b2;
+      --paper: #fbfbf8;
+      --panel: #ffffff;
+      --canvas: #efefeb;
+      --accent: #e73131;
+      --accent-soft: #fff0ee;
+      --blue: #2268d8;
+      --blue-soft: #edf4ff;
+      --warn: #9a5b00;
+      --warn-soft: #fff8e7;
+      --ok: #24774a;
+      --ok-soft: #edf8f1;
+      --shadow: 0 14px 40px rgba(18, 18, 18, .08);
+      --mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      --sans: "Microsoft YaHei", "PingFang SC", sans-serif;
+      --serif: "Noto Serif SC", "Source Han Serif SC", SimSun, serif;
+    }
+
+    .overview-intro { display:flex; align-items:flex-start; justify-content:space-between; gap:20px; }
+    .overview-intro > p { margin:4px 0; color:var(--muted); font-size:14px; line-height:1.6; }
+    .review-help { max-width:400px; font-size:13px; line-height:1.7; }
+    .review-help summary { cursor:pointer; color:var(--blue); padding:4px 0; }
+    .review-help ol { margin:10px 0 0; padding:14px 16px 14px 34px; background:var(--panel); border:1px solid var(--line); }
+    .overview-intro + .section-head { margin-top:24px; }
+    .version-details { margin-top:28px; border-top:1px solid var(--line); }
+    .version-details > summary { cursor:pointer; padding:18px 0; font-size:16px; font-weight:600; }
+    .version-details > summary > span { margin-left:14px; font-size:12px; font-weight:400; color:var(--muted); }
+    .version-details .version-table-wrap { margin-top:0; }
+    .review-help summary:focus-visible, .version-details summary:focus-visible, .module-card[role="button"]:focus-visible { outline:2px solid var(--blue); outline-offset:4px; }
+    @media (max-width:800px) { .overview-intro { flex-direction:column; gap:8px; } .version-details > summary > span { display:block; margin:6px 0 0 18px; } }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      overflow: hidden;
+      color: var(--ink);
+      background: var(--canvas);
+      font-family: var(--sans);
+    }
+
+    button, a { font: inherit; }
+    button { color: inherit; }
+    a { color: inherit; }
+
+    .app {
+      display: grid;
+      grid-template-columns: 228px minmax(0, 1fr);
+      height: 100vh;
+      min-width: 0;
+    }
+
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      background: #20201f;
+      color: #fff;
+      border-right: 1px solid #090909;
+    }
+
+    .brand {
+      padding: 28px 24px 22px;
+      border-bottom: 1px solid rgba(255, 255, 255, .14);
+    }
+
+    .brand-kicker {
+      margin: 0 0 7px;
+      color: #b6b6b2;
+      font: 11px/1.4 var(--mono);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font: 600 22px/1.35 var(--serif);
+      letter-spacing: .02em;
+    }
+
+    .brand small {
+      display: block;
+      margin-top: 8px;
+      color: #b6b6b2;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .side-nav {
+      min-height: 0;
+      overflow-x: hidden;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      padding: 18px 12px 24px;
+    }
+
+    .side-nav::-webkit-scrollbar {
+      display: none;
+      width: 0;
+      height: 0;
+    }
+
+    .nav-group-label {
+      padding: 0 12px 8px;
+      color: #8c8c88;
+      font: 10px/1.4 var(--mono);
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .nav-item {
+      position: relative;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 8px;
+      min-height: 52px;
+      padding: 8px 12px;
+      margin: 2px 0;
+      border: 0;
+      border-left: 3px solid transparent;
+      background: transparent;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .nav-item:hover { background: rgba(255, 255, 255, .06); }
+    .nav-item.is-active {
+      border-left-color: #ff4b45;
+      background: rgba(255, 255, 255, .1);
+    }
+
+    .nav-code {
+      display: none;
+    }
+
+    .nav-name {
+      color: #f5f5f2;
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .nav-state {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #666;
+    }
+
+    .nav-state.is-ready { background: #5ac785; }
+    .nav-state.is-review { background: #ffb23f; }
+
+    .side-foot {
+      padding: 16px 24px 20px;
+      border-top: 1px solid rgba(255, 255, 255, .14);
+      color: #aaa;
+      font-size: 11px;
+      line-height: 1.7;
+    }
+
+    .workspace {
+      min-width: 0;
+      min-height: 0;
+      display: grid;
+      grid-template-rows: 72px minmax(0, 1fr);
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 0 28px;
+      background: var(--paper);
+      border-bottom: 1px solid var(--line-strong);
+    }
+
+    .breadcrumb {
+      min-width: 0;
+    }
+
+    .breadcrumb small {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--muted);
+      font: 11px/1.2 var(--mono);
+    }
+
+    .breadcrumb strong {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font: 600 18px/1.3 var(--serif);
+    }
+
+    .top-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 0 0 auto;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 4px 9px;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      font: 11px/1.2 var(--mono);
+    }
+
+    .chip.is-warn { color: var(--warn); background: var(--warn-soft); border-color: #ead3a1; }
+    .chip.is-ok { color: var(--ok); background: var(--ok-soft); border-color: #b9ddc7; }
+
+    .view {
+      min-width: 0;
+      min-height: 0;
+      display: none;
+    }
+
+    .view.is-active { display: block; }
+
+    .overview {
+      height: 100%;
+      overflow: auto;
+      padding: 34px;
+    }
+
+    .overview-hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(300px, .7fr);
+      border: 1px solid var(--line-strong);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-main { padding: 36px 38px; }
+    .hero-side {
+      padding: 28px 30px;
+      border-left: 1px solid var(--line);
+      background: #f5f5f1;
+    }
+
+    .eyebrow {
+      margin: 0 0 12px;
+      color: var(--accent);
+      font: 12px/1.3 var(--mono);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .hero-main h2 {
+      max-width: 720px;
+      margin: 0;
+      font: 600 clamp(32px, 4vw, 58px)/1.08 var(--serif);
+      letter-spacing: -.03em;
+    }
+
+    .hero-main p {
+      max-width: 720px;
+      margin: 20px 0 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.8;
+    }
+
+    .flow-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .flow-step {
+      display: grid;
+      grid-template-columns: 26px 1fr;
+      align-items: start;
+      gap: 10px;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .flow-step span:first-child {
+      display: grid;
+      place-items: center;
+      width: 24px;
+      height: 24px;
+      border: 1px solid var(--line-strong);
+      background: var(--panel);
+      font: 11px/1 var(--mono);
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 20px;
+      margin: 32px 0 14px;
+    }
+
+    .section-head h3 {
+      margin: 0;
+      font: 600 23px/1.3 var(--serif);
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .module-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(190px, 1fr));
+      gap: 12px;
+    }
+
+    .module-card {
+      min-height: 164px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      cursor: pointer;
+      transition: transform .16s ease, border-color .16s ease;
+    }
+
+    .module-card:hover { transform: translateY(-2px); border-color: var(--ink); }
+    .module-card.is-featured { border: 2px solid var(--accent); background: #fffafa; }
+    .module-card.is-global { border-style: dashed; }
+
+    .module-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .module-card-code { font: 12px/1 var(--mono); color: var(--muted); }
+    .module-card-status {
+      padding: 4px 7px;
+      background: #f0f0ed;
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    .module-card.is-featured .module-card-status { color: var(--accent); background: var(--accent-soft); }
+    .module-card h4 { margin: 22px 0 8px; font-size: 17px; line-height: 1.45; }
+    .module-card p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.65; }
+
+    .version-table-wrap {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      overflow: auto;
+    }
+
+    table { width: 100%; border-collapse: collapse; }
+    th, td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    th { background: #f2f2ef; color: var(--muted); font-weight: 500; }
+    tr:last-child td { border-bottom: 0; }
+    .version-table-wrap tr[data-module="M04"] { background: #fff8f7; }
+
+    .detail-shell {
+      height: 100%;
+      min-height: 0;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: minmax(360px, 42%) minmax(0, 58%);
+    }
+
+    .prototype-pane {
+      min-width: 0;
+      min-height: 0;
+      overflow: hidden;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      background: #e8e8e3;
+      border-right: 1px solid var(--line-strong);
+    }
+
+    .pane-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 10px 14px;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--line-strong);
+      background: #f7f7f3;
+    }
+
+    .pane-title strong { display: block; font-size: 14px; }
+    .pane-title small { display: block; margin-top: 4px; color: var(--muted); font: 10px/1.4 var(--mono); }
+
+    .annotation-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 30px;
+      padding: 5px 9px;
+      border: 1px solid var(--line-strong);
+      background: var(--panel);
+      color: var(--blue);
+      font-size: 11px;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .state-switch {
+      grid-column: 1 / -1;
+      justify-self: end;
+      display: flex;
+      align-items: center;
+      border: 1px solid var(--line-strong);
+      background: var(--panel);
+    }
+
+    .state-btn {
+      min-height: 30px;
+      padding: 5px 10px;
+      border: 0;
+      border-right: 1px solid var(--line);
+      background: transparent;
+      font-size: 11px;
+      cursor: pointer;
+    }
+
+    .state-btn:last-child { border-right: 0; }
+    .state-btn.is-active { color: #fff; background: var(--ink); }
+
+    .prototype-stage {
+      min-height: 0;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      padding: 16px;
+      background-image:
+        linear-gradient(rgba(0,0,0,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,0,0,.035) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+
+    .phone-wrap {
+      width: 100%;
+      height: 100%;
+      min-width: 0;
+      min-height: 0;
+      display: grid;
+      place-items: center;
+    }
+
+    .phone-frame {
+      position: relative;
+      width: min(100%, 390px);
+      aspect-ratio: 750 / 1602;
+      overflow: hidden;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+    }
+
+    .phone-frame iframe {
+      position: absolute;
+      inset: 0 auto auto 0;
+      display: block;
+      width: 750px;
+      height: 1602px;
+      border: 0;
+      background: transparent;
+      transform-origin: left top;
+    }
+
+    .requirements-pane {
+      min-width: 0;
+      min-height: 0;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 184px minmax(0, 1fr);
+      background: var(--paper);
+    }
+
+    .requirements-pane.has-detail-document {
+      display: block;
+    }
+
+    .requirements-detail-frame {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-width: 0;
+      border: 0;
+      background: var(--paper);
+    }
+
+    .requirements-pane.has-detail-document > .req-toc,
+    .requirements-pane.has-detail-document > .requirements-scroll {
+      display: none;
+    }
+
+    .req-toc {
+      min-height: 0;
+      overflow: auto;
+      padding: 18px 12px;
+      border-right: 1px solid var(--line);
+      background: #f2f2ee;
+    }
+
+    .req-toc-title {
+      padding: 0 8px 10px;
+      color: var(--muted);
+      font: 10px/1.4 var(--mono);
+      letter-spacing: .08em;
+    }
+
+    .toc-link {
+      display: block;
+      width: 100%;
+      padding: 8px;
+      border: 0;
+      border-left: 2px solid transparent;
+      background: transparent;
+      color: var(--muted);
+      text-align: left;
+      font-size: 11px;
+      line-height: 1.45;
+      cursor: pointer;
+    }
+
+    .toc-link:hover, .toc-link.is-active { color: var(--ink); border-left-color: var(--accent); background: #fff; }
+
+    .requirements-scroll {
+      min-height: 0;
+      overflow: auto;
+      scroll-behavior: smooth;
+      padding: 26px 30px 60px;
+    }
+
+    .req-head {
+      padding-bottom: 22px;
+      border-bottom: 2px solid var(--ink);
+    }
+
+    .req-head h2 { margin: 0; font: 600 29px/1.25 var(--serif); }
+    .req-head p { margin: 10px 0 0; color: var(--muted); font-size: 13px; line-height: 1.7; }
+
+    .source-banner {
+      margin-top: 16px;
+      padding: 12px 14px;
+      border: 1px solid #a8c4ee;
+      background: var(--blue-soft);
+      color: #204e94;
+      font-size: 11px;
+      line-height: 1.65;
+    }
+
+    .req-section {
+      scroll-margin-top: 20px;
+      padding: 26px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .req-section:last-child { border-bottom: 0; }
+    .req-index { color: var(--accent); font: 11px/1 var(--mono); }
+    .req-section h3 { margin: 7px 0 13px; font: 600 20px/1.4 var(--serif); }
+    .req-section h4 { margin: 18px 0 8px; font-size: 13px; }
+    .req-section p, .req-section li { color: #444; font-size: 12px; line-height: 1.75; }
+    .req-section ul, .req-section ol { margin: 8px 0 0; padding-left: 20px; }
+    .req-section table { margin-top: 12px; border: 1px solid var(--line); }
+    .req-section code { padding: 2px 4px; background: #eeeeea; font: 11px/1.4 var(--mono); }
+
+    .rule-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .rule-box { padding: 12px; border: 1px solid var(--line); background: #fff; }
+    .rule-box strong { display: block; margin-bottom: 6px; font-size: 12px; }
+    .rule-box span { display: block; color: var(--muted); font-size: 11px; line-height: 1.55; }
+
+    .placeholder-view {
+      height: 100%;
+      overflow: auto;
+      padding: 42px;
+    }
+
+    .placeholder-card {
+      max-width: 840px;
+      padding: 36px;
+      border: 1px dashed var(--line-strong);
+      background: var(--panel);
+    }
+
+    .placeholder-card h2 { margin: 0 0 12px; font: 600 28px/1.3 var(--serif); }
+    .placeholder-card p { color: var(--muted); line-height: 1.8; }
+
+    .primary-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      margin-top: 16px;
+      padding: 8px 14px;
+      border: 1px solid var(--ink);
+      background: var(--ink);
+      color: #fff;
+      cursor: pointer;
+    }
+
+    @media (max-width: 1300px) {
+      .app { grid-template-columns: 200px minmax(0, 1fr); }
+      .detail-shell { grid-template-columns: minmax(320px, 40%) minmax(0, 60%); }
+      .requirements-pane:not(.has-detail-document) { grid-template-columns: 156px minmax(0, 1fr); }
+      .module-grid { grid-template-columns: repeat(3, minmax(190px, 1fr)); }
+      .pane-head { padding: 12px 14px; }
+      .state-btn { padding-inline: 8px; }
+    }
+
+    @media (max-width: 1050px) {
+      .app { grid-template-columns: 176px minmax(0, 1fr); }
+      .detail-shell { grid-template-columns: minmax(270px, 38%) minmax(0, 62%); }
+      .topbar { padding-inline: 18px; }
+      .brand { padding-inline: 18px; }
+      .side-foot { padding-inline: 18px; }
+      .pane-title small { display: none; }
+      .state-btn { padding-inline: 6px; font-size: 10px; }
+    }
+    /* M03 resource navigation only; no substitute customer prototype or duplicated rules. */
+    .nav-state.is-docs { background: var(--blue); }
+    .m03-module-card { border-color: var(--blue); }
+    .m03-module-card .module-card-status { color: var(--blue); background: var(--blue-soft); }
+    .m03-resources { height: 100%; overflow-y: auto; overflow-x: hidden; padding: 32px; }
+    .m03-intro { max-width: 920px; margin-bottom: 26px; }
+    .m03-intro h2 { font: 600 30px/1.4 var(--serif); margin: 10px 0; }
+    .m03-intro p:last-child { color: var(--muted); font-size: 14px; line-height: 1.8; }
+    .m03-document-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 20px; }
+    .m03-document { display: flex; flex-direction: column; align-items: flex-start; padding: 24px; background: var(--panel); border: 1px solid var(--line); }
+    .m03-document-tag { font-size: 12px; color: var(--muted); }
+    .m03-document h3 { font-size: 22px; margin: 14px 0 0; }
+    .m03-document p { font-size: 14px; line-height: 1.8; color: var(--muted); margin: 12px 0 20px; flex: 1; }
+    .m03-primary { display: inline-flex; gap: 24px; align-items: center; text-decoration: none; color: var(--panel); background: var(--ink); padding: 12px 18px; font-size: 14px; }
+    .m03-primary:hover { background: var(--blue); }
+    .m03-document small { margin-top: 14px; color: var(--muted); font-size: 12px; line-height: 1.7; }
+    .m03-section-index { margin-top: 32px; }
+    .m03-section-head { display: flex; align-items: center; flex-wrap: wrap; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+    .m03-section-head h3 { margin: 0; font-size: 18px; }
+    .m03-section-head span { color: var(--muted); font-size: 12px; }
+    .m03-link-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+    .m03-section-link { display: block; text-decoration: none; padding: 18px 20px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--panel); }
+    .m03-section-link:hover { background: var(--blue-soft); }
+    .m03-section-link strong { display: flex; justify-content: space-between; gap: 12px; font-size: 14px; font-weight: 500; }
+    .m03-section-link strong span { color: var(--blue); }
+    .m03-section-link > span { display: block; margin-top: 7px; font-size: 12px; line-height: 1.7; color: var(--muted); }
+    .m03-pending { margin-top: 28px; display: grid; grid-template-columns: minmax(0,1.5fr) minmax(0,1fr); gap: 28px; background: var(--warn-soft); border: 1px solid var(--line); padding: 24px; }
+    .m03-status-tag { color: var(--warn); font-size: 12px; }
+    .m03-pending h3 { font-size: 17px; line-height: 1.5; margin: 8px 0; }
+    .m03-pending h4 { font-size: 14px; margin: 0 0 6px; }
+    .m03-pending p { font-size: 13px; line-height: 1.8; margin: 0 0 14px; color: var(--muted); }
+    .m03-source-note,.m03-file-note { font-size: 12px; line-height: 1.8; color: var(--muted); margin: 20px 0 0; }
+    .m03-file-note { color: var(--warn); }
+    .m03-resources a:focus-visible,.m03-module-card:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+    @media (max-width: 1120px) { .m03-resources { padding: 24px; } .m03-pending { grid-template-columns: 1fr; gap: 12px; } }
+    @media (max-width: 800px) { .m03-document-grid,.m03-link-grid { grid-template-columns: 1fr; } .m03-resources { padding: 18px; } .m03-intro h2 { font-size: 24px; } }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <aside class="sidebar" aria-label="模块导航">
+      <div class="brand">
+        <h1>理财首页改版</h1>
+        <small>需求与原型评审</small>
+      </div>
+
+      <nav class="side-nav">
+        <div class="nav-group-label">Overview</div>
+        <button class="nav-item is-active" type="button" data-module="overview">
+          <span class="nav-code">00</span>
+          <span class="nav-name">项目总览</span>
+          <span class="nav-state is-ready"></span>
+        </button>
+
+        <div class="nav-group-label" style="margin-top:16px">Global</div>
+        <button class="nav-item" type="button" data-module="G01">
+          <span class="nav-code">G01</span>
+          <span class="nav-name">全局页面框架</span>
+          <span class="nav-state is-ready"></span>
+        </button>
+
+        <div class="nav-group-label" style="margin-top:16px">Modules</div>
+        <button class="nav-item" type="button" data-module="M01"><span class="nav-code">M01</span><span class="nav-name">顶部资产与账户服务区</span><span class="nav-state"></span></button>
+        <button class="nav-item" type="button" data-module="M02-B"><span class="nav-code">M02-B</span><span class="nav-name">宫格区</span><span class="nav-state is-review" title="常用理财服务宫格已接入，待阅读"></span></button>
+        <button class="nav-item" type="button" data-module="M02-C"><span class="nav-code">M02-C</span><span class="nav-name">小宝服务区</span><span class="nav-state is-review" title="结构候选与完整相关需求已接入，待评审"></span></button>
+        <button class="nav-item" type="button" data-module="M03"><span class="nav-code">M03</span><span class="nav-name">精选推荐</span><span class="nav-state is-review" title="正常列表示例与卡片、运营、排序及统计说明已接入，待阅读确认"></span></button>
+        <button class="nav-item" type="button" data-module="M04"><span class="nav-code">M04</span><span class="nav-name">热点机会</span><span class="nav-state is-review"></span></button>
+        <button class="nav-item" type="button" data-module="M06"><span class="nav-code">M06</span><span class="nav-name">榜单选基</span><span class="nav-state is-review" title="原型、完整需求与映射已接入，待页面验收"></span></button>
+        <button class="nav-item" type="button" data-module="M07"><span class="nav-code">M07</span><span class="nav-name">全局小宝问答服务</span><span class="nav-state"></span></button>
+      </nav>
+
+      <div class="side-foot">
+        绿色：规则已建立<br>
+        黄色：当前评审模块<br>
+        蓝色：资料已接入<br>
+        灰色：评审页未接入
+      </div>
+    </aside>
+
+    <section class="workspace">
+      <header class="topbar">
+        <div class="breadcrumb">
+          <small id="crumbCode">REVIEW CENTER / 00</small>
+          <strong id="crumbTitle">理财首页 · 项目总览</strong>
+        </div>
+        <div class="top-meta">
+          <span class="chip" id="reviewStatus">框架已确认</span>
+        </div>
+      </header>
+
+      <section class="view is-active" id="overviewView" data-page-key="wealth-home-review-center-overview">
+        <div class="overview">
+          <div class="overview-intro">
+            <p>选择模块，查看原型与对应需求说明。</p>
+            <details class="review-help" id="reviewHelp">
+              <summary>如何评审</summary>
+              <ol>
+                <li>选择本次评审模块，确认当前可评审范围。</li>
+                <li>左侧查看原型，按需切换已提供的页面状态。</li>
+                <li>右侧阅读需求说明；有页面编号时可点击双向定位。</li>
+                <li>核对规则、异常与验收要求，记录待确认事项。</li>
+              </ol>
+            </details>
+          </div>
+
+          <div class="section-head">
+            <h3>本期模块地图</h3>
+            <p>理财规划本期不上线，不设评审入口、不纳入本期验收；历史范围保留在总控。</p>
+          </div>
+          <section class="module-grid" id="moduleGrid">
+            <article class="module-card is-global" data-open-module="G01" role="button" tabindex="0"><div class="module-card-top"><span class="module-card-code">WHV4-G01</span><span class="module-card-status">规则已建立</span></div><h4>全局页面框架</h4><p>公共 Tab 外壳、底部导航、安全区与固定入口层级。</p></article>
+            <article class="module-card" data-open-module="M01" role="button" tabindex="0"><div class="module-card-top"><span class="module-card-code">WHV4-M01</span><span class="module-card-status">需求细化中 · 未接入</span></div><h4>顶部资产与账户服务区</h4><p>资产卡、外部资产卡与账户服务区。</p></article>
+            <article class="module-card" data-open-module="M02" role="button" tabindex="0"><div class="module-card-top"><span class="module-card-code">WHV4-M02</span><span class="module-card-status">宫格已接入</span></div><h4>宫格区</h4><p>常用理财服务宫格独立展示，与小宝服务区并列。小宝提示与下方卡片请从“小宝服务区”入口查看。</p></article>
+            <article class="module-card" data-open-module="M02-C" role="button" tabindex="0"><div class="module-card-top"><span class="module-card-code">WHV4-M02-C</span><span class="module-card-status">结构候选待评审</span></div><h4>小宝服务区</h4><p>范围为小宝提示入口与下方场景服务卡、精选补位卡及切换操作，不包含宫格。当前可查看卡片结构与提示示例，小宝入口最终文案和点击承接待细化。右侧连续阅读相关规则与验收要求；补位使用预置示例。</p></article>
+            <article class="module-card m03-module-card" data-open-module="M03" role="button" tabindex="0"><div class="module-card-top"><span class="module-card-code">WHV4-M03</span><span class="module-card-status">正常列表待确认</span></div><h4>精选推荐</h4><p>左侧查看正常列表示例，右侧阅读卡片、发布审核、推荐排序、首页更新和效果统计。榜单内容与配置说明已收录；客户卡片及其他状态演示后续补充。</p></article>
+            <article class="module-card is-featured" data-open-module="M04" role="button" tabindex="0"><div class="module-card-top"><span class="module-card-code">WHV4-M04</span><span class="module-card-status">进入评审</span></div><h4>热点机会</h4><p>市场主线、短期热点、近日大涨及底部热点条。</p></article>
+            <article class="module-card" data-open-module="M06" role="button" tabindex="0"><div class="module-card-top"><span class="module-card-code">WHV4-M06</span><span class="module-card-status">已接入 · 待页面验收</span></div><h4>榜单选基</h4><p>17榜规则与页面方案已确认；查看首页、完整榜单、双指标排序及异常状态，支持原型与需求双向定位。数据为演示样例。</p></article>
+            <article class="module-card" data-open-module="M07" role="button" tabindex="0"><div class="module-card-top"><span class="module-card-code">WHV4-M07</span><span class="module-card-status">未接入评审</span></div><h4>全局小宝问答服务</h4><p>常驻入口、问答层、上下文和失败兜底。</p></article>
+          </section>
+
+          <details class="version-details" id="versionDetails">
+            <summary>版本与来源详情<span>需要核对版本时展开</span></summary>
+            <p class="tool-version-note" style="color:var(--muted);font-size:12px;line-height:1.6;margin:0 0 14px">评审工具版本：v0.19。仅代表评审页面版本，不代表需求版本；各模块需求来源见下表。</p>
+            <div class="version-table-wrap">
+            <table>
+              <thead><tr><th>模块</th><th>需求引用原型</th><th>模块候选原型</th><th>需求来源</th><th>当前状态</th></tr></thead>
+              <tbody>
+                <tr><td>G01 全局页面框架</td><td>冻结 V4</td><td>—</td><td>由总控与模块规则引用</td><td>规则已建立</td></tr>
+                <tr><td>M01 顶部资产与账户服务区</td><td>冻结 V4</td><td>未接入评审</td><td>正式来源待接入核验</td><td>需求细化中；评审页未接入</td></tr>
+                <tr><td>M02-B 宫格区</td><td>宫格展示示例 v0.1</td><td>仅常用理财服务宫格已接入</td><td>宫格正式需求 v1.0</td><td>宫格规则已确认，阅读效果待评审；小宝服务区见独立条目</td></tr>
+                <tr><td>M02-A/C 小宝服务区</td><td>结构候选 v0.2</td><td>32 个状态只读评审</td><td>完整相关说明派生自 PRD v1.61</td><td>结构待评审；非最终 UI 或共享推荐实现验收</td></tr>
+                <tr><td>M03 精选推荐</td><td>正常列表线框稿 v0.1</td><td>中台线框稿 v0.11</td><td>卡片、运营、排序、首页更新与统计说明派生自 PRD v1.58</td><td>正常列表左右对照待确认；非完整状态验收</td></tr>
+                <tr data-module="M04"><td><strong>M04 热点机会</strong></td><td>冻结 V4</td><td><strong>V4.3 本期范围候选</strong></td><td><strong>v8</strong></td><td>隐藏延期 Tab；业务规则不变，待评审</td></tr>
+                <tr><td>M06 榜单选基</td><td>M06 v0.1</td><td>325个登记入口；只读评审映射</td><td>正式 Living Spec v1.6</td><td>已接入待复核；真实页面与数据联调待验收</td></tr>
+                <tr><td>M07 全局小宝问答服务</td><td>冻结 V4</td><td>未接入评审</td><td>正式来源待接入核验</td><td>评审页未接入；需求进展待核对</td></tr>
+              </tbody>
+            </table>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="view" id="m04View" data-page-key="wealth-home-review-center-m04">
+        <div class="detail-shell">
+          <section class="prototype-pane" aria-label="M04 原型区">
+            <header class="pane-head">
+              <div class="pane-title">
+                <strong>左侧｜热点机会原型与状态</strong>
+                <small>点击原型上的 01–04，可对应查看右侧需求 · 可切换正常与异常状态</small>
+              </div>
+              
+              <div class="state-switch" role="group" aria-label="预览状态">
+                <button class="state-btn is-active" type="button" data-preview-state="normal">正常</button>
+                <button class="state-btn" type="button" data-preview-state="empty">空分类</button>
+                <button class="state-btn" type="button" data-preview-state="failed">加载失败</button>
+                <button class="state-btn" type="button" data-preview-state="hotspot-failed">热点条失败</button>
+              </div>
+            </header>
+
+            <div class="prototype-stage">
+              <div class="phone-wrap">
+                <div class="phone-frame">
+                  <iframe id="m04Preview" src="../wealth-home-business-consensus-interactive-v4.3.html?review-center=m04&amp;review-state=normal&amp;review-ui=20260911-m05" title="热点机会模块聚焦高保真原型"></iframe>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="requirements-pane has-detail-document" aria-label="热点机会完整需求说明">
+            <iframe class="requirements-detail-frame" id="requirementsDetailFrame" src="./m04-requirements-detail.html" title="热点机会产品评审说明"></iframe>
+          </section>
+        </div>
+      </section>
+
+      <section class="view" id="m02bView" data-page-key="wealth-home-review-center-m02b">
+        <iframe id="m02bReviewFrame" src="./m02b-review.html?v=20260912-1" title="常用理财服务宫格展示示例与需求" style="width:100%;height:100%;border:0;display:block"></iframe>
+      </section>
+
+      <section class="view" id="m02cView" data-page-key="wealth-home-review-center-m02c"><iframe id="m02cReviewFrame" title="小宝服务区结构候选与完整业务说明" style="width:100%;height:100%;border:0;display:block"></iframe></section>
+
+      <section class="view" id="m03ResourcesView" data-page-key="wealth-home-review-center-m03-normal">
+        <iframe id="m03ReviewFrame" src="./m03-review.html?v=1.58-language-20260914" title="精选推荐正常列表示例与业务说明" style="width:100%;height:100%;border:0;display:block"></iframe>
+      </section>
+
+      <section class="view" id="m06View" data-page-key="wealth-home-review-center-m06"><iframe id="m06ReviewFrame" title="榜单选基原型与完整需求" style="width:100%;height:100%;border:0;display:block"></iframe></section>
+
+      <section class="view" id="placeholderView">
+        <div class="placeholder-view">
+          <article class="placeholder-card">
+            <p class="eyebrow" id="placeholderCode">WHV4-M01</p>
+            <h2 id="placeholderTitle">模块评审页未接入</h2>
+            <p id="placeholderCopy">接入状态不等同于需求编写进度，具体进展以该模块已核实的工作记录为准。</p>
+            <button class="primary-btn" type="button" data-module="overview">返回项目总览</button>
+          </article>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script>
+    const moduleNames = {
+      G01: "全局页面框架",
+      M01: "顶部资产与账户服务区",
+      M02: "宫格区",
+      "M02-C": "小宝服务区",
+      M03: "精选推荐",
+      M04: "热点机会",
+      M06: "榜单选基",
+      M07: "全局小宝问答服务"
+    };
+
+    const views = {
+      overview: document.getElementById("overviewView"),
+      M02: document.getElementById("m02bView"),
+      "M02-C": document.getElementById("m02cView"),
+      M03: document.getElementById("m03ResourcesView"),
+      M04: document.getElementById("m04View"),
+      M06: document.getElementById("m06View"),
+      placeholder: document.getElementById("placeholderView")
+    };
+
+    const crumbCode = document.getElementById("crumbCode");
+    const crumbTitle = document.getElementById("crumbTitle");
+    const reviewStatus = document.getElementById("reviewStatus");
+    const placeholderCode = document.getElementById("placeholderCode");
+    const placeholderTitle = document.getElementById("placeholderTitle");
+    const placeholderCopy = document.getElementById("placeholderCopy");
+
+    function activateModule(moduleKey, updateHash = true) {
+      const target = moduleKey === "M05" ? "overview" : (moduleKey || "overview");
+      Object.values(views).forEach(view => view.classList.remove("is-active"));
+      document.querySelectorAll(".nav-item").forEach(item => item.classList.toggle("is-active", item.dataset.module === target));
+
+      if (target === "overview") {
+        views.overview.classList.add("is-active");
+        crumbCode.textContent = "REVIEW CENTER / 00";
+        crumbTitle.textContent = "理财首页 · 项目总览";
+        reviewStatus.textContent = "框架已确认";
+        reviewStatus.className = "chip";
+        document.querySelector('meta[name="prototype-page-key"]').content = "wealth-home-review-center-overview";
+      } else if (target === "M02" || target === "M02-B") {
+        views.M02.classList.add("is-active");
+        document.querySelector('[data-module="M02-B"]').classList.add("is-active");
+        crumbCode.textContent = "理财首页 / 宫格区";
+        crumbTitle.textContent = "常用理财服务宫格 · 左示例＋右需求";
+        reviewStatus.textContent = "仅宫格已接入 · 待阅读";
+        reviewStatus.className = "chip is-warn";
+        document.querySelector('meta[name="prototype-page-key"]').content = "wealth-home-review-center-m02b";
+      } else if (target === "M02-C") {
+        views["M02-C"].classList.add("is-active");
+        crumbCode.textContent = "理财首页 / 小宝服务区";
+        crumbTitle.textContent = "小宝服务区 · 左原型＋右说明";
+        reviewStatus.textContent = "结构候选 · 待评审";
+        reviewStatus.className = "chip is-warn";
+        document.querySelector('meta[name="prototype-page-key"]').content = "wealth-home-review-center-m02c";
+      } else if (target === "M03") {
+        views.M03.classList.add("is-active");
+        crumbCode.textContent = "理财首页 / 精选推荐";
+        crumbTitle.textContent = "精选推荐 · 左原型＋右说明";
+        reviewStatus.textContent = "正常列表 · 待阅读确认";
+        reviewStatus.className = "chip is-warn";
+        document.querySelector('meta[name="prototype-page-key"]').content = "wealth-home-review-center-m03-normal";
+      } else if (target === "M06") {
+        views.M06.classList.add("is-active");
+        const m06Frame = document.getElementById("m06ReviewFrame");
+        if (!m06Frame.getAttribute("src")) m06Frame.src = "./m06-review.html?v=20261102-remove-detail-info&m06Entry=" + encodeURIComponent(new URLSearchParams(location.search).get("m06-layout") === "2" ? (new URLSearchParams(location.search).get("m06-entry") || "") : "");
+        crumbCode.textContent = "理财首页 / 榜单选基";
+        crumbTitle.textContent = "榜单选基 · 左原型＋右需求";
+        reviewStatus.textContent = "已接入 · 待页面验收";
+        reviewStatus.className = "chip is-warn";
+        document.querySelector('meta[name="prototype-page-key"]').content = "wealth-home-review-center-m06";
+      } else if (target === "M04") {
+        views.M04.classList.add("is-active");
+        crumbCode.textContent = "理财首页 / 热点机会";
+        crumbTitle.textContent = "热点机会 · 左原型＋右需求";
+        reviewStatus.textContent = "原型与需求待评审";
+        reviewStatus.className = "chip is-warn";
+        document.querySelector('meta[name="prototype-page-key"]').content = "wealth-home-review-center-m04";
+        requestAnimationFrame(syncPreviewScale);
+      } else {
+        views.placeholder.classList.add("is-active");
+        const name = moduleNames[target] || "待接入模块";
+        crumbCode.textContent = `WHV4-${target} / NOT CONNECTED`;
+        crumbTitle.textContent = `${name} · 待接入`;
+        reviewStatus.textContent = target === "G01" ? "规则已建立，页面待接入" : target === "M01" ? "需求细化中 · 评审页未接入" : "评审页未接入";
+        reviewStatus.className = "chip is-warn";
+        placeholderCode.textContent = `WHV4-${target}`;
+        placeholderTitle.textContent = name;
+        placeholderCopy.textContent = target === "G01"
+          ? "G01 不走业务模块 Brief 流程。后续可在这里集中呈现公共 Tab 外壳、底部导航、安全区、层级与遮挡规则，并由各模块引用规则 ID。"
+          : target === "M01" ? "该模块正在细化需求。本评审中心尚未接入对应原型与正式需求说明，不代表模块工作尚未开始。"
+          : "该模块尚未接入本评审中心，需求进展待核对。接入状态不等同于需求编写进度。";
+      }
+
+    document.addEventListener("keydown", event => {
+      if (event.key !== "Enter" && event.key !== " ") return;
+      const card = event.target.closest('.module-card[data-open-module]');
+      if (!card) return;
+      event.preventDefault();
+      activateModule(card.dataset.openModule);
+    });
+
+      if (updateHash) history.replaceState(null, "", target === "overview" ? "#overview" : `#${target}`);
+    }
+
+    document.addEventListener("click", event => {
+      const moduleTrigger = event.target.closest("[data-module]");
+      if (moduleTrigger) activateModule(moduleTrigger.dataset.module);
+
+      const cardTrigger = event.target.closest("[data-open-module]");
+      if (cardTrigger) activateModule(cardTrigger.dataset.openModule);
+    });
+
+    const previewFrame = document.getElementById("m04Preview");
+    const requirementsDetailFrame = document.getElementById("requirementsDetailFrame");
+    const previewStage = previewFrame.closest(".prototype-stage");
+    const previewBox = previewFrame.parentElement;
+    let activeReviewMap = null;
+
+    function syncPreviewScale() {
+      const availableWidth = previewStage.clientWidth - 32;
+      const availableHeight = previewStage.clientHeight - 32;
+      if (availableWidth <= 0 || availableHeight <= 0) return;
+      const scale = Math.min(availableWidth / 750, availableHeight / 1602, 1);
+      previewBox.style.width = `${750 * scale}px`;
+      previewBox.style.height = `${1602 * scale}px`;
+      previewFrame.style.transform = `scale(${scale})`;
+    }
+
+    window.addEventListener("resize", syncPreviewScale);
+    previewFrame.addEventListener("load", () => {
+      syncPreviewScale();
+      if (activeReviewMap) {
+        window.setTimeout(() => {
+          previewFrame.contentWindow?.postMessage({
+            type: "wealth-review-map-select",
+            module: "M04",
+            mapId: activeReviewMap
+          }, "*");
+        }, 80);
+      }
+    });
+    if ("ResizeObserver" in window) new ResizeObserver(syncPreviewScale).observe(previewStage);
+    syncPreviewScale();
+
+    function selectReviewMap(mapId, source = "prototype") {
+      if (!mapId) return;
+      activeReviewMap = mapId;
+      if (source !== "prototype") {
+        previewFrame.contentWindow?.postMessage({
+          type: "wealth-review-map-select",
+          module: "M04",
+          mapId
+        }, "*");
+      }
+      if (source !== "requirements") {
+        requirementsDetailFrame.contentWindow?.postMessage({
+          type: "wealth-review-map-select",
+          module: "M04",
+          mapId,
+          scroll: source === "prototype"
+        }, "*");
+      }
+    }
+
+    requirementsDetailFrame.addEventListener("load", () => {
+      if (activeReviewMap) selectReviewMap(activeReviewMap, "requirements");
+    });
+
+    window.addEventListener("message", event => {
+      if (event.data?.module !== "M04") return;
+      if (event.source === previewFrame.contentWindow && event.data?.type === "wealth-review-map-ready") {
+        if (activeReviewMap) selectReviewMap(activeReviewMap, "requirements");
+        return;
+      }
+      if (event.data?.type !== "wealth-review-map-select") return;
+      if (event.source === previewFrame.contentWindow) {
+        selectReviewMap(String(event.data.mapId || ""), "prototype");
+      } else if (event.source === requirementsDetailFrame.contentWindow) {
+        selectReviewMap(String(event.data.mapId || ""), "requirements");
+      }
+    });
+
+    document.querySelectorAll("[data-preview-state]").forEach(button => {
+      button.addEventListener("click", () => {
+        const state = button.dataset.previewState;
+        document.querySelectorAll("[data-preview-state]").forEach(item => item.classList.toggle("is-active", item === button));
+        const source = `../wealth-home-business-consensus-interactive-v4.3.html?review-center=m04&review-state=${state}&review-ui=20260911-m05`;
+        previewFrame.src = source;
+      });
+    });
+
+
+    window.addEventListener("hashchange", () => activateModule(location.hash.slice(1) || "overview", false));
+    activateModule(location.hash.replace("#", "") || "overview", false);
+  </script>
+<script id="m02c-center-state">
+(()=>{const frame=document.getElementById('m02cReviewFrame'),allowed=["scenes", "held", "watched", "browsed", "week", "month", "quarter", "negative", "reopen", "cap", "unlimited", "high", "valuation", "fallback-product", "fallback-productlink", "fallback-advisory", "fallback-topic", "fallback-market", "fallback-hotspot", "fallback-only", "ranking-conditional", "loading", "refreshing", "error-old", "error-new", "empty", "fallback-refreshing", "fallback-error", "restoration", "missing", "readded", "long"];
+const requested=new URLSearchParams(location.search).get('m02c-state');
+const state=allowed.includes(requested)?requested:'scenes';
+frame.src='./m02c-review.html?v=20260918-1&state='+encodeURIComponent(state);
+window.addEventListener('message',event=>{const d=event.data;if(event.source!==frame.contentWindow||!d||d.type!=='m02c-review:state-changed'||!allowed.includes(d.stateId))return;const url=new URL(location.href);url.searchParams.set('m02c-state',d.stateId);history.replaceState(null,'',url);});
+})();
+</script>
+<script id="m06-center-state">
+(()=>{const frame=document.getElementById('m06ReviewFrame'),allowed=["home-qdiiQuota-normal","detail-qdiiQuota-normal","home-qdiiQuota-short","detail-qdiiQuota-short","home-qdiiQuota-long","detail-qdiiQuota-long","home-qdiiQuota-empty","detail-qdiiQuota-empty","home-qdiiQuota-loading","detail-qdiiQuota-loading","home-qdiiQuota-error","detail-qdiiQuota-error","home-qdiiQuota-partial","detail-qdiiQuota-partial","home-qdiiQuota-stale","detail-qdiiQuota-stale","home-qdiiQuota-no-date","detail-qdiiQuota-no-date","detail-QDII额度榜-normal","detail-机构青睐榜-normal","detail-指增超额榜-normal","detail-月月正收益榜-normal","detail-长跑业绩榜-normal","detail-量化业绩榜-normal","detail-高股息指数榜-normal","detail-主题先锋榜-normal","detail-A股宽基榜-normal","detail-科技主题榜-normal","detail-消费主题榜-normal","detail-新能源主题榜-normal","detail-高端制造主题榜-normal","detail-医药主题榜-normal","detail-能源材料主题榜-normal","detail-公用事业主题榜-normal","detail-金融地产主题榜-normal","selector-全部榜单选择-normal","detail-机构青睐榜-short","detail-机构青睐榜-long","detail-机构青睐榜-empty","detail-机构青睐榜-loading","detail-机构青睐榜-error","detail-机构青睐榜-partial","detail-机构青睐榜-stale","detail-机构青睐榜-no-date","detail-指增超额榜-short","detail-指增超额榜-long","detail-指增超额榜-empty","detail-指增超额榜-loading","detail-指增超额榜-error","detail-指增超额榜-partial","detail-指增超额榜-stale","detail-指增超额榜-no-date","detail-月月正收益榜-short","detail-月月正收益榜-long","detail-月月正收益榜-empty","detail-月月正收益榜-loading","detail-月月正收益榜-error","detail-月月正收益榜-partial","detail-月月正收益榜-stale","detail-月月正收益榜-no-date","detail-长跑业绩榜-short","detail-长跑业绩榜-long","detail-长跑业绩榜-empty","detail-长跑业绩榜-loading","detail-长跑业绩榜-error","detail-长跑业绩榜-partial","detail-长跑业绩榜-stale","detail-长跑业绩榜-no-date","detail-量化业绩榜-short","detail-量化业绩榜-long","detail-量化业绩榜-empty","detail-量化业绩榜-loading","detail-量化业绩榜-error","detail-量化业绩榜-partial","detail-量化业绩榜-stale","detail-量化业绩榜-no-date","detail-高股息指数榜-short","detail-高股息指数榜-long","detail-高股息指数榜-empty","detail-高股息指数榜-loading","detail-高股息指数榜-error","detail-高股息指数榜-partial","detail-高股息指数榜-stale","detail-高股息指数榜-no-date","detail-主题先锋榜-short","detail-主题先锋榜-long","detail-主题先锋榜-empty","detail-主题先锋榜-loading","detail-主题先锋榜-error","detail-主题先锋榜-partial","detail-主题先锋榜-stale","detail-主题先锋榜-no-date","detail-A股宽基榜-short","detail-A股宽基榜-long","detail-A股宽基榜-empty","detail-A股宽基榜-loading","detail-A股宽基榜-error","detail-A股宽基榜-partial","detail-A股宽基榜-stale","detail-A股宽基榜-no-date","detail-科技主题榜-short","detail-科技主题榜-long","detail-科技主题榜-empty","detail-科技主题榜-loading","detail-科技主题榜-error","detail-科技主题榜-partial","detail-科技主题榜-stale","detail-科技主题榜-no-date","detail-消费主题榜-short","detail-消费主题榜-long","detail-消费主题榜-empty","detail-消费主题榜-loading","detail-消费主题榜-error","detail-消费主题榜-partial","detail-消费主题榜-stale","detail-消费主题榜-no-date","detail-新能源主题榜-short","detail-新能源主题榜-long","detail-新能源主题榜-empty","detail-新能源主题榜-loading","detail-新能源主题榜-error","detail-新能源主题榜-partial","detail-新能源主题榜-stale","detail-新能源主题榜-no-date","detail-高端制造主题榜-short","detail-高端制造主题榜-long","detail-高端制造主题榜-empty","detail-高端制造主题榜-loading","detail-高端制造主题榜-error","detail-高端制造主题榜-partial","detail-高端制造主题榜-stale","detail-高端制造主题榜-no-date","detail-医药主题榜-short","detail-医药主题榜-long","detail-医药主题榜-empty","detail-医药主题榜-loading","detail-医药主题榜-error","detail-医药主题榜-partial","detail-医药主题榜-stale","detail-医药主题榜-no-date","detail-能源材料主题榜-short","detail-能源材料主题榜-long","detail-能源材料主题榜-empty","detail-能源材料主题榜-loading","detail-能源材料主题榜-error","detail-能源材料主题榜-partial","detail-能源材料主题榜-stale","detail-能源材料主题榜-no-date","detail-公用事业主题榜-short","detail-公用事业主题榜-long","detail-公用事业主题榜-empty","detail-公用事业主题榜-loading","detail-公用事业主题榜-error","detail-公用事业主题榜-partial","detail-公用事业主题榜-stale","detail-公用事业主题榜-no-date","detail-金融地产主题榜-short","detail-金融地产主题榜-long","detail-金融地产主题榜-empty","detail-金融地产主题榜-loading","detail-金融地产主题榜-error","detail-金融地产主题榜-partial","detail-金融地产主题榜-stale","detail-金融地产主题榜-no-date","selector-全部榜单选择-short","selector-全部榜单选择-long","selector-全部榜单选择-empty","selector-全部榜单选择-loading","selector-全部榜单选择-error","selector-全部榜单选择-partial","selector-全部榜单选择-stale","selector-全部榜单选择-no-date","rules-QDII额度榜-normal","rules-QDII额度榜-short","rules-QDII额度榜-long","rules-QDII额度榜-empty","rules-QDII额度榜-loading","rules-QDII额度榜-error","rules-QDII额度榜-partial","rules-QDII额度榜-stale","rules-QDII额度榜-no-date","rules-机构青睐榜-normal","rules-机构青睐榜-short","rules-机构青睐榜-long","rules-机构青睐榜-empty","rules-机构青睐榜-loading","rules-机构青睐榜-error","rules-机构青睐榜-partial","rules-机构青睐榜-stale","rules-机构青睐榜-no-date","rules-指增超额榜-normal","rules-指增超额榜-short","rules-指增超额榜-long","rules-指增超额榜-empty","rules-指增超额榜-loading","rules-指增超额榜-error","rules-指增超额榜-partial","rules-指增超额榜-stale","rules-指增超额榜-no-date","rules-月月正收益榜-normal","rules-月月正收益榜-short","rules-月月正收益榜-long","rules-月月正收益榜-empty","rules-月月正收益榜-loading","rules-月月正收益榜-error","rules-月月正收益榜-partial","rules-月月正收益榜-stale","rules-月月正收益榜-no-date","rules-长跑业绩榜-normal","rules-长跑业绩榜-short","rules-长跑业绩榜-long","rules-长跑业绩榜-empty","rules-长跑业绩榜-loading","rules-长跑业绩榜-error","rules-长跑业绩榜-partial","rules-长跑业绩榜-stale","rules-长跑业绩榜-no-date","rules-量化业绩榜-normal","rules-量化业绩榜-short","rules-量化业绩榜-long","rules-量化业绩榜-empty","rules-量化业绩榜-loading","rules-量化业绩榜-error","rules-量化业绩榜-partial","rules-量化业绩榜-stale","rules-量化业绩榜-no-date","rules-高股息指数榜-normal","rules-高股息指数榜-short","rules-高股息指数榜-long","rules-高股息指数榜-empty","rules-高股息指数榜-loading","rules-高股息指数榜-error","rules-高股息指数榜-partial","rules-高股息指数榜-stale","rules-高股息指数榜-no-date","rules-主题先锋榜-normal","rules-主题先锋榜-short","rules-主题先锋榜-long","rules-主题先锋榜-empty","rules-主题先锋榜-loading","rules-主题先锋榜-error","rules-主题先锋榜-partial","rules-主题先锋榜-stale","rules-主题先锋榜-no-date","rules-A股宽基榜-normal","rules-A股宽基榜-short","rules-A股宽基榜-long","rules-A股宽基榜-empty","rules-A股宽基榜-loading","rules-A股宽基榜-error","rules-A股宽基榜-partial","rules-A股宽基榜-stale","rules-A股宽基榜-no-date","rules-科技主题榜-normal","rules-科技主题榜-short","rules-科技主题榜-long","rules-科技主题榜-empty","rules-科技主题榜-loading","rules-科技主题榜-error","rules-科技主题榜-partial","rules-科技主题榜-stale","rules-科技主题榜-no-date","rules-消费主题榜-normal","rules-消费主题榜-short","rules-消费主题榜-long","rules-消费主题榜-empty","rules-消费主题榜-loading","rules-消费主题榜-error","rules-消费主题榜-partial","rules-消费主题榜-stale","rules-消费主题榜-no-date","rules-新能源主题榜-normal","rules-新能源主题榜-short","rules-新能源主题榜-long","rules-新能源主题榜-empty","rules-新能源主题榜-loading","rules-新能源主题榜-error","rules-新能源主题榜-partial","rules-新能源主题榜-stale","rules-新能源主题榜-no-date","rules-高端制造主题榜-normal","rules-高端制造主题榜-short","rules-高端制造主题榜-long","rules-高端制造主题榜-empty","rules-高端制造主题榜-loading","rules-高端制造主题榜-error","rules-高端制造主题榜-partial","rules-高端制造主题榜-stale","rules-高端制造主题榜-no-date","rules-医药主题榜-normal","rules-医药主题榜-short","rules-医药主题榜-long","rules-医药主题榜-empty","rules-医药主题榜-loading","rules-医药主题榜-error","rules-医药主题榜-partial","rules-医药主题榜-stale","rules-医药主题榜-no-date","rules-能源材料主题榜-normal","rules-能源材料主题榜-short","rules-能源材料主题榜-long","rules-能源材料主题榜-empty","rules-能源材料主题榜-loading","rules-能源材料主题榜-error","rules-能源材料主题榜-partial","rules-能源材料主题榜-stale","rules-能源材料主题榜-no-date","rules-公用事业主题榜-normal","rules-公用事业主题榜-short","rules-公用事业主题榜-long","rules-公用事业主题榜-empty","rules-公用事业主题榜-loading","rules-公用事业主题榜-error","rules-公用事业主题榜-partial","rules-公用事业主题榜-stale","rules-公用事业主题榜-no-date","rules-金融地产主题榜-normal","rules-金融地产主题榜-short","rules-金融地产主题榜-long","rules-金融地产主题榜-empty","rules-金融地产主题榜-loading","rules-金融地产主题榜-error","rules-金融地产主题榜-partial","rules-金融地产主题榜-stale","rules-金融地产主题榜-no-date"];
+window.addEventListener('message',event=>{const d=event.data;if(event.source!==frame.contentWindow||!d)return;if(d.type==='m06-review:module-request'&&['M03','M04'].includes(d.module)){activateModule(d.module);return;}if(d.type!=='m06-review:entry-changed'||!allowed.includes(d.entryId))return;const url=new URL(location.href);url.searchParams.set('m06-entry',d.entryId);url.searchParams.set('m06-layout','2');history.replaceState(null,'',url);});
+})();
+</script>
+</body>
+</html>

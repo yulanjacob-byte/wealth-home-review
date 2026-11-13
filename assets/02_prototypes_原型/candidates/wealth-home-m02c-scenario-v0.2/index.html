@@ -1,0 +1,4242 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>场景服务卡 · 结构预览</title>
+<style>/* ============================================================
+ * 国金证券客户端设计系统 · design-tokens.css(数值真源)
+ * version: v2.6.2 · 750 设计稿基准
+ * 唯一颜色/尺寸来源。ALWAYS 用 var(--xxx),NEVER 硬编码色值。
+ * 深色模式:容器加 [data-theme="dark"] 即自动切换语义色。
+ * ============================================================ */
+
+:root {
+  /* ---------- 原子色盘:7 彩色族×19阶 + 灰18阶,锚点在第6阶 ---------- */
+  /* R · 品牌红(★R6 主色/涨红) */
+  --R1:#FFF2F0; --R2:#FFE0DB; --R3:#FFBAB3; --R4:#FF928A; --R5:#FF6661; --R6:#F93838; --R7:#D4242A; --R8:#AD151F; --R9:#870916; --R10:#610612; --R11:#281B26; --R12:#551313; --R13:#7E1C1C; --R14:#A72626; --R15:#D02F2F; --R16:#FA6060; --R17:#FB8888; --R18:#FDAFAF; --R19:#FED7D7;
+  /* O · 辅色橙 */
+  --O1:#FFF8F0; --O2:#FFECD6; --O3:#FFD6AD; --O4:#FFBE85; --O5:#FFA35C; --O6:#FF8533; --O7:#D96421; --O8:#B34712; --O9:#8C2F07; --O10:#661E04; --O11:#282024; --O12:#572D11; --O13:#81431A; --O14:#AB5922; --O15:#D56F2B; --O16:#FF9D5C; --O17:#FFB685; --O18:#FFCEAD; --O19:#FFE7D6;
+  /* Y · 辅色黄 */
+  --Y1:#FFFBE6; --Y2:#FFF2B8; --Y3:#FFE78F; --Y4:#FFD966; --Y5:#FFC83D; --Y6:#FFB415; --Y7:#D98F07; --Y8:#B36E00; --Y9:#8C5200; --Y10:#663800; --Y11:#291D1C; --Y12:#543313; --Y13:#7D4F1B; --Y14:#A66E26; --Y15:#CC8C1E; --Y16:#FDC74E; --Y17:#FADB87; --Y18:#FCEAAC; --Y19:#FFF7D6;
+  /* J · 辅色金(广告/会员) */
+  --J1:#FFF6EA; --J2:#F5E2C4; --J3:#E8C595; --J4:#DBA869; --J5:#CF8B42; --J6:#C36E20; --J7:#9C4F11; --J8:#753507; --J9:#4F1F01; --J10:#290E00; --J11:#24180C; --J12:#462F16; --J13:#694621; --J14:#8B5D2C; --J15:#AD7437; --J16:#D9A268; --J17:#E2B98E; --J18:#ECD1B3; --J19:#F5E8D9;
+  /* G · 辅色绿(★G6 跌绿) */
+  --G1:#E3FAEC; --G2:#B7EBD1; --G3:#8ADCB5; --G4:#5ECE9A; --G5:#31BF7E; --G6:#05B063; --G7:#048A4E; --G8:#03643A; --G9:#013D25; --G10:#001710; --G11:#16252A; --G12:#02321D; --G13:#044A2B; --G14:#05633A; --G15:#067B48; --G16:#37C082; --G17:#69D0A1; --G18:#9BDFC1; --G19:#CDEFE0;
+  /* B · 辅色蓝(★B6 卖/链接) */
+  --B1:#F0F7FF; --B2:#CFE5FF; --B3:#A6CCFF; --B4:#7DB1FF; --B5:#5493FF; --B6:#2B73FF; --B7:#1A53D9; --B8:#0C39B3; --B9:#03238C; --B10:#011566; --B11:#181F36; --B12:#0F2757; --B13:#163A81; --B14:#1D4DAB; --B15:#2460D5; --B16:#558FFF; --B17:#80ABFF; --B18:#AAC7FF; --B19:#D5E3FF;
+  /* P · 辅色紫(智能体) */
+  --P1:#F4F0FF; --P2:#EEE8FF; --P3:#CEBFFF; --P4:#AB96FF; --P5:#866EFF; --P6:#5E44FF; --P7:#4130D9; --P8:#281EB3; --P9:#15118C; --P10:#0B0B66; --P11:#100C2D; --P12:#201757; --P13:#2F2281; --P14:#3F2EAB; --P15:#4F39D5; --P16:#7E69FF; --P17:#9E8FFF; --P18:#BFB4FF; --P19:#DFDAFF;
+  /* H · 基础灰(★H9 主文本) */
+  --H1:#FFFFFF; --H2:#F2F4F8; --H3:#E2E8F2; --H4:#EEEEEE; --H5:#DDDDDD; --H6:#CCCCCC; --H7:#87878D; --H8:#55555E; --H9:#0F0F1B; --H10:#000000; --H11:#161824; --H12:#0F0F1B; --H13:#21212D; --H14:#373746; --H15:#55555E; --H16:#87878D; --H17:#87878D; --H18:#DDDDDD;
+  /* ---------- 品牌渐变 ---------- */
+  --grad-red:linear-gradient(180deg, var(--CP1) 0%, var(--CP0) 100%);
+  --grad-ai:linear-gradient(135deg, var(--CP2) 0%, var(--CP3) 100%);
+  --grad-peach:linear-gradient(180deg, var(--O1) 0%, #FFFBF7 100%);
+  --grad-iris:linear-gradient(180deg, #F6FBFF 0%, #FFF9FF 50%, #F3F5FF 100%);
+  --grad-glass:linear-gradient(180deg, #FFFFFF 0%, rgba(255,255,255,0.2) 100%);
+  --grad-orb:radial-gradient(circle, rgba(179,160,255,.55) 0%, rgba(255,223,252,.55) 35%, rgba(199,229,255,.55) 70%, rgba(124,181,255,.55) 100%);
+  /* ---------- 语义别名(开发友好) ---------- */
+  --red-50:var(--R1); --red-100:var(--R2); --red-200:var(--R3); --red-300:var(--R4); --red-400:var(--R5); --red-500:var(--R6); --red-600:var(--R7); --red-700:var(--R8); --gold-50:var(--J1); --gold-100:var(--J2); --gold-200:var(--J3); --gold-300:var(--J4); --gold-400:var(--J5); --gold-500:var(--J6); --gold-600:var(--J7); --gold-700:var(--J8); --blue-50:var(--B1); --blue-100:var(--B2); --blue-300:var(--B5); --blue-500:var(--B6); --blue-700:var(--B7); --ink-900:var(--H9); --ink-700:var(--H8); --ink-500:var(--H8); --ink-400:var(--H7); --ink-300:var(--H6); --line:var(--H4); --bg-1:var(--H1); --bg-2:var(--H2); --bg-3:#F8F9FB;
+  /* ---------- 圆角 / 间距 ---------- */
+  /* 750 基准(v1.6.2 起全系统统一 750,不再 ÷2;基线单位 8) */
+  --r-4:4px; --r-6:6px; --r-8:8px; --r-12:12px; --r-16:16px; --r-20:20px; --r-24:24px; --r-32:32px; --r-pill:999px; --s-4:4px; --s-8:8px; --s-12:12px; --s-16:16px; --s-20:20px; --s-24:24px; --s-32:32px; --s-40:40px; --s-48:48px; --s-64:64px; /* ---------- 字体 ---------- */
+  --font-sans:"PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-num:"GJType", "PingFang SC", system-ui, sans-serif;
+
+  /* ===================================================
+   * 语义 token(白版/默认)— 按用途取用,而非按颜色
+   * =================================================== */
+  /* 01 品牌色 · CP · Brand */
+  --CP0:var(--R6); /* 品牌色(对应色盘 R6) */
+  --CP1:#FF7067; /* 品牌渐变浅色端 */
+  --CP2:#667FFF; /* 智能体品牌渐变色蓝 */
+  --CP3:#8B52FF; /* 智能体品牌渐变色紫 */
+  /* 02 文字色 · CT · Text */
+  --CT1:var(--H9); /* 主要文本 / 标题 */
+  --CT2:var(--H9); /* 大面积主要文本的黑肤特殊处理（例：资讯） */
+  --CT3:var(--H8); /* 次要文本 / 副标题 */
+  --CT4:var(--H7); /* 辅助文本 / 提示说明 */
+  --CT5:var(--H8); /* 弱文本 / 失效文本 */
+  --CT6:var(--H1); /* 反白文字 */
+  --CT7:var(--H1); /* 顶部标题栏文字 */
+  --CT8:rgba(255,255,255,0.3); /* 禁用按钮上的反白文字 */
+  /* 03 涨跌色 · CS · Rise / Fall */
+  --CS1:var(--R6); /* 涨红 */
+  --CS2:var(--G6); /* 跌绿 */
+  --CS3:var(--H8); /* 平灰 */
+  --CS4:var(--B6); /* 部分交易场景的跌 / 卖 */
+  /* 04 功能色 · CF · Functional */
+  --CF1:var(--R6); /* 警告 / 失败 */
+  --CF2:#FF7015; /* 警示 / 次要提示 */
+  --CF3:var(--B6); /* 成功 / 链接色 */
+  --CF4:#059BB0; /* 市场情绪-大盘指数-"偏低"功能色 */
+  --CF5:#32BFDE; /* 市场情绪-北向净卖入-"深股通"线条 / 选中色值 */
+  --CF6:var(--J6); /* 辅助棕 - 广告词 */
+  --CF7:var(--G6); /* 成功(操作结果,如结果页"操作成功"提示);与跌绿 --CS2 同色值不同语义,价格语境的"跌"仍用 --CS2 */
+  /* 05 线框色 · CL · Line / Border */
+  --CL1:var(--H5); /* 一级分割线 / 默认描边 */
+  --CL2:var(--H4); /* 常规分割线 */
+  --CL3:var(--R6); /* 红色边框 */
+  --CL4:var(--O6); /* 橙色边框 */
+  --CL5:var(--B6); /* 蓝色边框 */
+  --CL6:var(--P6); /* 紫色边框 */
+  --CL8:rgba(43,115,255,0.5); /* 市场情绪选中边框 */
+  --CL9:var(--B6); /* 分时图背景 */
+  /* 06 按钮色 · CN · Button / Action */
+  --CN1:var(--R6); /* 交易买 / 默认主按钮 */
+  --CN2:var(--R7); /* 交易买 - 按下 */
+  --CN3:var(--B6); /* 交易卖 / 期权平 */
+  --CN4:var(--B7); /* 交易卖 / 期权平 - 按下 */
+  --CN5:var(--G6); /* 期权卖 */
+  --CN6:var(--G7); /* 期权卖 - 按下 */
+  --CN7:var(--R7); /* 融买 */
+  --CN8:var(--R8); /* 融买 - 按下 */
+  --CN9:var(--B7); /* 融卖 */
+  --CN10:var(--B8); /* 融卖 - 按下 */
+  --CN11:rgba(249,56,56,0.3); /* 常规按钮禁用状态 */
+  --CN12:var(--R1); /* 浅色主按钮背景色 */
+  --CN13:var(--R2); /* 浅色主按钮背景色 - 按下 */
+  --CN14:var(--H2); /* 灰色辅助按钮背景色 */
+  --CN15:var(--H3); /* 灰色辅助按钮背景色 - 按下 */
+  /* 07 图标色 · CI · Icon */
+  --CI1:var(--H9); /* 主要图标 */
+  --CI2:var(--H8); /* 次要图标，搭配次要文本 */
+  --CI3:var(--H7); /* 辅助图标，搭配辅助文本及提示说明 */
+  --CI4:var(--H6); /* 弱图标 / 失效图标，搭配弱文本及失效文本 */
+  --CI5:var(--H1); /* 反白图标，搭配反白文字 */
+  /* 08 图表色 · CH · Chart */
+  --CH1:var(--R6); /* 主品牌色 / 高亮 (图表) */
+  --CH2:var(--R5); /* 红 - 浅一阶 */
+  --CH3:var(--O6); /* 橙 - 主 */
+  --CH4:var(--O4); /* 橙 - 浅 */
+  --CH5:var(--Y6); /* 黄 - 主 */
+  --CH6:var(--Y4); /* 黄 - 浅 */
+  --CH7:var(--G5); /* 绿 - 主 */
+  --CH8:var(--G4); /* 绿 - 浅 */
+  --CH9:var(--B5); /* 蓝 - 主 */
+  --CH10:var(--B3); /* 蓝 - 浅 */
+  --CH11:var(--P5); /* 紫 - 主 */
+  --CH12:var(--P3); /* 紫 - 浅 */
+  --CH13:var(--J3); /* 金 - 主 */
+  --CH14:var(--J2); /* 金 - 浅 */
+  /* 09 背景色 · CB · Background */
+  --CB1:var(--H1); /* 卡片背景色 */
+  --CB2:var(--H2); /* 页面背景色 */
+  --CB3:var(--H2); /* 二层卡片 / 二级未选中 Tab */
+  --CB35:#FCFDFF; /* 瓷片区卡片背景 */
+  --CB41:#F6F8FC; /* 用于常规文字模块背景 */
+  --CB7:var(--H2); /* 三层卡片 / 需要提亮特殊处理模块 */
+  --CB8:var(--H1); /* 浅色浮层 */
+  --CB4:var(--R1); /* 红色标签背景 */
+  --CB43:var(--R2); /* 红色标签背景（深） */
+  --CB5:var(--O1); /* 橙色标签背景 */
+  --CB44:var(--O2); /* 橙色标签背景（深） */
+  --CB6:var(--B1); /* 蓝色标签背景 */
+  --CB45:var(--B2); /* 蓝色标签背景（深） */
+  --CB9:var(--G1); /* 绿色标签背景 */
+  --CB37:#FBF4EE; /* 金色标签背景 */
+  --CB10:rgba(249,56,56,0.05); /* 指数涨背景 */
+  --CB11:rgba(5,176,99,0.05); /* 指数跌背景 */
+  --CB12:rgba(85,85,94,0.05); /* 指数平背景 */
+  --CB36:rgba(255,112,21,0.05); /* 自选底部通知条 / 交易公告背景 */
+  --CB13:rgba(249,56,56,0.08); /* 红色透明标签背景 */
+  --CB14:rgba(43,115,255,0.08); /* 蓝色透明标签背景 */
+  --CB15:rgba(255,112,21,0.08); /* 橙色透明标签背景 */
+  --CB16:rgba(94,68,255,0.08); /* 紫色透明标签背景 */
+  --CB27:rgba(5,176,99,0.08); /* 自选个股列表跌 / 理财热点 / 指数定投气泡背景 */
+  --CB17:rgba(43,115,255,0.1); /* 自选 / 行情图表蓝色走势线背景色 */
+  --CB18:rgba(0,0,0,0.8); /* 深色浮层背景 */
+  --CB19:rgba(0,0,0,0.6); /* 常规遮罩色 */
+  --CB20:rgba(249,56,56,0.25); /* 自选分时上涨 / 国金策略涨 */
+  --CB21:rgba(5,176,99,0.25); /* 自选分时下跌 / 国金策略跌 */
+  --CB22:rgba(85,85,94,0.25); /* 自选分时平 */
+  --CB23:rgba(249,56,56,0); /* 自选分时上涨渐变端 */
+  --CB24:rgba(5,176,99,0); /* 自选分时下跌渐变端 */
+  --CB25:rgba(85,85,94,0); /* 自选分时平渐变端 */
+  --CB26:rgba(255,255,255,0); /* 自选个股列表涨跌背景渐变端 */
+  --CB28:#E3FAF9; /* 市场情绪-大盘情绪-偏低背景 */
+  --CB29:rgba(249,56,56,0.1); /* 国金策略指数色值展示卡片背景 */
+  --CB30:rgba(249,56,56,0.15); /* 国金策略指数色值展示卡片背景 */
+  --CB31:rgba(249,56,56,0.2); /* 国金策略指数色值展示卡片背景 */
+  --CB32:rgba(5,176,99,0.1); /* 国金策略指数色值展示卡片背景 */
+  --CB33:rgba(5,176,99,0.15); /* 国金策略指数色值展示卡片背景 */
+  --CB34:rgba(5,176,99,0.2); /* 国金策略指数色值展示卡片背景 */
+  --CB38:#F6FBFF; /* 智能体相关的通用渐变背景色 */
+  --CB39:#FFF9FF; /* 智能体相关的通用渐变背景色 */
+  --CB40:#F3F5FF; /* 智能体相关的通用渐变背景色 */
+  --CB42:#F6F5FF; /* 智能体相关卡片浅紫渐变背景色 */
+}
+
+/* ===================================================
+ * 深色模式覆盖(仅 39 个 token 需切换,其余不变)
+ * =================================================== */
+[data-theme="dark"] {
+  --CT1:var(--H1); /* 主要文本 / 标题 */
+  --CT2:#BBBBBB; /* 大面积主要文本的黑肤特殊处理（例：资讯） */
+  --CT3:var(--H7); /* 次要文本 / 副标题 */
+  --CT5:var(--H6); /* 弱文本 / 失效文本 */
+  --CS3:var(--H7); /* 平灰 */
+  --CL1:var(--H14); /* 一级分割线 / 默认描边 */
+  --CL2:var(--H14); /* 常规分割线 */
+  --CL9:var(--H5); /* 分时图背景 */
+  --CN12:var(--R11); /* 浅色主按钮背景色 */
+  --CN13:var(--R12); /* 浅色主按钮背景色 - 按下 */
+  --CN14:var(--H9); /* 灰色辅助按钮背景色 */
+  --CN15:var(--H13); /* 灰色辅助按钮背景色 - 按下 */
+  --CI1:var(--H1); /* 主要图标 */
+  --CI2:var(--H7); /* 次要图标，搭配次要文本 */
+  --CI4:var(--H8); /* 弱图标 / 失效图标，搭配弱文本及失效文本 */
+  --CB1:var(--H11); /* 卡片背景色 */
+  --CB2:var(--H9); /* 页面背景色 */
+  --CB3:#1C1E2D; /* 二层卡片 / 二级未选中 Tab */
+  --CB35:#1C1E2D; /* 瓷片区卡片背景 */
+  --CB41:#1C1E2D; /* 用于常规文字模块背景 */
+  --CB7:#282A35; /* 三层卡片 / 需要提亮特殊处理模块 */
+  --CB8:#282A35; /* 浅色浮层 */
+  --CB4:var(--R11); /* 红色标签背景 */
+  --CB43:var(--R12); /* 红色标签背景（深） */
+  --CB5:var(--O11); /* 橙色标签背景 */
+  --CB44:var(--O12); /* 橙色标签背景（深） */
+  --CB6:var(--B11); /* 蓝色标签背景 */
+  --CB45:var(--B12); /* 蓝色标签背景（深） */
+  --CB9:var(--G11); /* 绿色标签背景 */
+  --CB37:#2D2724; /* 金色标签背景 */
+  --CB17:var(--H5); /* 自选 / 行情图表蓝色走势线背景色 */
+  --CB22:rgba(135,135,141,0.25); /* 自选分时平 */
+  --CB25:rgba(135,135,141,0); /* 自选分时平渐变端 */
+  --CB26:rgba(22,24,36,0); /* 自选个股列表涨跌背景渐变端 */
+  --CB28:#062B31; /* 市场情绪-大盘情绪-偏低背景 */
+  --CB38:#281B28; /* 智能体相关的通用渐变背景色 */
+  --CB39:#1D2032; /* 智能体相关的通用渐变背景色 */
+  --CB40:#1C1E2D; /* 智能体相关的通用渐变背景色 */
+  --CB42:#302F50; /* 智能体相关卡片浅紫渐变背景色 */
+}</style>
+<style>
+@font-face{font-family:GJType;src:url(data:font/ttf;base64,AAEAAAAOAIAAAwBgRkZUTaGHafkAABCIAAAAHEdERUYAFQAUAAAQbAAAABxPUy8ybMd8VgAAAWgAAABgY21hcBQohasAAAJIAAABemN2dCAAIgKIAAADxAAAAARnYXNw//8AAwAAEGQAAAAIZ2x5Zgk+VYgAAAQQAAAJEGhlYWQtn86SAAAA7AAAADZoaGVhBeQCPQAAASQAAAAkaG10eDm3CaQAAAHIAAAAgGxvY2Eo1iakAAADyAAAAEZtYXhwAGkAcAAAAUgAAAAgbmFtZV/KHEgAAA0gAAAC3HBvc3QCUALBAAAP/AAAAGYAAQAAAAEAAAQx79ZfDzz1AAsEAAAAAADlzt0rAAAAAOYUrkEAIv9mAnsCwwAAAAgAAgAAAAAAAAABAAACw/9mAKQCuAAAAAACewABAAAAAAAAAAAAAAAAAAAAHgABAAAAIgA/AAUAAAAAAAIAAAABAAEAAABAAC4AAAAAAAQCDAGQAAUAAAKZAswAAACPApkCzAAAAesAMwEJAAACAAUJAAAAAAAAAAAAAwAAAEAAAAAAAAAAAEdKWlEAwAAkImUDUv9SAKQGFQFIAAAAAQAAAAAAAAAAAAAAIAABAXYAIgAAAAABVQAAAlEAZgK4AD0CjwBIAlEBMwJRAGYCAABcAgAAMwD1AFICAABcAMwAMwIAAC4CAABDAgAAnwIAAEMCAAA9AgAAOAIAAEMCAAA4AgAAPQIAADMCAAA4APUAUgJRAFwCUQBcAlEAXAIAADMCUQBSAFwAXABcAFwAAAADAAAAAwAAABwAAQAAAAAAdAADAAEAAAAcAAQAWAAAABIAEAADAAIAJgA6AD4AfgClIkgiYCJl//8AAAAkACgAPAB+AKUiSCJgImT////f/97/3f+e/3jd1t2/3bwAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAQYAAAEAAAAAAAAAAQIAAAACAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAMEBQAGBwgJCgsMDQ4PEBESExQVFhcYABkaGwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHwAAAAAgIR0AAAAAAAAAAAAAAAAAAAAAHgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAiAogAAAAqACoAKgBsALgBGAEyAUoBbAGCAZABngGqAbgB4AHyAiACVAJwAqIC1gLqAyADVANmA3oDjgOgA8YD7AQyBFIEbgSIAAAAAgAiAAABMgKqAAMABwAusQEALzyyBwQA7TKxBgXcPLIDAgDtMgCxAwAvPLIFBADtMrIHBgH8PLIBAgDtMjMRIREnMxEjIgEQ7szMAqr9ViICZgAAAwBm/6QB7ALDAB8AJQArAAABHgEVIzQmJxUWFRQGBxUjNS4BNTMUFhc1JjU0Njc1MxE+ATU0JwMOARUUFwFSQ1dSKCCaWEJSQlhSKCCaV0NSIChIUiAoSAKMDmpGJDkM5jiARmsONjYOa0YkOgznOIBGag43/WwMOiQ8JAE+DDkkPCQABQA9/80CewKaAAMADwAbACcAMwAAFyMBMwIyFh0BFAYiJj0BNDYiBh0BFBYyNj0BNAAyFh0BFAYiJj0BNDYiBh0BFBYyNj0BNN1RAU9RT1xCQlxBhCoeHioe/kFcQkJcQoUqHh4qHjMCzf56Qy9jL0NELmMvBiAXXhchIRdeFwHjRC9iL0REL2IvBiAXXhchIRdeFwAAAAADAEj/zQJIApoAIgAxAD4AABIyFhUUBwYHHgEXNzMOAQ8BFyMnBgcGIiY1NDc2NyYnJjU0EwYHBhUUFjMyNz4BNy4BEiIGFRQXFhc2NzY1NNF6VjkSIBVSECtYBycQEWdnNAQCRqZzOBcwKQMfexofJEMxMC4DCwMXXB82JBIOFxQRJAKaVz0/QRQcHHYWThRMHByXUgUCS3RTS0EcJzwENC89/t4WIiorMUMxAw0DIIIBQSYbGh4WHxESKSEbAAABATP/pAIpAsMACwAAAQ4BFBYXIy4BNDY3AilQVFRQTUxdXk0Cw0/dyNxPU87cz1MAAAAAAQBm/6QBXALDAAsAABMzHgEUBgcjPgE0JmZLTV5dTE1QVFQCw1PP3M5TT9zI3QAAAQBcAI8BpAHXABEAAAEXBycXIzcHJzcnNxcnMwc3FwFDYSlcClMKWylraSlZClMKWikBLixHQW1oQUcxMUdAcXZARwABADMAZgHNAgAACwAAATMVIxUjNSM1MzUzASmkpFKkpFIBXFKkpFKkAAAAAAEAUv9mAKQAMwAEAAAXByM1M6QpKVIzZ80AAAABAFwBCgGkAVwAAwAAEzUhFVwBSAEKUlIAAAAAAQAz/80AmgAzAAMAABcjNTOaZ2czZgAAAQAu/80B0gKaAAMAABcjATOAUgFSUjMCzQAAAAIAQ//NAb0CmgALABcAAAE0JiIGFREUFjI2NTMUBiImNRE0NjIWFQFsQFhAQFhAUW+cb2+cbwHcLEBALP6uLD8/LE5vb04BUk5wcE4AAAAAAQCf/80BYQKaAAYAAAERIxEHNTcBYVJwaAKa/TMCaV5tVQAAAQBD/80BvQKaABwAABIyFhUUBwYHDgEHIRUhNT4BNzY3NjU0JiIGFSM0spxvNxk+EmcNART+hhxyHUETKkBYQFECmnBOQVQmUBiIElJSJpcmVRxAKSxAQCxOAAABAD3/zQHDApoAJQAAEjIWFRQHFh0BFAYiJj0BMxUUFjI2PQE0JisBNTMyNjQmIgYVIzS0mGxCTXKiclJCXkJDLigoKjw8VDxSApptTFY3O2AqUXFxURUVLkJCLiovQlI7VD09KkwAAAIAOP/NAcgCmgAKAA0AAAERMxUjFSM1ITUTAzMRAYdBQU//AOiTqwKa/g9SiopSAfH+DwFlAAAAAQBD/80BvQKaACEAAAEVIwc2MzIWHQEUBiMiJjUzFRQWMzI2PQE0JiMiBgcnEjcBn/UKLjJOb29OTXBRQSssQEAsIDQNVw4GAppSvhpwTlxOb3BNAio/PyxcLEAjHAEBDHoAAAIAOP/NAcgCmgATACAAABM2MzIWFxUUBiImPQE0PgI3EzMDIgYdARQWMjY9AS4B0xcWUnQCdaZ1EQ4pBoFWXTJERGREAkQBdgVzUiJTdHRTJBU4IVQMART+j0UxHzFERDEiMEMAAAAAAQA9/80BwwKaAAYAAAkBIwEhNSEBw/7sUwEU/s0BhgJI/YUCe1IAAAMAM//NAc0CmgARABkAIQAAEjIWFRQHFhUUBiImNTQ3JjU0EiIGFBYyNjQCIgYUFjI2NK+ickpUeKp4VEr2ZkhIZkhNXENDXEMCmnJRXjs9Z1V4eFVnPTteUf7sR2ZISGYBe0JeQkJeAAAAAAIAOP/NAcgCmgATACAAACUGIyImJzU0NjIWHQEUDgIHAyMTMjY9ATQmIgYdAR4BAS0XFlJ0AnWmdREOKQaBVl0yRERkRAJE8QVyUiJTdXVTJBU4IVQM/u0BcEUxHzJERDIiMEMAAAAAAgBSAIoApAHcAAMABwAANyM1MzUjNTOkUlJSUopSrlIAAAAAAQBcAEgB9gIfAAYAAAENARUlNSUB9v6/AUH+ZgGaAcyZmFPCUsMAAAIAXACkAfYBwwADAAcAACUhNSE1ITUhAfb+ZgGa/mYBmqRTeVMAAAABAFwASAH2Ah8ABgAAEzUFFQU1JVwBmv5mAUEBzFPDUsJTmAABADMA7AHNAXsAFwAAEzIWMzI2PwEVDgIjIiYjIgYPATU+ApoekB4bNAwMBRE2Gx6QHhs0DAwFETYBez4aDQ1SBhEcPRkNDVIGERwAAQBS/80CAAKaABYAAAEDMxUjFTcVBxUjNSM1MzUjNTMDMxsBAgCIeZ+fn1Kfn595iFx7ewKa/uZSYQFSAa6uUmFSARr/AAEAAAAAAAIAXACFAfYB4QAXAC8AABMyFjMyNj8BFQ4CIyImIyIGDwE1PgI3MhYzMjY/ARUOAiMiJiMiBg8BNT4Cwx+OHxs0DAwFETYbHo8fGzQMDAURNhsfjh8bNAwMBRE2Gx+OHxs0DAwFETYBFD0ZDQ1SBhEcPhoNDVIGERzNPRoMDVIGERw9GQ0NUgYRHAAAAQBcAFIB9gIUABMAAAEzFSMHMxUjByM3IzUzNyM1MzczAZxagjq84yZeJ1qCOrziJ14Bw1R4U1JSU3hUUQAAAAIAXAAKAfYCXAADAAoAACUVJTUBDQEVJTUlAfb+ZgGa/r8BQf5mAZpeVKtUAP+AgFSrUqsAAAAAAgBcAAoB9gJcAAMACgAANyUVBRE1BRUFNSVcAZr+ZgGa/mYBQV6rVKsB/lSrUqtUgAAAAAAADgCuAAEAAAAAAAAAUgCmAAEAAAAAAAEABgEHAAEAAAAAAAIABwEeAAEAAAAAAAMAKgF8AAEAAAAAAAQADgHFAAEAAAAAAAUADgHyAAEAAAAAAAYADgIfAAMAAQQJAAAApAAAAAMAAQQJAAEADAD5AAMAAQQJAAIADgEOAAMAAQQJAAMAVAEmAAMAAQQJAAQAHAGnAAMAAQQJAAUAHAHUAAMAAQQJAAYAHAIBAEMAbwBwAHkAcgBpAGcAaAB0ACAAKABjACkAIAAyADAAMgA2ACAAUwBJAE4ATwBMAEkATgBLACAAUwBFAEMAVQBSAEkAVABJAEUAUwAgAFMAVABPAEMASwAgAEMATwBNAFAAQQBOAFkAIABMAEkATQBJAFQARQBEAC4AIABBAGwAbAAgAHIAaQBnAGgAdABzACAAcgBlAHMAZQByAHYAZQBkAC4AAENvcHlyaWdodCAoYykgMjAyNiBTSU5PTElOSyBTRUNVUklUSUVTIFNUT0NLIENPTVBBTlkgTElNSVRFRC4gQWxsIHJpZ2h0cyByZXNlcnZlZC4AAEcASgBUAHkAcABlAABHSlR5cGUAAFIAZQBnAHUAbABhAHIAAFJlZ3VsYXIAAEYAbwBuAHQARgBvAHIAZwBlACAAMgAuADAAIAA6ACAARwBKAFQAeQBwAGUAIABSAGUAZwB1AGwAYQByACAAOgAgADIANwAtADQALQAyADAAMgA2AABGb250Rm9yZ2UgMi4wIDogR0pUeXBlIFJlZ3VsYXIgOiAyNy00LTIwMjYAAEcASgBUAHkAcABlACAAUgBlAGcAdQBsAGEAcgAAR0pUeXBlIFJlZ3VsYXIAAFYAZQByAHMAaQBvAG4AIAAxAC4AMAAwADAAIAAAVmVyc2lvbiAxLjAwMCAAAEcASgBUAHkAcABlAC0AUgBlAGcAdQBsAGEAcgAAR0pUeXBlLVJlZ3VsYXIAAAIAAAAAAAD/bQAzAAAAAAAAAAAAAAAAAAAAAAAAAAAAIgAAAAEAAgAHAAgACQALAAwADQAOAA8AEAARABIAEwAUABUAFgAXABgAGQAaABsAHAAdAB8AIAAhAGEAlgCnAI8AlACVAAAAAAAB//8AAgABAAAAAAAAAAwAFAAEAAAAAgAAAAEAAAABAAAAAAABAAAAANWj3owAAAAA5c7dKwAAAADmFK5B) format('truetype');font-weight:400 600;font-display:swap}
+*{box-sizing:border-box}body{margin:0;background:var(--CB1);color:var(--CT1);font-family:var(--font-sans)}button,select{font:inherit}button{cursor:pointer}button:focus-visible,[role=button]:focus-visible,a:focus-visible,select:focus-visible{outline:2px solid var(--CF3);outline-offset:4px}button{color:inherit}a{color:var(--CF3)}[hidden]{display:none!important}
+.work-header{padding:28px 36px 22px;border-bottom:1px solid var(--CL2);display:flex;justify-content:space-between;align-items:center;gap:20px}.eyebrow{font-size:12px;letter-spacing:.12em;color:var(--CT4);margin:0 0 8px}.work-header h1{font-size:24px;font-weight:600;margin:0}.work-header p.sub{margin:9px 0 0;font-size:13px;color:var(--CT3);line-height:1.8}.badge{font-size:12px;padding:7px 12px;border:1px solid var(--CL1);border-radius:999px;white-space:nowrap;color:var(--CT3)}
+.workspace{display:grid;grid-template-columns:250px minmax(0,1fr);min-height:calc(100vh - 135px)}.control-panel{border-right:1px solid var(--CL2);padding:24px 18px;background:var(--CB1)}.control-panel h2{font-size:12px;color:var(--CT4);font-weight:500;letter-spacing:.1em;margin:0 10px 12px}.group-title{font-size:12px;color:var(--CT4);margin:24px 10px 8px}.state-btn{display:block;width:100%;padding:10px 12px;text-align:left;border:0;border-radius:6px;background:transparent;font-size:13px;color:var(--CT3);line-height:1.5;margin-bottom:2px}.state-btn:hover{background:var(--CB2)}.state-btn[aria-current=true]{background:var(--CN12);color:var(--CN1);font-weight:500}.state-btn .dot{display:inline-block;width:5px;height:5px;border-radius:50%;background:currentColor;margin-right:9px;vertical-align:middle}.preview-space{background:var(--CB2);padding:26px 36px 40px;min-width:0}.preview-tools{max-width:850px;margin:0 auto 20px;display:flex;align-items:center;justify-content:space-between;gap:16px}.preview-tools h2{font-size:16px;font-weight:500;margin:0}.preview-tools p{color:var(--CT4);font-size:12px;margin:6px 0 0}.width-control{font-size:12px;color:var(--CT3);display:flex;gap:8px;align-items:center}.width-control select{border:1px solid var(--CL1);background:var(--CB1);border-radius:4px;padding:6px;color:var(--CT1)}
+.preview-column{max-width:850px;margin:auto}.phone-stage{margin:0 auto;width:390px;max-width:100%;background:var(--CB2);border:1px solid var(--CL1);border-radius:20px;overflow:hidden}.phone{width:750px;zoom:.518;background:var(--CB2);color:var(--CT1);font-size:28px;line-height:1.5;font-family:var(--font-sans)}
+/* Local module excerpt: base-mobile.html main/gj-module/card spacing, 750 baseline.
+   Header / navigation / other modules are deliberately not reconstructed. */
+.shell[data-level="1"]{--pad:var(--s-16);--gap:var(--s-16)}.phone main{display:flex;flex-direction:column;gap:var(--gap);padding:var(--s-16) var(--pad) var(--s-16)}.gj-module{margin:0}.card{background:var(--CB1);border-radius:var(--r-16);padding:var(--s-20)}.context-block{padding:var(--s-24);background:var(--CB1);border-radius:var(--r-16);color:var(--CT4);font-size:24px;display:flex;justify-content:space-between;align-items:center}.context-block strong{font-weight:400;color:var(--CT3)}.context-follow{border:1px dashed var(--CL1);background:transparent}.scene-card{padding:var(--s-20);background:var(--CB1);border-radius:var(--r-32);touch-action:pan-y;overflow:hidden}.bubble-row{display:flex;gap:var(--s-12);align-items:center;padding-bottom:var(--s-20)}.xiaobao{width:64px;height:64px;flex:none}.bubble{flex:1;border-radius:var(--r-32);background:var(--CB2);padding:var(--s-12) var(--s-20);font-size:28px;line-height:1.6;min-width:0}.bubble em{color:var(--CS1);font-style:normal}.body-panel{border:1px solid var(--CL2);border-radius:var(--r-16);overflow:hidden}.click-block{display:block;width:100%;text-align:left;border:0;background:transparent;color:inherit;padding:var(--s-24);font:inherit;cursor:pointer}.click-block:hover{background:var(--CB2)}.click-block h3{font-size:32px;font-weight:500;margin:0 0 var(--s-20)}.click-block p{margin:var(--s-12) 0 0;font-size:24px;color:var(--CT3)}.section-heading{display:flex;justify-content:space-between;align-items:baseline;gap:var(--s-16);margin-bottom:var(--s-24)}.section-heading h3{margin:0}.performance-head{display:block}.performance-head .outperform{display:block;margin-top:var(--s-8)}.outperform{font-size:24px;color:var(--CS1)}.number{font-family:var(--font-num);font-variant-numeric:tabular-nums;line-height:1.1;font-weight:400}.rise{color:var(--CS1)}.fall{color:var(--CS2)}.neutral{color:var(--CS3)}.muted{color:var(--CT4)}.return-row{display:grid;grid-template-columns:104px 1fr 108px;align-items:center;gap:var(--s-16);margin:var(--s-20) 0;font-size:24px}.return-row .value{text-align:right;font-size:28px}.bar-track{height:14px;background:var(--CB2);border-radius:var(--r-pill);overflow:hidden}.bar-fill{height:100%;background:var(--CS1);border-radius:var(--r-pill)}.benchmark .bar-fill{opacity:.4}.negative .bar-fill{background:var(--CS2)}.comparison-label{font-size:20px;color:var(--CT4);margin-top:var(--s-12)}.aux{display:grid;grid-template-columns:1fr 1fr;padding:var(--s-24) 0 0;margin-top:var(--s-24);border-top:1px solid var(--CL2);text-align:center;gap:var(--s-16)}.aux .number{display:block;font-size:40px}.aux .label{display:block;font-size:24px;color:var(--CT4);margin-top:var(--s-12)}.fund-name{font-size:28px;color:var(--CT1);margin:var(--s-20) 0 0}.more-row{padding:0 var(--s-24) var(--s-16);display:flex;justify-content:flex-end}.text-button{font-size:26px;font-weight:500;color:var(--CT3);background:transparent;border:0;padding:var(--s-12);min-height:56px}.text-button:hover{color:var(--CF3)}.switch-row{padding-top:var(--s-24);display:flex;justify-content:flex-end}.outline-button{background:var(--CB1);color:var(--CN1);border:1px solid var(--CN1);border-radius:34px;min-height:68px;font-size:28px;font-weight:500;padding:0 var(--s-24);min-width:178px}.outline-button:active{background:var(--CN13)}
+.status-compare{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-24);padding:var(--s-24) 0;text-align:center}.status-compare .label{display:block;font-size:24px;color:var(--CT4);margin-bottom:var(--s-12)}.status-compare strong{font-weight:500;font-size:36px}.status-compare .number{font-size:44px}.status-compare>div+div{border-left:1px solid var(--CL2)}.nav-placeholder{min-height:206px;background:var(--CB2);border:1px dashed var(--CL1);display:flex;align-items:center;justify-content:center;padding:var(--s-24);color:var(--CT4);font-size:24px;text-align:center}.nav-stat{display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--s-20);gap:var(--s-16)}.nav-stat .number{font-size:40px}.nav-stat span{font-size:24px;color:var(--CT4)}.percentile{display:flex;align-items:baseline;gap:var(--s-16);padding:var(--s-24) 0}.percentile .number{font-size:44px;color:var(--CT1)}.percentile small{font-size:24px;color:var(--CT3)}.percentile-scale{height:10px;position:relative;background:var(--CL2);border-radius:var(--r-pill);margin:var(--s-16) 0}.percentile-scale:after{content:'';position:absolute;left:28%;top:-8px;width:5px;height:26px;background:var(--CT1)}.scale-labels{display:flex;justify-content:space-between;font-size:20px;color:var(--CT4)}.board-head{display:grid;grid-template-columns:128px 1fr 1fr;gap:var(--s-12);align-items:center}.board-name{font-size:28px;color:var(--CS1);border:1px solid var(--CL2);border-radius:var(--r-16);padding:var(--s-16) var(--s-8);text-align:center}.board-metric{text-align:center}.board-metric .number{font-size:36px;display:block}.board-metric small{display:block;font-size:20px;color:var(--CT4);line-height:1.5;margin-top:var(--s-12)}.board-reason{border-top:1px solid var(--CL2);padding-top:var(--s-20)}.fund-row{border-top:1px solid var(--CL2)}.fund-row .name{font-size:28px;display:block;margin-bottom:var(--s-16)}.fund-metrics{display:flex;gap:var(--s-24);font-size:24px;color:var(--CT4)}.fund-metrics .number{font-size:28px;margin-right:var(--s-8)}.fallback-title{font-size:32px;font-weight:500;margin-bottom:var(--s-24)}.product-hero{display:grid;grid-template-columns:1.3fr 1fr;gap:var(--s-24);align-items:center}.media-placeholder{border:1px dashed var(--CL1);background:var(--CB2);min-height:180px;display:flex;align-items:center;justify-content:center;color:var(--CT4);font-size:24px;text-align:center;padding:var(--s-16)}.topic-media{min-height:230px;margin-bottom:var(--s-20)}.product-hero p{font-size:26px}.product-info{border-top:1px solid var(--CL2)}.product-info .aux{margin-top:var(--s-16);padding-top:var(--s-16);border:0}.ranking-head{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:var(--s-12);font-size:24px;color:var(--CT4);padding:var(--s-20) 0}.ranking-row{border-top:1px solid var(--CL2);color:var(--CT3)}.feedback{padding:var(--s-20);font-size:24px;line-height:1.6;display:flex;align-items:center;justify-content:space-between;gap:var(--s-16);color:var(--CT3);border-bottom:1px solid var(--CL2);margin-bottom:var(--s-20)}.loading-block,.failure-block{background:var(--CB1);border-radius:var(--r-32);padding:var(--s-40) var(--s-24);text-align:center;font-size:28px;color:var(--CT3)}.failure-block .outline-button{margin-top:var(--s-24)}.skeleton{height:24px;border-radius:var(--r-8);background:var(--CB2);margin:var(--s-20) 0}.skeleton:nth-child(2){width:70%}.skeleton:nth-child(3){height:160px}.skeleton:nth-child(4){width:45%}
+.preview-caption{max-width:570px;margin:20px auto 0;font-size:13px;color:var(--CT3);line-height:1.8}.preview-caption p{margin:8px 0}.preview-caption strong{font-weight:500;color:var(--CT1)}.fixture-tag{color:var(--CT4);font-size:12px}.fixture-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.tool-button{padding:8px 12px;background:var(--CB1);border:1px solid var(--CL1);border-radius:5px;font-size:12px;color:var(--CT3)}.tool-button:hover{border-color:var(--CF3);color:var(--CF3)}.interaction-output{border-top:1px solid var(--CL1);padding-top:14px;min-height:42px;color:var(--CT4);font-size:12px;margin-top:16px}.details{border-top:1px solid var(--CL1);margin-top:18px;padding-top:14px;font-size:12px;color:var(--CT4)}.details summary{cursor:pointer}.details p{margin:8px 0}.status-select{display:none}.standalone .work-header,.standalone .control-panel,.standalone .preview-tools,.standalone .preview-caption{display:none}.standalone .workspace{display:block;min-height:0}.standalone .preview-space{padding:0;background:var(--CB2)}.standalone .phone-stage{border:0;border-radius:0;width:100%;max-width:750px}.standalone .preview-column{max-width:none}
+@media(max-width:850px){.work-header{padding:20px;align-items:flex-start}.work-header h1{font-size:20px}.workspace{display:block}.control-panel{border-right:0;border-bottom:1px solid var(--CL2);padding:12px 20px}.control-panel h2,.state-navigation{display:none}.status-select{display:block;width:100%;padding:10px;border:1px solid var(--CL1);border-radius:6px;background:var(--CB1);color:var(--CT1);font-size:14px}.preview-space{padding:20px 12px}.preview-tools{padding:0 6px}.preview-tools h2{font-size:14px}.preview-tools p{font-size:11px}.width-control{display:none}.preview-caption{padding:0 8px}.badge{font-size:11px}.work-header .sub{max-width:270px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+</style></head><body>
+<header class="work-header"><div><p class="eyebrow">理财首页 · 结构预览</p><h1>场景服务卡</h1><p class="sub">先看内容与交互，再细化视觉。页面内名称、数值与示例文案仅用于演示。</p></div><span class="badge">结构版 · 待评审</span></header>
+<div class="workspace"><aside class="control-panel" aria-label="演示状态"><h2>选择一个场景查看</h2><select class="status-select" aria-label="选择演示状态" id="stateSelect"></select><nav id="stateNavigation" class="state-navigation"></nav></aside>
+<section class="preview-space" aria-label="局部页面预览"><div class="preview-column"><div class="preview-tools"><div><h2 id="stateTitle"></h2><p id="positionLabel"></p></div><label class="width-control">页面宽度 <select id="widthSelect"><option value="390">390</option><option value="375">375</option><option value="430">430</option></select></label></div>
+<div class="phone-stage" id="phoneStage"><div class="phone shell" id="phone" data-level="1"><main><section class="gj-module context-block" id="gridContext"><strong>常用理财服务</strong><span>上方区域示意</span></section><section class="gj-module" id="sceneRegion" aria-label="场景服务内容"></section><section class="gj-module context-block context-follow" id="followingContext"><span>后续首页内容</span><span>相邻区域示意</span></section></main></div></div>
+<div class="preview-caption"><p id="stateDescription"></p><p id="selectedResult"></p><p class="fixture-tag" id="pendingNote"></p><div class="fixture-actions" id="fixtureActions"></div><div class="interaction-output" id="interactionOutput" role="status" aria-live="polite">可在卡片中点击，核对对应的现有 App 页面去向。</div><details class="details"><summary>演示范围与待细化项</summary><p>只验证场景卡的内容层次、既定切换、原点击区域和必要状态。灰色上下区域用于观察位置变化，不实现其他模块。</p><p>小宝头像后的文案与当前卡片联动，入口点击、问答上下文及入口级加载失败表现尚未确定。失败提示在卡片区域展示。</p><p>图表精确画法、逐字文案、申购及限额的生效日期字段、辅助收益缺失规则、最近一次自选日期的数据能力仍待细化。净值曲线与运营图片采用内容占位，不编造走势。</p><p>补位使用预先确定的结果样例；下方结果在页面外说明，不重建精选列表或推荐算法。榜单仅查看条件结构，不假设其常规推荐资格已确认。</p><p><a href="../../../docs/wealth-feed-platform-prd.html" target="_blank" rel="noopener">查看正式需求</a> · 结构版 v0.2 / 来源 v1.61</p></details></div></div></section></div>
+<script>
+'use strict';
+// Static fixtures only: not production qualification, ranking, refresh or analytics.
+const avatar='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgwIiBoZWlnaHQ9IjE4MiIgdmlld0JveD0iMCAwIDE4MCAxODIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxtYXNrIGlkPSJtYXNrMF8xODk3Nl8xNTUiIHN0eWxlPSJtYXNrLXR5cGU6YWxwaGEiIG1hc2tVbml0cz0idXNlclNwYWNlT25Vc2UiIHg9IjIiIHk9IjIiIHdpZHRoPSIxNzYiIGhlaWdodD0iMTc2Ij4KPHBhdGggZD0iTTE2OC40NDIgNTEuNTIwNUMxNzcuNDEyIDY5LjgwODYgMTc5LjcxMiA5MC42NTYzIDE3NC45NDIgMTEwLjQ2QzE3MC4xNzIgMTMwLjI2MyAxNTguNjMzIDE0Ny43NzggMTQyLjMxOSAxNTkuOTc2QzEyNi4wMDYgMTcyLjE3NCAxMDUuOTQzIDE3OC4yODkgODUuNTk4OCAxNzcuMjY0QzY1LjI1NDggMTc2LjIzOSA0NS45MDgzIDE2OC4xMzggMzAuOTAzNiAxNTQuMzYyQzE1Ljg5ODggMTQwLjU4NSA2LjE3ODkyIDEyMS45OTkgMy40MjQwMyAxMDEuODE3QzAuNjY5MTQ4IDgxLjYzNDEgNS4wNTI0MyA2MS4xMjMxIDE1LjgxNjIgNDMuODI5NUMyNi41Nzk5IDI2LjUzNTggNDMuMDQ3NiAxMy41NDYzIDYyLjM3MjYgNy4xMDYzOUM4MS42OTc3IDAuNjY2NDg3IDEwMi42NjUgMS4xODA5MiAxMjEuNjUxIDguNTYwNzVMMTE3LjI2NyAxOS44NDEyQzExMi4xOTEgMzIuODk5MiA5Ny4wMjkxIDM4LjY0NDcgODMuMTUxNyA0MC41NjZDODAuMTMzOCA0MC45ODM4IDc3LjE0MzMgNDEuNjc5NiA3NC4yMTg2IDQyLjY1NDJDNjMuMTgwOSA0Ni4zMzI0IDUzLjc3NTEgNTMuNzUxNSA0Ny42MjczIDYzLjYyOUM0MS40Nzk0IDczLjUwNjUgMzguOTc1OSA4NS4yMjE2IDQwLjU0OTQgOTYuNzQ5MkM0Mi4xMjI4IDEwOC4yNzcgNDcuNjc0NSAxMTguODkyIDU2LjI0NDYgMTI2Ljc2MUM2NC44MTQ4IDEzNC42MjkgNzUuODY0OCAxMzkuMjU2IDg3LjQ4NDUgMTM5Ljg0MkM5OS4xMDQzIDE0MC40MjcgMTEwLjU2MyAxMzYuOTM1IDExOS44ODEgMTI5Ljk2OEMxMjkuMTk5IDEyMy4wMDEgMTM1Ljc5IDExMi45OTcgMTM4LjUxNCAxMDEuNjg2QzEzOS4yMzYgOTguNjg4NyAxMzkuNjc0IDk1LjY0OTggMTM5LjgzMyA5Mi42MDczQzE0MC41NjUgNzguNjE2NiAxNDQuOTk4IDYzLjAyMDIgMTU3LjU3NiA1Ni44NTA0TDE2OC40NDIgNTEuNTIwNVoiIGZpbGw9IndoaXRlIi8+CjwvbWFzaz4KPGcgbWFzaz0idXJsKCNtYXNrMF8xODk3Nl8xNTUpIj4KPGcgZmlsdGVyPSJ1cmwoI2ZpbHRlcjBfZl8xODk3Nl8xNTUpIj4KPGNpcmNsZSBjeD0iODkuOTk5IiBjeT0iOTAuMDAwMSIgcj0iOTAiIHRyYW5zZm9ybT0icm90YXRlKDkwIDg5Ljk5OSA5MC4wMDAxKSIgZmlsbD0idXJsKCNwYWludDBfbGluZWFyXzE4OTc2XzE1NSkiLz4KPC9nPgo8L2c+CjxnIGZpbHRlcj0idXJsKCNmaWx0ZXIxX2RpaV8xODk3Nl8xNTUpIj4KPHJlY3QgeD0iMzcuNzk5MiIgeT0iMzcuOCIgd2lkdGg9IjEwNC40IiBoZWlnaHQ9IjEwNC4zOTYiIHJ4PSIzOSIgZmlsbD0id2hpdGUiLz4KPC9nPgo8cGF0aCBkPSJNNzIuNTk4MSA3OC4zNjc3Qzc1LjgwMTIgNzguMzY3NyA3OC4zOTg2IDgwLjk2NDQgNzguMzk4OCA4NC4xNjc1Vjk1LjgxNEM3OC4zOTg4IDk5LjAxNzIgNzUuODAxMyAxMDEuNjE0IDcyLjU5ODEgMTAxLjYxNEM2OS4zOTUgMTAxLjYxNCA2Ni43OTgzIDk5LjAxNyA2Ni43OTgyIDk1LjgxNFY4NC4xNjc1QzY2Ljc5ODUgODAuOTY0NiA2OS4zOTUxIDc4LjM2NzkgNzIuNTk4MSA3OC4zNjc3Wk0xMDcuMzk5IDc4LjM2NzdDMTEwLjYwMiA3OC4zNjc3IDExMy4xOTkgODAuOTY0NCAxMTMuMiA4NC4xNjc1Vjk1LjgxNEMxMTMuMiA5OS4wMTcyIDExMC42MDIgMTAxLjYxNCAxMDcuMzk5IDEwMS42MTRDMTA0LjE5NiAxMDEuNjE0IDEwMS41OTkgOTkuMDE3IDEwMS41OTkgOTUuODE0Vjg0LjE2NzVDMTAxLjU5OSA4MC45NjQ2IDEwNC4xOTYgNzguMzY3OSAxMDcuMzk5IDc4LjM2NzdaIiBmaWxsPSJ1cmwoI3BhaW50MV9saW5lYXJfMTg5NzZfMTU1KSIvPgo8ZyBmaWx0ZXI9InVybCgjZmlsdGVyMl9kXzE4OTc2XzE1NSkiPgo8Y2lyY2xlIGN4PSIxMzguNzQ5IiBjeT0iMzYuNzQ5NiIgcj0iMjAuMjUiIGZpbGw9InVybCgjcGFpbnQyX3JhZGlhbF8xODk3Nl8xNTUpIi8+CjwvZz4KPGRlZnM+CjxmaWx0ZXIgaWQ9ImZpbHRlcjBfZl8xODk3Nl8xNTUiIHg9Ii0xNi41NTI3IiB5PSItMTYuNTUxNiIgd2lkdGg9IjIxMy4xMDMiIGhlaWdodD0iMjEzLjEwMyIgZmlsdGVyVW5pdHM9InVzZXJTcGFjZU9uVXNlIiBjb2xvci1pbnRlcnBvbGF0aW9uLWZpbHRlcnM9InNSR0IiPgo8ZmVGbG9vZCBmbG9vZC1vcGFjaXR5PSIwIiByZXN1bHQ9IkJhY2tncm91bmRJbWFnZUZpeCIvPgo8ZmVCbGVuZCBtb2RlPSJub3JtYWwiIGluPSJTb3VyY2VHcmFwaGljIiBpbjI9IkJhY2tncm91bmRJbWFnZUZpeCIgcmVzdWx0PSJzaGFwZSIvPgo8ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSI4LjI3NTg2IiByZXN1bHQ9ImVmZmVjdDFfZm9yZWdyb3VuZEJsdXJfMTg5NzZfMTU1Ii8+CjwvZmlsdGVyPgo8ZmlsdGVyIGlkPSJmaWx0ZXIxX2RpaV8xODk3Nl8xNTUiIHg9IjI0Ljc5OTIiIHk9IjMxLjI3NSIgd2lkdGg9IjEzMC40IiBoZWlnaHQ9IjE0OS45MjEiIGZpbHRlclVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSJzUkdCIj4KPGZlRmxvb2QgZmxvb2Qtb3BhY2l0eT0iMCIgcmVzdWx0PSJCYWNrZ3JvdW5kSW1hZ2VGaXgiLz4KPGZlQ29sb3JNYXRyaXggaW49IlNvdXJjZUFscGhhIiB0eXBlPSJtYXRyaXgiIHZhbHVlcz0iMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMTI3IDAiIHJlc3VsdD0iaGFyZEFscGhhIi8+CjxmZU1vcnBob2xvZ3kgcmFkaXVzPSIxMyIgb3BlcmF0b3I9ImVyb2RlIiBpbj0iU291cmNlQWxwaGEiIHJlc3VsdD0iZWZmZWN0MV9kcm9wU2hhZG93XzE4OTc2XzE1NSIvPgo8ZmVPZmZzZXQgZHk9IjI2Ii8+CjxmZUdhdXNzaWFuQmx1ciBzdGREZXZpYXRpb249IjEzIi8+CjxmZUNvbXBvc2l0ZSBpbjI9ImhhcmRBbHBoYSIgb3BlcmF0b3I9Im91dCIvPgo8ZmVDb2xvck1hdHJpeCB0eXBlPSJtYXRyaXgiIHZhbHVlcz0iMCAwIDAgMCAwLjU3MDU3MyAwIDAgMCAwIDAuNzEzNzEyIDAgMCAwIDAgMSAwIDAgMCAxIDAiLz4KPGZlQmxlbmQgbW9kZT0ibm9ybWFsIiBpbjI9IkJhY2tncm91bmRJbWFnZUZpeCIgcmVzdWx0PSJlZmZlY3QxX2Ryb3BTaGFkb3dfMTg5NzZfMTU1Ii8+CjxmZUJsZW5kIG1vZGU9Im5vcm1hbCIgaW49IlNvdXJjZUdyYXBoaWMiIGluMj0iZWZmZWN0MV9kcm9wU2hhZG93XzE4OTc2XzE1NSIgcmVzdWx0PSJzaGFwZSIvPgo8ZmVDb2xvck1hdHJpeCBpbj0iU291cmNlQWxwaGEiIHR5cGU9Im1hdHJpeCIgdmFsdWVzPSIwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAxMjcgMCIgcmVzdWx0PSJoYXJkQWxwaGEiLz4KPGZlTW9ycGhvbG9neSByYWRpdXM9IjYuNTI1IiBvcGVyYXRvcj0iZGlsYXRlIiBpbj0iU291cmNlQWxwaGEiIHJlc3VsdD0iZWZmZWN0Ml9pbm5lclNoYWRvd18xODk3Nl8xNTUiLz4KPGZlT2Zmc2V0IGR4PSItNi41MjUiIGR5PSItNi41MjUiLz4KPGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iMTMuMDUiLz4KPGZlQ29tcG9zaXRlIGluMj0iaGFyZEFscGhhIiBvcGVyYXRvcj0iYXJpdGhtZXRpYyIgazI9Ii0xIiBrMz0iMSIvPgo8ZmVDb2xvck1hdHJpeCB0eXBlPSJtYXRyaXgiIHZhbHVlcz0iMCAwIDAgMCAwLjM4MjUgMCAwIDAgMCAwLjUyMDI4OSAwIDAgMCAwIDAuODUgMCAwIDAgMC44IDAiLz4KPGZlQmxlbmQgbW9kZT0ibm9ybWFsIiBpbjI9InNoYXBlIiByZXN1bHQ9ImVmZmVjdDJfaW5uZXJTaGFkb3dfMTg5NzZfMTU1Ii8+CjxmZUNvbG9yTWF0cml4IGluPSJTb3VyY2VBbHBoYSIgdHlwZT0ibWF0cml4IiB2YWx1ZXM9IjAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDEyNyAwIiByZXN1bHQ9ImhhcmRBbHBoYSIvPgo8ZmVPZmZzZXQgZHg9Ii0zLjI2MjUiIGR5PSI2LjUyNSIvPgo8ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSIzLjI2MjUiLz4KPGZlQ29tcG9zaXRlIGluMj0iaGFyZEFscGhhIiBvcGVyYXRvcj0iYXJpdGhtZXRpYyIgazI9Ii0xIiBrMz0iMSIvPgo8ZmVDb2xvck1hdHJpeCB0eXBlPSJtYXRyaXgiIHZhbHVlcz0iMCAwIDAgMCAxIDAgMCAwIDAgMSAwIDAgMCAwIDEgMCAwIDAgMC44IDAiLz4KPGZlQmxlbmQgbW9kZT0ibm9ybWFsIiBpbjI9ImVmZmVjdDJfaW5uZXJTaGFkb3dfMTg5NzZfMTU1IiByZXN1bHQ9ImVmZmVjdDNfaW5uZXJTaGFkb3dfMTg5NzZfMTU1Ii8+CjwvZmlsdGVyPgo8ZmlsdGVyIGlkPSJmaWx0ZXIyX2RfMTg5NzZfMTU1IiB4PSIxMDYuNDc1IiB5PSIxNi40OTk2IiB3aWR0aD0iNjQuNTQ2OSIgaGVpZ2h0PSI3MS41MDc4IiBmaWx0ZXJVbml0cz0idXNlclNwYWNlT25Vc2UiIGNvbG9yLWludGVycG9sYXRpb24tZmlsdGVycz0ic1JHQiI+CjxmZUZsb29kIGZsb29kLW9wYWNpdHk9IjAiIHJlc3VsdD0iQmFja2dyb3VuZEltYWdlRml4Ii8+CjxmZUNvbG9yTWF0cml4IGluPSJTb3VyY2VBbHBoYSIgdHlwZT0ibWF0cml4IiB2YWx1ZXM9IjAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDEyNyAwIiByZXN1bHQ9ImhhcmRBbHBoYSIvPgo8ZmVNb3JwaG9sb2d5IHJhZGl1cz0iNi4zMjgxMyIgb3BlcmF0b3I9ImVyb2RlIiBpbj0iU291cmNlQWxwaGEiIHJlc3VsdD0iZWZmZWN0MV9kcm9wU2hhZG93XzE4OTc2XzE1NSIvPgo8ZmVPZmZzZXQgZHk9IjE4Ljk4NDQiLz4KPGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iOS4xNzU3OCIvPgo8ZmVDb21wb3NpdGUgaW4yPSJoYXJkQWxwaGEiIG9wZXJhdG9yPSJvdXQiLz4KPGZlQ29sb3JNYXRyaXggdHlwZT0ibWF0cml4IiB2YWx1ZXM9IjAgMCAwIDAgMSAwIDAgMCAwIDEgMCAwIDAgMCAxIDAgMCAwIDEgMCIvPgo8ZmVCbGVuZCBtb2RlPSJtdWx0aXBseSIgaW4yPSJCYWNrZ3JvdW5kSW1hZ2VGaXgiIHJlc3VsdD0iZWZmZWN0MV9kcm9wU2hhZG93XzE4OTc2XzE1NSIvPgo8ZmVCbGVuZCBtb2RlPSJub3JtYWwiIGluPSJTb3VyY2VHcmFwaGljIiBpbjI9ImVmZmVjdDFfZHJvcFNoYWRvd18xODk3Nl8xNTUiIHJlc3VsdD0ic2hhcGUiLz4KPC9maWx0ZXI+CjxsaW5lYXJHcmFkaWVudCBpZD0icGFpbnQwX2xpbmVhcl8xODk3Nl8xNTUiIHgxPSIxNDkuNjUiIHkxPSI0MS44NTg1IiB4Mj0iNzYuNTUwOCIgeTI9IjE3Mi4yMzkiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj4KPHN0b3Agc3RvcC1jb2xvcj0iI0IzQTBGRiIvPgo8c3RvcCBvZmZzZXQ9IjAuMzQ5MDA5IiBzdG9wLWNvbG9yPSIjRkZERkZDIi8+CjxzdG9wIG9mZnNldD0iMC42NDU1MDUiIHN0b3AtY29sb3I9IiNDN0U1RkYiLz4KPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjN0NCNUZGIi8+CjwvbGluZWFyR3JhZGllbnQ+CjxsaW5lYXJHcmFkaWVudCBpZD0icGFpbnQxX2xpbmVhcl8xODk3Nl8xNTUiIHgxPSIxMDcuNCIgeTE9Ijc4LjM2NjgiIHgyPSIxMDcuNCIgeTI9IjEwMS42MTIiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj4KPHN0b3Agc3RvcC1jb2xvcj0iIzdCODc5RiIvPgo8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMwODIwNEUiLz4KPC9saW5lYXJHcmFkaWVudD4KPHJhZGlhbEdyYWRpZW50IGlkPSJwYWludDJfcmFkaWFsXzE4OTc2XzE1NSIgY3g9IjAiIGN5PSIwIiByPSIxIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgZ3JhZGllbnRUcmFuc2Zvcm09InRyYW5zbGF0ZSgxMzQuNjk5IDI4LjY0OTYpIHJvdGF0ZSg1Mi4zMTY0KSBzY2FsZSgyNC45MTc5KSI+CjxzdG9wIHN0b3AtY29sb3I9IiNGRkY4RjAiLz4KPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjRkZCRTg1Ii8+CjwvcmFkaWFsR3JhZGllbnQ+CjwvZGVmcz4KPC9zdmc+Cg==';
+const escapeHTML=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const cards={
+ held:{kind:'board',id:'scene-held',name:'持仓关联 · 1只基金',relation:'您持仓的',stock:'示例股票甲',signal:'关联概念近期有资金流入',board:'电池',count:1,reason:'相关产业链资金关注度提升。'},
+ watched:{kind:'board',id:'scene-watched',name:'关注关联 · 1只基金',relation:'您新关注的',stock:'示例股票乙',signal:'关联概念近期上涨',board:'通信',count:1,reason:'板块近期表现活跃，可关注相关基金。'},
+ browsed:{kind:'board',id:'scene-browsed',name:'浏览关联 · 无推荐理由',relation:'您近期多次浏览的',stock:'示例股票丙',signal:'关联概念近期上涨',board:'新能源',count:1,reason:''},
+ week:{kind:'performance',id:'scene-week',name:'近期表现不错 · 近1周',fund:'示例成长混合 A',period:'近1周',fundReturn:1.2,benchmark:.6,year:22.25,days:362},
+ month:{kind:'performance',id:'scene-month',name:'近期表现不错 · 近1月',fund:'示例成长混合 A',period:'近1月',fundReturn:6.2,benchmark:4.5,year:22.25,days:362},
+ quarter:{kind:'performance',id:'scene-quarter',name:'近期表现不错 · 近3月',fund:'示例成长混合 A',period:'近3月',fundReturn:12.8,benchmark:7.3,year:22.25,days:362},
+ negative:{kind:'performance',id:'scene-negative',name:'近期表现不错 · 负收益跑赢',fund:'示例成长混合 A',period:'近1周',fundReturn:-1,benchmark:-2,year:22.25,days:362},
+ reopen:{kind:'reopen',id:'scene-reopen',name:'开放申购',fund:'示例成长混合 A',year:22.25,days:362},
+ cap:{kind:'cap',id:'scene-cap',name:'提高单日申购限额',fund:'示例成长混合 A',before:'1,000',after:'10,000',year:22.25,days:362},
+ unlimited:{kind:'cap',id:'scene-unlimited',name:'提高限额 · 不限额',fund:'示例成长混合 A',before:'1,000',after:null,year:22.25,days:362},
+ high:{kind:'high',id:'scene-high',name:'净值创新高',fund:'示例成长混合 A',nav:'1.2345',date:'2026年9月16日',highPeriod:'近1年',year:22.25,days:362},
+ valuation:{kind:'valuation',id:'scene-valuation',name:'跟踪指数进入低估值区域',fund:'示例指数基金 A',index:'示例指数',percentile:28,year:2.25,days:362},
+ missing:{kind:'reopen',id:'scene-missing-date',name:'无法取得有效加入日期',fund:'示例成长混合 A',year:22.25,days:null},
+ readded:{kind:'reopen',id:'scene-readded',name:'删除重加 · 当天1天',fund:'示例成长混合 A',year:22.25,days:1},
+ long:{kind:'cap',id:'scene-long-title',name:'长名称与内容高度',fund:'示例先进制造与产业升级灵活配置混合型证券投资基金 A',before:'1,000',after:'10,000',year:22.25,days:362},
+ product:{kind:'product',id:'selected-product',name:'产品图文补位',fund:'示例成长混合 A',related:true},
+ productlink:{kind:'product',id:'selected-product-link',name:'产品图文 · 配置跳转地址',fund:'示例成长混合 A',related:true,configuredLink:true},
+ advisory:{kind:'product',id:'selected-advisory',name:'普通基金投顾 · 保留KYP',fund:'示例稳健配置投顾',kyp:true},
+ topic:{kind:'topic',id:'selected-topic',name:'专题补位'},
+ market:{kind:'market',id:'selected-market',name:'市场主线补位',board:'先进制造',count:2,reason:'关注产业升级与制造业发展。'},
+ hotspot:{kind:'hotspot',id:'selected-hotspot',name:'短期热点补位',board:'通信',count:2,reason:'板块近期表现活跃。'},
+ ranking:{kind:'ranking',id:'conditional-ranking',name:'榜单条件结构'}
+};
+const sceneKeys=['held','week','reopen','cap','high','valuation','watched','browsed'];
+const states=[];
+function state(key,label,group,cardKeys,extra={}){states.push({key,label,group,cardKeys,...extra})}
+state('scenes','多卡连续浏览','场景服务卡',sceneKeys,{description:'已确定的8张场景卡。左右横滑或点击“下一个”；文案与内容一起变化，末张继续回到首张。'});
+for(const k of ['held','watched','browsed','week','month','quarter','negative','reopen','cap','unlimited','high','valuation'])state(k,cards[k].name,'场景服务卡',[k]);
+for(const k of ['product','productlink','advisory','topic','market','hotspot'])state('fallback-'+k,cards[k].name,'精选补位卡',[k],{fallback:true});
+state('fallback-only','补位后下方精选为空','精选补位卡',['product'],{fallback:true,selectedEmpty:true});
+state('ranking-conditional','榜单 · 条件结构','精选补位卡',['ranking'],{conditional:true,description:'仅核对榜单卡的结构承载。推荐方式尚未确认，不把此例计为已可补位结果。'});
+state('loading','首次加载','加载与结果状态',[],{status:'loading'});
+state('refreshing','刷新中 · 保留旧内容','加载与结果状态',sceneKeys,{status:'refreshing',initialIndex:3});
+state('error-old','失败 · 有有效旧内容','加载与结果状态',sceneKeys,{status:'error-old',initialIndex:3});
+state('error-new','失败 · 无可保留旧内容','加载与结果状态',[],{status:'error-new'});
+state('empty','成功 · 场景与补位均为空','加载与结果状态',[],{status:'empty'});
+state('fallback-refreshing','补位共同更新中','加载与结果状态',['market'],{fallback:true,status:'refreshing'});
+state('fallback-error','补位共同更新失败','加载与结果状态',['market'],{fallback:true,status:'error-old'});
+state('restoration','场景恢复 · 等待下次获取','加载与结果状态',['product'],{fallback:true,status:'restoration',description:'当前仍在阅读补位卡。模拟场景恢复后，只有点击下方“模拟下一次获取成功”才整体更新结果。'});
+for(const k of ['missing','readded','long'])state(k,cards[k].name,'字段与内容边界',[k]);
+const SOURCE_ANCHORS=['theme-display','watchlist-display','watchlist-common-info','service-card-switching','selected-fallback-rule','fallback-joint-update','empty-error-rule'];
+let currentState,index=0,suppressClickUntil=0,retryPending=false,retryTimer;
+const $=id=>document.getElementById(id);
+const formatReturn=v=>(v>0?'+':'')+v.toFixed(2)+'%';
+function num(v,cls=''){return '<span class="number '+cls+'">'+escapeHTML(v)+'</span>'}
+function aux(c){return '<div class="aux" data-aux="watchlist"><div>'+num(formatReturn(c.year),c.year>0?'rise':c.year<0?'fall':'neutral')+'<span class="label">近1年收益率</span></div><div>'+num(c.days===null?'—':c.days)+'<span class="label">已加入自选天数</span></div></div>'}
+function targetAttrs(kind,name){return 'data-target="'+escapeHTML(kind)+'" data-name="'+escapeHTML(name)+'"'}
+function titleCopy(c){const f='<em>'+escapeHTML(c.fund||'')+'</em>';switch(c.kind){case 'board':return escapeHTML(c.relation)+'<em>'+escapeHTML(c.stock)+'</em>，'+escapeHTML(c.signal);case 'performance':return '您自选的'+f+'，近期表现不错';case 'reopen':return '您自选的'+f+'，已恢复申购';case 'cap':return '您自选的'+f+'，单日申购限额提高了';case 'high':return '您自选的'+f+'，'+escapeHTML(c.date)+'复权净值创'+c.highPeriod+'新高';case 'valuation':return '您自选的'+f+'，跟踪指数进入低估值区域';case 'product':return '看看您关注的'+f;case 'topic':return '为您精选了一份投资专题';case 'market':return '一起看看近期市场主线';case 'hotspot':return '一起看看近期市场热点';default:return '一起看看基金榜单';}}
+function watchBody(c){let core='';if(c.kind==='performance'){const diff=(c.fundReturn-c.benchmark).toFixed(2),max=Math.max(Math.abs(c.fundReturn),Math.abs(c.benchmark));core='<div class="section-heading performance-head"><h3>'+c.period+'表现</h3><span class="outperform">跑赢基准 '+num(diff)+' 个百分点</span></div>';for(const [label,val,cls] of [['该基金',c.fundReturn,''],['业绩基准',c.benchmark,'benchmark']]){core+='<div class="return-row '+cls+(val<0?' negative':'')+'"><span class="muted">'+label+'</span><div class="bar-track"><div class="bar-fill" style="width:'+Math.abs(val)/max*100+'%"></div></div><span class="value number '+(val<0?'fall':'rise')+'">'+formatReturn(val)+'</span></div>'}}
+else if(c.kind==='reopen'){core='<div class="status-compare"><div><span class="label">调整前</span><strong class="muted">暂停申购</strong></div><div><span class="label">调整后</span><strong>开放申购</strong></div></div>'}
+else if(c.kind==='cap'){core='<h3>单日累计申购限额</h3><div class="status-compare"><div><span class="label">调整前</span>'+num(c.before,'muted')+' 元</div><div><span class="label">调整后</span>'+(c.after?num(c.after)+' 元':'<strong>不限额</strong>')+'</div></div>'}
+else if(c.kind==='high'){core='<h3>'+c.highPeriod+'复权净值走势</h3><div class="nav-stat"><span>最新已公布复权净值</span>'+num(c.nav)+'</div><div class="nav-placeholder" data-plot="pending">净值走势展示区域</div><p>'+c.date+' · 创'+c.highPeriod+'新高</p>'}
+else if(c.kind==='valuation'){core='<h3>跟踪指数估值</h3><p>'+c.index+' · PE-TTM近5年历史分位</p><div class="percentile">'+num(c.percentile+'%')+'<small>当前历史分位</small></div><div class="percentile-scale" aria-hidden="true"></div><div class="scale-labels"><span>0%</span><span>100%</span></div>'}
+return '<div class="body-panel"><div class="click-block" role="button" tabindex="0" '+targetAttrs('产品详情',c.fund)+'>'+core+'<div class="fund-name">'+escapeHTML(c.fund)+'</div>'+aux(c)+'</div><div class="more-row"><button class="text-button" '+targetAttrs('自选列表','自选基金')+'>更多</button></div></div>'}
+function boardBody(c){const isRelated=c.kind==='board',isMarket=c.kind==='market';const title=isRelated?'':(isMarket?'市场主线':'短期热点')+'｜'+c.board;const metric1=isRelated?'近3日累计涨跌幅':isMarket?'近10个交易日累计涨跌幅':'近5个交易日累计涨跌幅',metric2=isRelated?'近3日累计资金净流入':'当日实时涨跌幅';let html='<div class="body-panel"><button class="click-block" '+targetAttrs('板块详情',c.board)+'>'+(title?'<div class="fallback-title">'+title+'</div>':'')+'<div class="board-head"><span class="board-name">'+c.board+'</span><span class="board-metric">'+num('+5.25%','rise')+'<small>'+metric1+'</small></span><span class="board-metric">'+num(isRelated?'35.21亿元':'+1.25%',isRelated?'':'rise')+'<small>'+metric2+'</small></span></div>'+(c.reason?'<p class="board-reason">'+c.reason+'</p>':'')+'</button>';for(let i=0;i<c.count;i++){const fund=i?'示例产业升级混合 A':'示例成长混合 A';html+='<button class="click-block fund-row" '+targetAttrs('基金详情',fund)+'><span class="name">'+fund+'</span><div class="fund-metrics"><span>'+num(i?'6.20%':'8.50%')+'持仓占比</span><span>'+num(i?'+18.10%':'+22.25%','rise')+'近1年</span></div></button>'}return html+'</div>'}
+function fallbackBody(c){
+ if(c.kind==='market'||c.kind==='hotspot')return boardBody(c);
+ if(c.kind==='product')return '<div class="body-panel"><button class="click-block" '+targetAttrs(c.configuredLink?'原配置跳转地址':'产品详情',c.fund)+'><h3>关注长期成长机会</h3><div class="product-hero"><div><p>聚焦产业升级</p><p>了解产品的投资方向</p></div><div class="media-placeholder">原卡图片区域</div></div><div class="product-info" style="margin-top:var(--s-24);padding-top:var(--s-20)"><span class="fund-name">'+c.fund+'</span>'+(c.kyp?'<p data-kyp="true">原产品 KYP 内容</p>':'')+'<div class="aux"><div>'+num('+22.25%','rise')+'<span class="label">近1年收益率</span></div><div>'+num('8.20%')+'<span class="label">近1年最大回撤</span></div></div></div></button></div>';
+ if(c.kind==='topic')return '<button class="click-block body-panel" '+targetAttrs('原专题落地页','示例投资专题')+'><h3>从产业变化中寻找投资线索</h3><div class="product-hero"><div><p>了解产业发展脉络</p><p>关注相关投资方向</p></div><div class="media-placeholder">原专题图片区域</div></div></button>';
+ return '<div class="body-panel"><div class="click-block" style="cursor:default"><h3>所选榜单名称</h3><p>所选榜单说明</p><div class="ranking-head"><span>基金名称</span><span>该榜指标一</span><span>该榜指标二</span></div><div class="ranking-head ranking-row"><span>基金示例</span><span>指标值</span><span>指标值</span></div><p>实际内容沿用所选榜单</p></div><div class="more-row"><button class="text-button" '+targetAttrs('所选榜单页面','配置榜单')+'>查看完整榜单</button></div></div>';
+}
+function report(text){$('interactionOutput').textContent=text}
+function currentCard(){return cards[currentState.cardKeys[index]]}
+function showCard(){const c=currentCard();if(!c)return '';const copy=c.kind==='product'&&!c.related?'一起了解这款基金投顾产品':titleCopy(c);return '<div class="bubble-row"><img class="xiaobao" src="'+avatar+'" alt="小宝"><div class="bubble">'+copy+'</div></div>'+((c.kind==='board')?boardBody(c):['performance','reopen','cap','high','valuation'].includes(c.kind)?watchBody(c):fallbackBody(c))+(currentState.cardKeys.length>1?'<div class="switch-row"><button class="outline-button" id="nextCard">下一个</button></div>':'')}
+function render(){const s=currentState,c=currentCard();$('stateTitle').textContent=s.label;$('positionLabel').textContent=c?(s.cardKeys.length>1?'当前 '+(index+1)+' / '+s.cardKeys.length+' · '+c.name:'单张结构 · '+c.name):'首页局部 · 状态演示';$('stateDescription').innerHTML='<strong>本例：</strong>'+escapeHTML(s.description||(s.fallback?'场景查询成功且无可展示卡，当前已入选的常规精选卡补到上方；原内容和点击去向保留。':s.status==='empty'?'场景和补位均查询成功且没有内容，小宝文案与卡片整体隐藏；上下相邻区域自然衔接。':s.status==='loading'?'加载尚未完成，保留区域反馈，不当作成功无内容。':s.status==='error-new'?'当前身份没有可保留的旧内容。保留失败提示及重试，不显示上一身份内容。':s.status==='error-old'?'本例保留原列表第4张及阅读位置；刷新失败可重试，不重新选卡或清空内容。':s.status==='refreshing'?'更新尚未完成，保留原内容与位置，显示加载反馈。':'展示该场景完整内容，单卡隐藏切换控件。'));
+const result=s.conditional?'榜单尚未纳入已确认的可补位结果。':s.fallback?(s.selectedEmpty?'下方精选：移出同一卡后为空，区域及标题隐藏。':'下方精选结果记录：已移出 '+c.name+'，其余卡片保持原相对顺序，不补新卡。'):'此状态不重建下方精选列表。';$('selectedResult').textContent=result;
+let note='所有数值均为演示值；文案为结构拟稿，小宝入口点击尚未定义。';if(c?.kind==='high')note+=' 走势留作占位，数据点、坐标与高点标识细则待确认。';if(c?.kind==='valuation')note+=' 仅显示28%实际分位；位置线为结构示意，不划五档。';if(c?.kind==='performance')note+=' 比较条只表达数值关系；坐标及正负收益的最终画法待确认。';if(c?.kind==='cap'||c?.kind==='reopen')note+=' 生效日期字段暂未作为已确认字段展示。';$('pendingNote').textContent=note;
+const region=$('sceneRegion');region.hidden=s.status==='empty';region.setAttribute('aria-busy',String(retryPending||s.status==='loading'||s.status==='refreshing'));
+if(s.status==='loading')region.innerHTML='<div class="loading-block" role="status">正在加载推荐内容<div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div></div>';
+else if(s.status==='error-new')region.innerHTML='<div class="failure-block" role="status">'+(retryPending?'正在重新加载':'推荐内容暂时加载失败')+'<div><button class="outline-button retry" '+(retryPending?'disabled':'')+'>重试</button></div></div>';
+else if(s.status!=='empty'){let feedback='';if(s.status==='refreshing'||retryPending)feedback='<div class="feedback" role="status">正在更新推荐内容</div>';else if(s.status==='error-old')feedback='<div class="feedback" role="status"><span>刷新失败，请稍后重试</span><button class="text-button retry">重试</button></div>';region.innerHTML='<article class="scene-card" id="activeCard" data-card-id="'+c.id+'" data-card-kind="'+c.kind+'" tabindex="0" aria-label="'+escapeHTML(c.name)+'">'+feedback+showCard()+'</article>'}else region.innerHTML='';
+document.querySelectorAll('.state-btn').forEach(b=>b.setAttribute('aria-current',String(b.dataset.state===s.key)));$('stateSelect').value=s.key;
+let actions='';if(['loading','refreshing','restoration'].includes(s.status))actions+='<button class="tool-button" id="resolveDemo">模拟下一次获取成功</button>';if(s.status==='error-old'||s.status==='error-new')actions+='<button class="tool-button" id="retryFailDemo">模拟重试仍失败</button>';$('fixtureActions').innerHTML=actions;$('fixtureActions').hidden=!actions;
+}
+function selectState(key,updateURL=true){clearTimeout(retryTimer);retryPending=false;currentState=states.find(s=>s.key===key)||states[0];index=currentState.initialIndex||0;if(updateURL)history.replaceState(null,'','#'+currentState.key);render();report('可在卡片中点击，核对对应的现有 App 页面去向。')}
+function advance(delta){if(retryPending||currentState.cardKeys.length<2)return;const focusId=document.activeElement?.id;index=(index+delta+currentState.cardKeys.length)%currentState.cardKeys.length;render();if(focusId==='activeCard'||focusId==='nextCard')$(focusId)?.focus({preventScroll:true});report('已切换至 '+currentCard().name+'；点击去向未触发。')}
+function resolve(){const wasFallback=currentState.fallback;selectState('scenes');report(wasFallback?'已模拟共同获取成功：上方恢复场景卡，原补位卡符合条件时可回到下方精选。此处只展示结果，不执行共享选卡。':'已模拟获取成功，显示场景卡。')}
+function retry(fail=false){const previousKey=currentState.key;retryPending=true;render();report('演示重试中；保留当前有效旧内容。');retryTimer=setTimeout(()=>{retryPending=false;if(fail){render();report('已模拟重试仍失败，内容与位置保留。')}else if(previousKey==='error-new'){selectState('scenes');report('已模拟重试成功，展示场景卡。')}else{currentState={...currentState,status:undefined};render();report('已模拟重试成功；本例新旧内容相同，阅读位置保持。')}},700)}
+for(const group of [...new Set(states.map(s=>s.group))]){const heading=document.createElement('p');heading.className='group-title';heading.textContent=group;$('stateNavigation').append(heading);const optgroup=document.createElement('optgroup');optgroup.label=group;for(const s of states.filter(s=>s.group===group)){const b=document.createElement('button');b.className='state-btn';b.dataset.state=s.key;b.innerHTML='<span class="dot"></span>'+escapeHTML(s.label);b.addEventListener('click',()=>selectState(s.key));$('stateNavigation').append(b);const opt=document.createElement('option');opt.value=s.key;opt.textContent=s.label;optgroup.append(opt)}$('stateSelect').append(optgroup)}
+$('stateSelect').addEventListener('change',e=>selectState(e.target.value));
+$('sceneRegion').addEventListener('click',e=>{if(Date.now()<suppressClickUntil){e.preventDefault();e.stopPropagation();return}if(e.target.closest('#nextCard')){advance(1);return}if(e.target.closest('.retry')){retry();return}const target=e.target.closest('[data-target]');if(target)report('点击去向：'+target.dataset.target+' · '+target.dataset.name+'。对应现有 App 页面，本结构版不创建替代详情页。')});
+$('sceneRegion').addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();advance(e.key==='ArrowRight'?1:-1);return}if((e.key==='Enter'||e.key===' ')&&e.target.matches('[role=button]')){e.preventDefault();e.target.click()}});
+let down=null;$('sceneRegion').addEventListener('pointerdown',e=>{if(e.button!==0)return;down={x:e.clientX,y:e.clientY,id:e.pointerId}});window.addEventListener('pointerup',e=>{if(!down||down.id!==e.pointerId)return;const dx=e.clientX-down.x,dy=e.clientY-down.y;down=null;if(Math.abs(dx)>40&&Math.abs(dx)>Math.abs(dy)*1.3){suppressClickUntil=Date.now()+400;advance(dx<0?1:-1)}});window.addEventListener('pointercancel',()=>down=null);
+$('fixtureActions').addEventListener('click',e=>{const id=e.target.id;if(id==='resolveDemo')resolve();if(id==='retryFailDemo')retry(true);});
+function fit(){const host=$('phoneStage');let width=+ $('widthSelect').value;if(document.body.classList.contains('standalone'))width=Math.min(innerWidth,750);else width=Math.min(width,document.querySelector('.preview-column').clientWidth);host.style.width=width+'px';$('phone').style.zoom=(width-(document.body.classList.contains('standalone')?0:2))/750;}
+if(new URLSearchParams(location.search).get('view')==='module')document.body.classList.add('standalone');$('widthSelect').addEventListener('change',fit);window.addEventListener('resize',fit);window.addEventListener('hashchange',()=>selectState(location.hash.slice(1),false));selectState(location.hash.slice(1)||'scenes',false);fit();
+window.M02C_PREVIEW=Object.freeze({states:states.map(s=>({key:s.key,label:s.label,group:s.group,cardKeys:s.cardKeys,status:s.status||'normal',fallback:!!s.fallback,conditional:!!s.conditional})),sourceVersion:'v1.61',sourceAnchors:SOURCE_ANCHORS});
+</script>
+
+<!-- M02C review bridge:start -->
+<script id="prototype-annotations-data" type="application/json">{
+  "version": 1,
+  "workflowMode": "review-center-readonly",
+  "project": {
+    "id": "wealth-home-m02c",
+    "name": "M02-C 动态场景服务卡",
+    "source": "local"
+  },
+  "source": {
+    "path": "source-document:wealth-feed-platform-prd.html",
+    "version": "v1.61",
+    "sha256": "79C3E8C038E7FB90E2B85F694B4927AEC35262BAEFFE6EDB7247463C07608445"
+  },
+  "productProfile": {
+    "productName": "理财首页 V4",
+    "productType": "证券客户端",
+    "primaryUsers": [
+      "理财客户"
+    ],
+    "annotationMode": "standard",
+    "enabledAnnotationTypes": [
+      "P",
+      "C",
+      "A",
+      "S"
+    ]
+  },
+  "pages": [
+    {
+      "pageKey": "wealth-home-scenario-scenes",
+      "title": "多卡连续浏览",
+      "path": "index.html",
+      "route": "#scenes",
+      "stateId": "scenes",
+      "prototype": "index.html?view=module&review=1#scenes",
+      "annotationPolicy": "visible-semantic-regions"
+    },
+    {
+      "pageKey": "wealth-home-scenario-held",
+      "title": "持仓关联 · 1只基金",
+      "path": "index.html",
+      "route": "#held",
+      "stateId": "held",
+      "prototype": "index.html?view=module&review=1#held",
+      "annotationPolicy": "visible-semantic-regions"
+    },
+    {
+      "pageKey": "wealth-home-scenario-watched",
+      "title": "关注关联 · 1只基金",
+      "path": "index.html",
+      "route": "#watched",
+      "stateId": "watched",
+      "prototype": "index.html?view=module&review=1#watched",
+      "annotationPolicy": "visible-semantic-regions"
+    },
+    {
+      "pageKey": "wealth-home-scenario-browsed",
+      "title": "浏览关联 · 无推荐理由",
+      "path": "index.html",
+      "route": "#browsed",
+      "stateId": "browsed",
+      "prototype": "index.html?view=module&review=1#browsed",
+      "annotationPolicy": "visible-semantic-regions"
+    },
+    {
+      "pageKey": "wealth-home-scenario-week",
+      "title": "近期表现不错 · 近1周",
+      "path": "index.html",
+      "route": "#week",
+      "stateId": "week",
+      "prototype": "index.html?view=module&review=1#week",
+      "annotationPolicy": "visible-semantic-regions"
+    },
+    {
+      "pageKey": "wealth-home-scenario-month",
+      "title": "近期表现不错 · 近1月",
+      "path": "index.html",
+      "route": "#month",
+      "stateId": "month",
+      "prototype": "index.html?view=module&review=1#month",
+      "annotationPolicy": "visible-semantic-regions"
+    },
+    {
+      "pageKey": "wealth-home-scenario-quarter",
+      "title": "近期表现不错 · 近3月",
+      "path": "index.html",
+      "route": "#quarter",
+      "stateId": "quarter",
+      "prototype": "index.html?view=module&review=1#quarter",
+      "annotationPolicy": "visible-semantic-regions"
+    },
+    {
+      "pageKey": "wealth-home-scenario-negative",
+      "title": "近期表现不错 · 负收益跑赢",
+      "path": "index.html",
+      "route": "#negative",
+      "stateId": "negative",
+      "prototype": "index.html?view=module&review=1#negative",
+      "annotationPolicy": "visible-semantic-regions"
+    },
+    {
+      "pageKey": "wealth-home-scenario-reopen",
+      "title": "开放申购",
+      "path": "index.html",
+      "route": "#reopen",
+      "stateId": "reopen",
+      "prototype": "index.html?view=module&review=1#reopen",
+      "annotationPolicy": "visible-semantic-regions"
+    },
+    {
+      "pageKey": "wealth-home-scenario-cap",
+      "title": "提高单日申购限额",
+      "path": "index.html",
+      "route": "#cap",
+      "stateId": "cap",
+      "prototype": "index.html?view=module&review=1#cap",
+      "annotationPolicy": "visible-semantic-regions"
+    },
+    {
+      "pageKey": "wealth-home-scenario-unlimited",
+      "title": "提高限额 · 不限额",
+      "path": "index.html",
+      "route": "#unlimited",
+      "stateId": "unlimited",
+      "prototype": "index.html?view=module&review=1#unlimited",
+      "annotationPolicy": "visible-semantic-regions"
+    },
+    {
+      "pageKey": "wealth-home-scenario-high",
+      "title": "净值创新高",
+      "path": "index.html",
+      "route": "#high",
+      "stateId": "high",
+      "prototype": "index.html?view=module&review=1#high",
+      "annotationPolicy": "visible-semantic-regions"
+    },
+    {
+      "pageKey": "wealth-home-scenario-valuation",
+      "title": "跟踪指数进入低估值区域",
+      "path": "index.html",
+      "route": "#valuation",
+      "stateId": "valuation",
+      "prototype": "index.html?view=module&review=1#valuation",
+      "annotationPolicy": "visible-semantic-regions"
+    },
+    {
+      "pageKey": "wealth-home-scenario-fallback-product",
+      "title": "产品图文补位",
+      "path": "index.html",
+      "route": "#fallback-product",
+      "stateId": "fallback-product",
+      "prototype": "index.html?view=module&review=1#fallback-product",
+      "annotationPolicy": "visible-semantic-regions"
+    },
+    {
+      "pageKey": "wealth-home-scenario-fallback-productlink",
+      "title": "产品图文 · 配置跳转地址",
+      "path": "index.html",
+      "route": "#fallback-productlink",
+      "stateId": "fallback-productlink",
+      "prototype": "index.html?view=module&review=1#fallback-productlink",
+      "annotationPolicy": "visible-semantic-regions"
+    },
+    {
+      "pageKey": "wealth-home-scenario-fallback-advisory",
+      "title": "普通基金投顾 · 保留KYP",
+      "path": "index.html",
+      "route": "#fallback-advisory",
+      "stateId": "fallback-advisory",
+      "prototype": "index.html?view=module&review=1#fallback-advisory",
+      "annotationPolicy": "visible-semantic-regions"
+    },
+    {
+      "pageKey": "wealth-home-scenario-fallback-topic",
+      "title": "专题补位",
+      "path": "index.html",
+      "route": "#fallback-topic",
+      "stateId": "fallback-topic",
+      "prototype": "index.html?view=module&review=1#fallback-topic",
+      "annotationPolicy": "visible-semantic-regions"
+    },
+    {
+      "pageKey": "wealth-home-scenario-fallback-market",
+      "title": "市场主线补位",
+      "path": "index.html",
+      "route": "#fallback-market",
+      "stateId": "fallback-market",
+      "prototype": "index.html?view=module&review=1#fallback-market",
+      "annotationPolicy": "visible-semantic-regions"
+    },
+    {
+      "pageKey": "wealth-home-scenario-fallback-hotspot",
+      "title": "短期热点补位",
+      "path": "index.html",
+      "route": "#fallback-hotspot",
+      "stateId": "fallback-hotspot",
+      "prototype": "index.html?view=module&review=1#fallback-hotspot",
+      "annotationPolicy": "visible-semantic-regions"
+    },
+    {
+      "pageKey": "wealth-home-scenario-fallback-only",
+      "title": "补位后下方精选为空",
+      "path": "index.html",
+      "route": "#fallback-only",
+      "stateId": "fallback-only",
+      "prototype": "index.html?view=module&review=1#fallback-only",
+      "annotationPolicy": "visible-semantic-regions"
+    },
+    {
+      "pageKey": "wealth-home-scenario-ranking-conditional",
+      "title": "榜单 · 条件结构",
+      "path": "index.html",
+      "route": "#ranking-conditional",
+      "stateId": "ranking-conditional",
+      "prototype": "index.html?view=module&review=1#ranking-conditional",
+      "annotationPolicy": "visible-semantic-regions"
+    },
+    {
+      "pageKey": "wealth-home-scenario-loading",
+      "title": "首次加载",
+      "path": "index.html",
+      "route": "#loading",
+      "stateId": "loading",
+      "prototype": "index.html?view=module&review=1#loading",
+      "annotationPolicy": "visible-semantic-regions"
+    },
+    {
+      "pageKey": "wealth-home-scenario-refreshing",
+      "title": "刷新中 · 保留旧内容",
+      "path": "index.html",
+      "route": "#refreshing",
+      "stateId": "refreshing",
+      "prototype": "index.html?view=module&review=1#refreshing",
+      "annotationPolicy": "visible-semantic-regions"
+    },
+    {
+      "pageKey": "wealth-home-scenario-error-old",
+      "title": "失败 · 有有效旧内容",
+      "path": "index.html",
+      "route": "#error-old",
+      "stateId": "error-old",
+      "prototype": "index.html?view=module&review=1#error-old",
+      "annotationPolicy": "visible-semantic-regions"
+    },
+    {
+      "pageKey": "wealth-home-scenario-error-new",
+      "title": "失败 · 无可保留旧内容",
+      "path": "index.html",
+      "route": "#error-new",
+      "stateId": "error-new",
+      "prototype": "index.html?view=module&review=1#error-new",
+      "annotationPolicy": "visible-semantic-regions"
+    },
+    {
+      "pageKey": "wealth-home-scenario-empty",
+      "title": "成功 · 场景与补位均为空",
+      "path": "index.html",
+      "route": "#empty",
+      "stateId": "empty",
+      "prototype": "index.html?view=module&review=1#empty",
+      "annotationPolicy": "none-hidden-region"
+    },
+    {
+      "pageKey": "wealth-home-scenario-fallback-refreshing",
+      "title": "补位共同更新中",
+      "path": "index.html",
+      "route": "#fallback-refreshing",
+      "stateId": "fallback-refreshing",
+      "prototype": "index.html?view=module&review=1#fallback-refreshing",
+      "annotationPolicy": "visible-semantic-regions"
+    },
+    {
+      "pageKey": "wealth-home-scenario-fallback-error",
+      "title": "补位共同更新失败",
+      "path": "index.html",
+      "route": "#fallback-error",
+      "stateId": "fallback-error",
+      "prototype": "index.html?view=module&review=1#fallback-error",
+      "annotationPolicy": "visible-semantic-regions"
+    },
+    {
+      "pageKey": "wealth-home-scenario-restoration",
+      "title": "场景恢复 · 等待下次获取",
+      "path": "index.html",
+      "route": "#restoration",
+      "stateId": "restoration",
+      "prototype": "index.html?view=module&review=1#restoration",
+      "annotationPolicy": "visible-semantic-regions"
+    },
+    {
+      "pageKey": "wealth-home-scenario-missing",
+      "title": "无法取得有效加入日期",
+      "path": "index.html",
+      "route": "#missing",
+      "stateId": "missing",
+      "prototype": "index.html?view=module&review=1#missing",
+      "annotationPolicy": "visible-semantic-regions"
+    },
+    {
+      "pageKey": "wealth-home-scenario-readded",
+      "title": "删除重加 · 当天1天",
+      "path": "index.html",
+      "route": "#readded",
+      "stateId": "readded",
+      "prototype": "index.html?view=module&review=1#readded",
+      "annotationPolicy": "visible-semantic-regions"
+    },
+    {
+      "pageKey": "wealth-home-scenario-long",
+      "title": "长名称与内容高度",
+      "path": "index.html",
+      "route": "#long",
+      "stateId": "long",
+      "prototype": "index.html?view=module&review=1#long",
+      "annotationPolicy": "visible-semantic-regions"
+    }
+  ],
+  "annotations": [
+    {
+      "id": "ANN-wealth-home-scenario-scenes-001",
+      "pageKey": "wealth-home-scenario-scenes",
+      "semanticSlot": "bubble",
+      "target": {
+        "selector": "#activeCard .bubble-row",
+        "strategy": "selector"
+      },
+      "title": "小宝头像后的场景文案",
+      "annotationType": "P",
+      "kind": "component",
+      "dimension": "页面概览",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 页面功能介绍\n\n场景服务卡结构评审，当前状态：多卡连续浏览。\n\n### 业务流程\n\n从统一评审中心选择当前状态。\n\n### 核心内容\n\n对照当前可见的场景内容或加载反馈。\n\n### 主要操作\n\n点击编号定位正式需求；卡片交互沿用候选原型。\n\n### 状态与异常\n\n成功无内容整体隐藏；加载与失败不视为空内容。\n\n### 待确认\n\n当前仅为结构候选，图表细节、逐字文案与数据能力未决项仍按 PRD 保留。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#service-card-switching"
+      },
+      "sourceAnchors": [
+        "service-card-switching",
+        "theme-display",
+        "watchlist-display"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-scenes-bubble",
+        "title": "小宝头像后的场景文案",
+        "requirementAnchor": "service-card-switching",
+        "visibleLanding": true,
+        "visibleText": "您"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-scenes-002",
+      "pageKey": "wealth-home-scenario-scenes",
+      "semanticSlot": "body-board",
+      "target": {
+        "selector": "#activeCard[data-card-kind=\"board\"] .body-panel",
+        "strategy": "selector"
+      },
+      "title": "客户相关板块与关联基金",
+      "annotationType": "C",
+      "kind": "component",
+      "dimension": "区域说明",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 业务含义\n\n客户相关板块与关联基金。正式要求见 PRD「theme-customer-rules」，只读编号用于对照当前可见区域。\n\n### 展示与交互\n\n沿用已确认结构与原点击区域；示例数值和文案不作为新增业务事实。\n\n### 状态与异常\n\n只在对应内容可见时展示编号；数据与异常处理以正式 PRD 为准。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#theme-customer-rules"
+      },
+      "sourceAnchors": [
+        "theme-customer-rules",
+        "theme-display",
+        "theme-content-rules"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-scenes-body-board",
+        "title": "客户相关板块与关联基金",
+        "requirementAnchor": "theme-customer-rules",
+        "visibleLanding": true,
+        "visibleText": "近3日累计涨跌幅"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-scenes-003",
+      "pageKey": "wealth-home-scenario-scenes",
+      "semanticSlot": "body-performance",
+      "target": {
+        "selector": "#activeCard[data-card-kind=\"performance\"] .body-panel",
+        "strategy": "selector"
+      },
+      "title": "实际命中周期的业绩比较",
+      "annotationType": "C",
+      "kind": "component",
+      "dimension": "区域说明",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 业务含义\n\n实际命中周期的业绩比较。正式要求见 PRD「watchlist-performance」，只读编号用于对照当前可见区域。\n\n### 展示与交互\n\n沿用已确认结构与原点击区域；示例数值和文案不作为新增业务事实。\n\n### 状态与异常\n\n只在对应内容可见时展示编号；数据与异常处理以正式 PRD 为准。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#watchlist-performance"
+      },
+      "sourceAnchors": [
+        "watchlist-performance",
+        "watchlist-display",
+        "watchlist-common-info"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-scenes-body-performance",
+        "title": "实际命中周期的业绩比较",
+        "requirementAnchor": "watchlist-performance",
+        "visibleLanding": true,
+        "visibleText": "业绩基准"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-scenes-004",
+      "pageKey": "wealth-home-scenario-scenes",
+      "semanticSlot": "body-reopen",
+      "target": {
+        "selector": "#activeCard[data-card-kind=\"reopen\"] .body-panel",
+        "strategy": "selector"
+      },
+      "title": "恢复申购与自选辅助信息",
+      "annotationType": "C",
+      "kind": "component",
+      "dimension": "区域说明",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 业务含义\n\n恢复申购与自选辅助信息。正式要求见 PRD「watchlist-subscription」，只读编号用于对照当前可见区域。\n\n### 展示与交互\n\n沿用已确认结构与原点击区域；示例数值和文案不作为新增业务事实。\n\n### 状态与异常\n\n只在对应内容可见时展示编号；数据与异常处理以正式 PRD 为准。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#watchlist-subscription"
+      },
+      "sourceAnchors": [
+        "watchlist-subscription",
+        "watchlist-display",
+        "watchlist-common-info"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-scenes-body-reopen",
+        "title": "恢复申购与自选辅助信息",
+        "requirementAnchor": "watchlist-subscription",
+        "visibleLanding": true,
+        "visibleText": "开放申购"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-scenes-005",
+      "pageKey": "wealth-home-scenario-scenes",
+      "semanticSlot": "body-cap",
+      "target": {
+        "selector": "#activeCard[data-card-kind=\"cap\"] .body-panel",
+        "strategy": "selector"
+      },
+      "title": "单日累计申购限额与自选辅助信息",
+      "annotationType": "C",
+      "kind": "component",
+      "dimension": "区域说明",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 业务含义\n\n单日累计申购限额与自选辅助信息。正式要求见 PRD「watchlist-limit」，只读编号用于对照当前可见区域。\n\n### 展示与交互\n\n沿用已确认结构与原点击区域；示例数值和文案不作为新增业务事实。\n\n### 状态与异常\n\n只在对应内容可见时展示编号；数据与异常处理以正式 PRD 为准。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#watchlist-limit"
+      },
+      "sourceAnchors": [
+        "watchlist-limit",
+        "watchlist-display",
+        "watchlist-common-info"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-scenes-body-cap",
+        "title": "单日累计申购限额与自选辅助信息",
+        "requirementAnchor": "watchlist-limit",
+        "visibleLanding": true,
+        "visibleText": "单日累计申购限额"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-scenes-006",
+      "pageKey": "wealth-home-scenario-scenes",
+      "semanticSlot": "body-high",
+      "target": {
+        "selector": "#activeCard[data-card-kind=\"high\"] .body-panel",
+        "strategy": "selector"
+      },
+      "title": "复权净值新高与自选辅助信息",
+      "annotationType": "C",
+      "kind": "component",
+      "dimension": "区域说明",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 业务含义\n\n复权净值新高与自选辅助信息。正式要求见 PRD「watchlist-new-high」，只读编号用于对照当前可见区域。\n\n### 展示与交互\n\n沿用已确认结构与原点击区域；示例数值和文案不作为新增业务事实。\n\n### 状态与异常\n\n只在对应内容可见时展示编号；数据与异常处理以正式 PRD 为准。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#watchlist-new-high"
+      },
+      "sourceAnchors": [
+        "watchlist-new-high",
+        "watchlist-display",
+        "watchlist-common-info"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-scenes-body-high",
+        "title": "复权净值新高与自选辅助信息",
+        "requirementAnchor": "watchlist-new-high",
+        "visibleLanding": true,
+        "visibleText": "复权净值"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-scenes-007",
+      "pageKey": "wealth-home-scenario-scenes",
+      "semanticSlot": "body-valuation",
+      "target": {
+        "selector": "#activeCard[data-card-kind=\"valuation\"] .body-panel",
+        "strategy": "selector"
+      },
+      "title": "实际估值分位与自选辅助信息",
+      "annotationType": "C",
+      "kind": "component",
+      "dimension": "区域说明",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 业务含义\n\n实际估值分位与自选辅助信息。正式要求见 PRD「watchlist-valuation」，只读编号用于对照当前可见区域。\n\n### 展示与交互\n\n沿用已确认结构与原点击区域；示例数值和文案不作为新增业务事实。\n\n### 状态与异常\n\n只在对应内容可见时展示编号；数据与异常处理以正式 PRD 为准。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#watchlist-valuation"
+      },
+      "sourceAnchors": [
+        "watchlist-valuation",
+        "watchlist-display",
+        "watchlist-common-info"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-scenes-body-valuation",
+        "title": "实际估值分位与自选辅助信息",
+        "requirementAnchor": "watchlist-valuation",
+        "visibleLanding": true,
+        "visibleText": "当前历史分位"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-scenes-008",
+      "pageKey": "wealth-home-scenario-scenes",
+      "semanticSlot": "switch",
+      "target": {
+        "selector": "#nextCard",
+        "strategy": "selector"
+      },
+      "title": "多卡手动切换",
+      "annotationType": "A",
+      "kind": "interaction",
+      "dimension": "区域说明",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 业务含义\n\n多卡手动切换。正式要求见 PRD「service-card-switching」，只读编号用于对照当前可见区域。\n\n### 展示与交互\n\n沿用已确认结构与原点击区域；示例数值和文案不作为新增业务事实。\n\n### 状态与异常\n\n只在对应内容可见时展示编号；数据与异常处理以正式 PRD 为准。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#service-card-switching"
+      },
+      "sourceAnchors": [
+        "service-card-switching"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-scenes-switch",
+        "title": "多卡手动切换",
+        "requirementAnchor": "service-card-switching",
+        "visibleLanding": true,
+        "visibleText": "下一个"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-held-001",
+      "pageKey": "wealth-home-scenario-held",
+      "semanticSlot": "bubble",
+      "target": {
+        "selector": "#activeCard .bubble-row",
+        "strategy": "selector"
+      },
+      "title": "小宝头像后的场景文案",
+      "annotationType": "P",
+      "kind": "component",
+      "dimension": "页面概览",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 页面功能介绍\n\n场景服务卡结构评审，当前状态：持仓关联 · 1只基金。\n\n### 业务流程\n\n从统一评审中心选择当前状态。\n\n### 核心内容\n\n对照当前可见的场景内容或加载反馈。\n\n### 主要操作\n\n点击编号定位正式需求；卡片交互沿用候选原型。\n\n### 状态与异常\n\n成功无内容整体隐藏；加载与失败不视为空内容。\n\n### 待确认\n\n当前仅为结构候选，图表细节、逐字文案与数据能力未决项仍按 PRD 保留。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#service-card-switching"
+      },
+      "sourceAnchors": [
+        "service-card-switching",
+        "theme-display",
+        "watchlist-display"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-held-bubble",
+        "title": "小宝头像后的场景文案",
+        "requirementAnchor": "service-card-switching",
+        "visibleLanding": true,
+        "visibleText": "您"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-held-002",
+      "pageKey": "wealth-home-scenario-held",
+      "semanticSlot": "body-board",
+      "target": {
+        "selector": "#activeCard[data-card-kind=\"board\"] .body-panel",
+        "strategy": "selector"
+      },
+      "title": "客户相关板块与关联基金",
+      "annotationType": "C",
+      "kind": "component",
+      "dimension": "区域说明",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 业务含义\n\n客户相关板块与关联基金。正式要求见 PRD「theme-customer-rules」，只读编号用于对照当前可见区域。\n\n### 展示与交互\n\n沿用已确认结构与原点击区域；示例数值和文案不作为新增业务事实。\n\n### 状态与异常\n\n只在对应内容可见时展示编号；数据与异常处理以正式 PRD 为准。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#theme-customer-rules"
+      },
+      "sourceAnchors": [
+        "theme-customer-rules",
+        "theme-display",
+        "theme-content-rules"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-held-body-board",
+        "title": "客户相关板块与关联基金",
+        "requirementAnchor": "theme-customer-rules",
+        "visibleLanding": true,
+        "visibleText": "近3日累计涨跌幅"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-watched-001",
+      "pageKey": "wealth-home-scenario-watched",
+      "semanticSlot": "bubble",
+      "target": {
+        "selector": "#activeCard .bubble-row",
+        "strategy": "selector"
+      },
+      "title": "小宝头像后的场景文案",
+      "annotationType": "P",
+      "kind": "component",
+      "dimension": "页面概览",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 页面功能介绍\n\n场景服务卡结构评审，当前状态：关注关联 · 1只基金。\n\n### 业务流程\n\n从统一评审中心选择当前状态。\n\n### 核心内容\n\n对照当前可见的场景内容或加载反馈。\n\n### 主要操作\n\n点击编号定位正式需求；卡片交互沿用候选原型。\n\n### 状态与异常\n\n成功无内容整体隐藏；加载与失败不视为空内容。\n\n### 待确认\n\n当前仅为结构候选，图表细节、逐字文案与数据能力未决项仍按 PRD 保留。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#service-card-switching"
+      },
+      "sourceAnchors": [
+        "service-card-switching",
+        "theme-display",
+        "watchlist-display"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-watched-bubble",
+        "title": "小宝头像后的场景文案",
+        "requirementAnchor": "service-card-switching",
+        "visibleLanding": true,
+        "visibleText": "您"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-watched-002",
+      "pageKey": "wealth-home-scenario-watched",
+      "semanticSlot": "body-board",
+      "target": {
+        "selector": "#activeCard[data-card-kind=\"board\"] .body-panel",
+        "strategy": "selector"
+      },
+      "title": "客户相关板块与关联基金",
+      "annotationType": "C",
+      "kind": "component",
+      "dimension": "区域说明",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 业务含义\n\n客户相关板块与关联基金。正式要求见 PRD「theme-customer-rules」，只读编号用于对照当前可见区域。\n\n### 展示与交互\n\n沿用已确认结构与原点击区域；示例数值和文案不作为新增业务事实。\n\n### 状态与异常\n\n只在对应内容可见时展示编号；数据与异常处理以正式 PRD 为准。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#theme-customer-rules"
+      },
+      "sourceAnchors": [
+        "theme-customer-rules",
+        "theme-display",
+        "theme-content-rules"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-watched-body-board",
+        "title": "客户相关板块与关联基金",
+        "requirementAnchor": "theme-customer-rules",
+        "visibleLanding": true,
+        "visibleText": "近3日累计涨跌幅"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-browsed-001",
+      "pageKey": "wealth-home-scenario-browsed",
+      "semanticSlot": "bubble",
+      "target": {
+        "selector": "#activeCard .bubble-row",
+        "strategy": "selector"
+      },
+      "title": "小宝头像后的场景文案",
+      "annotationType": "P",
+      "kind": "component",
+      "dimension": "页面概览",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 页面功能介绍\n\n场景服务卡结构评审，当前状态：浏览关联 · 无推荐理由。\n\n### 业务流程\n\n从统一评审中心选择当前状态。\n\n### 核心内容\n\n对照当前可见的场景内容或加载反馈。\n\n### 主要操作\n\n点击编号定位正式需求；卡片交互沿用候选原型。\n\n### 状态与异常\n\n成功无内容整体隐藏；加载与失败不视为空内容。\n\n### 待确认\n\n当前仅为结构候选，图表细节、逐字文案与数据能力未决项仍按 PRD 保留。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#service-card-switching"
+      },
+      "sourceAnchors": [
+        "service-card-switching",
+        "theme-display",
+        "watchlist-display"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-browsed-bubble",
+        "title": "小宝头像后的场景文案",
+        "requirementAnchor": "service-card-switching",
+        "visibleLanding": true,
+        "visibleText": "您"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-browsed-002",
+      "pageKey": "wealth-home-scenario-browsed",
+      "semanticSlot": "body-board",
+      "target": {
+        "selector": "#activeCard[data-card-kind=\"board\"] .body-panel",
+        "strategy": "selector"
+      },
+      "title": "客户相关板块与关联基金",
+      "annotationType": "C",
+      "kind": "component",
+      "dimension": "区域说明",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 业务含义\n\n客户相关板块与关联基金。正式要求见 PRD「theme-customer-rules」，只读编号用于对照当前可见区域。\n\n### 展示与交互\n\n沿用已确认结构与原点击区域；示例数值和文案不作为新增业务事实。\n\n### 状态与异常\n\n只在对应内容可见时展示编号；数据与异常处理以正式 PRD 为准。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#theme-customer-rules"
+      },
+      "sourceAnchors": [
+        "theme-customer-rules",
+        "theme-display",
+        "theme-content-rules"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-browsed-body-board",
+        "title": "客户相关板块与关联基金",
+        "requirementAnchor": "theme-customer-rules",
+        "visibleLanding": true,
+        "visibleText": "近3日累计涨跌幅"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-week-001",
+      "pageKey": "wealth-home-scenario-week",
+      "semanticSlot": "bubble",
+      "target": {
+        "selector": "#activeCard .bubble-row",
+        "strategy": "selector"
+      },
+      "title": "小宝头像后的场景文案",
+      "annotationType": "P",
+      "kind": "component",
+      "dimension": "页面概览",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 页面功能介绍\n\n场景服务卡结构评审，当前状态：近期表现不错 · 近1周。\n\n### 业务流程\n\n从统一评审中心选择当前状态。\n\n### 核心内容\n\n对照当前可见的场景内容或加载反馈。\n\n### 主要操作\n\n点击编号定位正式需求；卡片交互沿用候选原型。\n\n### 状态与异常\n\n成功无内容整体隐藏；加载与失败不视为空内容。\n\n### 待确认\n\n当前仅为结构候选，图表细节、逐字文案与数据能力未决项仍按 PRD 保留。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#service-card-switching"
+      },
+      "sourceAnchors": [
+        "service-card-switching",
+        "theme-display",
+        "watchlist-display"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-week-bubble",
+        "title": "小宝头像后的场景文案",
+        "requirementAnchor": "service-card-switching",
+        "visibleLanding": true,
+        "visibleText": "您"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-week-002",
+      "pageKey": "wealth-home-scenario-week",
+      "semanticSlot": "body-performance",
+      "target": {
+        "selector": "#activeCard[data-card-kind=\"performance\"] .body-panel",
+        "strategy": "selector"
+      },
+      "title": "实际命中周期的业绩比较",
+      "annotationType": "C",
+      "kind": "component",
+      "dimension": "区域说明",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 业务含义\n\n实际命中周期的业绩比较。正式要求见 PRD「watchlist-performance」，只读编号用于对照当前可见区域。\n\n### 展示与交互\n\n沿用已确认结构与原点击区域；示例数值和文案不作为新增业务事实。\n\n### 状态与异常\n\n只在对应内容可见时展示编号；数据与异常处理以正式 PRD 为准。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#watchlist-performance"
+      },
+      "sourceAnchors": [
+        "watchlist-performance",
+        "watchlist-display",
+        "watchlist-common-info"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-week-body-performance",
+        "title": "实际命中周期的业绩比较",
+        "requirementAnchor": "watchlist-performance",
+        "visibleLanding": true,
+        "visibleText": "业绩基准"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-month-001",
+      "pageKey": "wealth-home-scenario-month",
+      "semanticSlot": "bubble",
+      "target": {
+        "selector": "#activeCard .bubble-row",
+        "strategy": "selector"
+      },
+      "title": "小宝头像后的场景文案",
+      "annotationType": "P",
+      "kind": "component",
+      "dimension": "页面概览",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 页面功能介绍\n\n场景服务卡结构评审，当前状态：近期表现不错 · 近1月。\n\n### 业务流程\n\n从统一评审中心选择当前状态。\n\n### 核心内容\n\n对照当前可见的场景内容或加载反馈。\n\n### 主要操作\n\n点击编号定位正式需求；卡片交互沿用候选原型。\n\n### 状态与异常\n\n成功无内容整体隐藏；加载与失败不视为空内容。\n\n### 待确认\n\n当前仅为结构候选，图表细节、逐字文案与数据能力未决项仍按 PRD 保留。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#service-card-switching"
+      },
+      "sourceAnchors": [
+        "service-card-switching",
+        "theme-display",
+        "watchlist-display"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-month-bubble",
+        "title": "小宝头像后的场景文案",
+        "requirementAnchor": "service-card-switching",
+        "visibleLanding": true,
+        "visibleText": "您"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-month-002",
+      "pageKey": "wealth-home-scenario-month",
+      "semanticSlot": "body-performance",
+      "target": {
+        "selector": "#activeCard[data-card-kind=\"performance\"] .body-panel",
+        "strategy": "selector"
+      },
+      "title": "实际命中周期的业绩比较",
+      "annotationType": "C",
+      "kind": "component",
+      "dimension": "区域说明",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 业务含义\n\n实际命中周期的业绩比较。正式要求见 PRD「watchlist-performance」，只读编号用于对照当前可见区域。\n\n### 展示与交互\n\n沿用已确认结构与原点击区域；示例数值和文案不作为新增业务事实。\n\n### 状态与异常\n\n只在对应内容可见时展示编号；数据与异常处理以正式 PRD 为准。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#watchlist-performance"
+      },
+      "sourceAnchors": [
+        "watchlist-performance",
+        "watchlist-display",
+        "watchlist-common-info"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-month-body-performance",
+        "title": "实际命中周期的业绩比较",
+        "requirementAnchor": "watchlist-performance",
+        "visibleLanding": true,
+        "visibleText": "业绩基准"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-quarter-001",
+      "pageKey": "wealth-home-scenario-quarter",
+      "semanticSlot": "bubble",
+      "target": {
+        "selector": "#activeCard .bubble-row",
+        "strategy": "selector"
+      },
+      "title": "小宝头像后的场景文案",
+      "annotationType": "P",
+      "kind": "component",
+      "dimension": "页面概览",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 页面功能介绍\n\n场景服务卡结构评审，当前状态：近期表现不错 · 近3月。\n\n### 业务流程\n\n从统一评审中心选择当前状态。\n\n### 核心内容\n\n对照当前可见的场景内容或加载反馈。\n\n### 主要操作\n\n点击编号定位正式需求；卡片交互沿用候选原型。\n\n### 状态与异常\n\n成功无内容整体隐藏；加载与失败不视为空内容。\n\n### 待确认\n\n当前仅为结构候选，图表细节、逐字文案与数据能力未决项仍按 PRD 保留。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#service-card-switching"
+      },
+      "sourceAnchors": [
+        "service-card-switching",
+        "theme-display",
+        "watchlist-display"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-quarter-bubble",
+        "title": "小宝头像后的场景文案",
+        "requirementAnchor": "service-card-switching",
+        "visibleLanding": true,
+        "visibleText": "您"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-quarter-002",
+      "pageKey": "wealth-home-scenario-quarter",
+      "semanticSlot": "body-performance",
+      "target": {
+        "selector": "#activeCard[data-card-kind=\"performance\"] .body-panel",
+        "strategy": "selector"
+      },
+      "title": "实际命中周期的业绩比较",
+      "annotationType": "C",
+      "kind": "component",
+      "dimension": "区域说明",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 业务含义\n\n实际命中周期的业绩比较。正式要求见 PRD「watchlist-performance」，只读编号用于对照当前可见区域。\n\n### 展示与交互\n\n沿用已确认结构与原点击区域；示例数值和文案不作为新增业务事实。\n\n### 状态与异常\n\n只在对应内容可见时展示编号；数据与异常处理以正式 PRD 为准。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#watchlist-performance"
+      },
+      "sourceAnchors": [
+        "watchlist-performance",
+        "watchlist-display",
+        "watchlist-common-info"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-quarter-body-performance",
+        "title": "实际命中周期的业绩比较",
+        "requirementAnchor": "watchlist-performance",
+        "visibleLanding": true,
+        "visibleText": "业绩基准"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-negative-001",
+      "pageKey": "wealth-home-scenario-negative",
+      "semanticSlot": "bubble",
+      "target": {
+        "selector": "#activeCard .bubble-row",
+        "strategy": "selector"
+      },
+      "title": "小宝头像后的场景文案",
+      "annotationType": "P",
+      "kind": "component",
+      "dimension": "页面概览",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 页面功能介绍\n\n场景服务卡结构评审，当前状态：近期表现不错 · 负收益跑赢。\n\n### 业务流程\n\n从统一评审中心选择当前状态。\n\n### 核心内容\n\n对照当前可见的场景内容或加载反馈。\n\n### 主要操作\n\n点击编号定位正式需求；卡片交互沿用候选原型。\n\n### 状态与异常\n\n成功无内容整体隐藏；加载与失败不视为空内容。\n\n### 待确认\n\n当前仅为结构候选，图表细节、逐字文案与数据能力未决项仍按 PRD 保留。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#service-card-switching"
+      },
+      "sourceAnchors": [
+        "service-card-switching",
+        "theme-display",
+        "watchlist-display"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-negative-bubble",
+        "title": "小宝头像后的场景文案",
+        "requirementAnchor": "service-card-switching",
+        "visibleLanding": true,
+        "visibleText": "您"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-negative-002",
+      "pageKey": "wealth-home-scenario-negative",
+      "semanticSlot": "body-performance",
+      "target": {
+        "selector": "#activeCard[data-card-kind=\"performance\"] .body-panel",
+        "strategy": "selector"
+      },
+      "title": "实际命中周期的业绩比较",
+      "annotationType": "C",
+      "kind": "component",
+      "dimension": "区域说明",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 业务含义\n\n实际命中周期的业绩比较。正式要求见 PRD「watchlist-performance」，只读编号用于对照当前可见区域。\n\n### 展示与交互\n\n沿用已确认结构与原点击区域；示例数值和文案不作为新增业务事实。\n\n### 状态与异常\n\n只在对应内容可见时展示编号；数据与异常处理以正式 PRD 为准。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#watchlist-performance"
+      },
+      "sourceAnchors": [
+        "watchlist-performance",
+        "watchlist-display",
+        "watchlist-common-info"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-negative-body-performance",
+        "title": "实际命中周期的业绩比较",
+        "requirementAnchor": "watchlist-performance",
+        "visibleLanding": true,
+        "visibleText": "业绩基准"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-reopen-001",
+      "pageKey": "wealth-home-scenario-reopen",
+      "semanticSlot": "bubble",
+      "target": {
+        "selector": "#activeCard .bubble-row",
+        "strategy": "selector"
+      },
+      "title": "小宝头像后的场景文案",
+      "annotationType": "P",
+      "kind": "component",
+      "dimension": "页面概览",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 页面功能介绍\n\n场景服务卡结构评审，当前状态：开放申购。\n\n### 业务流程\n\n从统一评审中心选择当前状态。\n\n### 核心内容\n\n对照当前可见的场景内容或加载反馈。\n\n### 主要操作\n\n点击编号定位正式需求；卡片交互沿用候选原型。\n\n### 状态与异常\n\n成功无内容整体隐藏；加载与失败不视为空内容。\n\n### 待确认\n\n当前仅为结构候选，图表细节、逐字文案与数据能力未决项仍按 PRD 保留。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#service-card-switching"
+      },
+      "sourceAnchors": [
+        "service-card-switching",
+        "theme-display",
+        "watchlist-display"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-reopen-bubble",
+        "title": "小宝头像后的场景文案",
+        "requirementAnchor": "service-card-switching",
+        "visibleLanding": true,
+        "visibleText": "您"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-reopen-002",
+      "pageKey": "wealth-home-scenario-reopen",
+      "semanticSlot": "body-reopen",
+      "target": {
+        "selector": "#activeCard[data-card-kind=\"reopen\"] .body-panel",
+        "strategy": "selector"
+      },
+      "title": "恢复申购与自选辅助信息",
+      "annotationType": "C",
+      "kind": "component",
+      "dimension": "区域说明",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 业务含义\n\n恢复申购与自选辅助信息。正式要求见 PRD「watchlist-subscription」，只读编号用于对照当前可见区域。\n\n### 展示与交互\n\n沿用已确认结构与原点击区域；示例数值和文案不作为新增业务事实。\n\n### 状态与异常\n\n只在对应内容可见时展示编号；数据与异常处理以正式 PRD 为准。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#watchlist-subscription"
+      },
+      "sourceAnchors": [
+        "watchlist-subscription",
+        "watchlist-display",
+        "watchlist-common-info"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-reopen-body-reopen",
+        "title": "恢复申购与自选辅助信息",
+        "requirementAnchor": "watchlist-subscription",
+        "visibleLanding": true,
+        "visibleText": "开放申购"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-cap-001",
+      "pageKey": "wealth-home-scenario-cap",
+      "semanticSlot": "bubble",
+      "target": {
+        "selector": "#activeCard .bubble-row",
+        "strategy": "selector"
+      },
+      "title": "小宝头像后的场景文案",
+      "annotationType": "P",
+      "kind": "component",
+      "dimension": "页面概览",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 页面功能介绍\n\n场景服务卡结构评审，当前状态：提高单日申购限额。\n\n### 业务流程\n\n从统一评审中心选择当前状态。\n\n### 核心内容\n\n对照当前可见的场景内容或加载反馈。\n\n### 主要操作\n\n点击编号定位正式需求；卡片交互沿用候选原型。\n\n### 状态与异常\n\n成功无内容整体隐藏；加载与失败不视为空内容。\n\n### 待确认\n\n当前仅为结构候选，图表细节、逐字文案与数据能力未决项仍按 PRD 保留。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#service-card-switching"
+      },
+      "sourceAnchors": [
+        "service-card-switching",
+        "theme-display",
+        "watchlist-display"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-cap-bubble",
+        "title": "小宝头像后的场景文案",
+        "requirementAnchor": "service-card-switching",
+        "visibleLanding": true,
+        "visibleText": "您"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-cap-002",
+      "pageKey": "wealth-home-scenario-cap",
+      "semanticSlot": "body-cap",
+      "target": {
+        "selector": "#activeCard[data-card-kind=\"cap\"] .body-panel",
+        "strategy": "selector"
+      },
+      "title": "单日累计申购限额与自选辅助信息",
+      "annotationType": "C",
+      "kind": "component",
+      "dimension": "区域说明",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 业务含义\n\n单日累计申购限额与自选辅助信息。正式要求见 PRD「watchlist-limit」，只读编号用于对照当前可见区域。\n\n### 展示与交互\n\n沿用已确认结构与原点击区域；示例数值和文案不作为新增业务事实。\n\n### 状态与异常\n\n只在对应内容可见时展示编号；数据与异常处理以正式 PRD 为准。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#watchlist-limit"
+      },
+      "sourceAnchors": [
+        "watchlist-limit",
+        "watchlist-display",
+        "watchlist-common-info"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-cap-body-cap",
+        "title": "单日累计申购限额与自选辅助信息",
+        "requirementAnchor": "watchlist-limit",
+        "visibleLanding": true,
+        "visibleText": "单日累计申购限额"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-unlimited-001",
+      "pageKey": "wealth-home-scenario-unlimited",
+      "semanticSlot": "bubble",
+      "target": {
+        "selector": "#activeCard .bubble-row",
+        "strategy": "selector"
+      },
+      "title": "小宝头像后的场景文案",
+      "annotationType": "P",
+      "kind": "component",
+      "dimension": "页面概览",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 页面功能介绍\n\n场景服务卡结构评审，当前状态：提高限额 · 不限额。\n\n### 业务流程\n\n从统一评审中心选择当前状态。\n\n### 核心内容\n\n对照当前可见的场景内容或加载反馈。\n\n### 主要操作\n\n点击编号定位正式需求；卡片交互沿用候选原型。\n\n### 状态与异常\n\n成功无内容整体隐藏；加载与失败不视为空内容。\n\n### 待确认\n\n当前仅为结构候选，图表细节、逐字文案与数据能力未决项仍按 PRD 保留。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#service-card-switching"
+      },
+      "sourceAnchors": [
+        "service-card-switching",
+        "theme-display",
+        "watchlist-display"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-unlimited-bubble",
+        "title": "小宝头像后的场景文案",
+        "requirementAnchor": "service-card-switching",
+        "visibleLanding": true,
+        "visibleText": "您"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-unlimited-002",
+      "pageKey": "wealth-home-scenario-unlimited",
+      "semanticSlot": "body-cap",
+      "target": {
+        "selector": "#activeCard[data-card-kind=\"cap\"] .body-panel",
+        "strategy": "selector"
+      },
+      "title": "单日累计申购限额与自选辅助信息",
+      "annotationType": "C",
+      "kind": "component",
+      "dimension": "区域说明",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 业务含义\n\n单日累计申购限额与自选辅助信息。正式要求见 PRD「watchlist-limit」，只读编号用于对照当前可见区域。\n\n### 展示与交互\n\n沿用已确认结构与原点击区域；示例数值和文案不作为新增业务事实。\n\n### 状态与异常\n\n只在对应内容可见时展示编号；数据与异常处理以正式 PRD 为准。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#watchlist-limit"
+      },
+      "sourceAnchors": [
+        "watchlist-limit",
+        "watchlist-display",
+        "watchlist-common-info"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-unlimited-body-cap",
+        "title": "单日累计申购限额与自选辅助信息",
+        "requirementAnchor": "watchlist-limit",
+        "visibleLanding": true,
+        "visibleText": "单日累计申购限额"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-high-001",
+      "pageKey": "wealth-home-scenario-high",
+      "semanticSlot": "bubble",
+      "target": {
+        "selector": "#activeCard .bubble-row",
+        "strategy": "selector"
+      },
+      "title": "小宝头像后的场景文案",
+      "annotationType": "P",
+      "kind": "component",
+      "dimension": "页面概览",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 页面功能介绍\n\n场景服务卡结构评审，当前状态：净值创新高。\n\n### 业务流程\n\n从统一评审中心选择当前状态。\n\n### 核心内容\n\n对照当前可见的场景内容或加载反馈。\n\n### 主要操作\n\n点击编号定位正式需求；卡片交互沿用候选原型。\n\n### 状态与异常\n\n成功无内容整体隐藏；加载与失败不视为空内容。\n\n### 待确认\n\n当前仅为结构候选，图表细节、逐字文案与数据能力未决项仍按 PRD 保留。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#service-card-switching"
+      },
+      "sourceAnchors": [
+        "service-card-switching",
+        "theme-display",
+        "watchlist-display"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-high-bubble",
+        "title": "小宝头像后的场景文案",
+        "requirementAnchor": "service-card-switching",
+        "visibleLanding": true,
+        "visibleText": "您"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-high-002",
+      "pageKey": "wealth-home-scenario-high",
+      "semanticSlot": "body-high",
+      "target": {
+        "selector": "#activeCard[data-card-kind=\"high\"] .body-panel",
+        "strategy": "selector"
+      },
+      "title": "复权净值新高与自选辅助信息",
+      "annotationType": "C",
+      "kind": "component",
+      "dimension": "区域说明",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 业务含义\n\n复权净值新高与自选辅助信息。正式要求见 PRD「watchlist-new-high」，只读编号用于对照当前可见区域。\n\n### 展示与交互\n\n沿用已确认结构与原点击区域；示例数值和文案不作为新增业务事实。\n\n### 状态与异常\n\n只在对应内容可见时展示编号；数据与异常处理以正式 PRD 为准。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#watchlist-new-high"
+      },
+      "sourceAnchors": [
+        "watchlist-new-high",
+        "watchlist-display",
+        "watchlist-common-info"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-high-body-high",
+        "title": "复权净值新高与自选辅助信息",
+        "requirementAnchor": "watchlist-new-high",
+        "visibleLanding": true,
+        "visibleText": "复权净值"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-valuation-001",
+      "pageKey": "wealth-home-scenario-valuation",
+      "semanticSlot": "bubble",
+      "target": {
+        "selector": "#activeCard .bubble-row",
+        "strategy": "selector"
+      },
+      "title": "小宝头像后的场景文案",
+      "annotationType": "P",
+      "kind": "component",
+      "dimension": "页面概览",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 页面功能介绍\n\n场景服务卡结构评审，当前状态：跟踪指数进入低估值区域。\n\n### 业务流程\n\n从统一评审中心选择当前状态。\n\n### 核心内容\n\n对照当前可见的场景内容或加载反馈。\n\n### 主要操作\n\n点击编号定位正式需求；卡片交互沿用候选原型。\n\n### 状态与异常\n\n成功无内容整体隐藏；加载与失败不视为空内容。\n\n### 待确认\n\n当前仅为结构候选，图表细节、逐字文案与数据能力未决项仍按 PRD 保留。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#service-card-switching"
+      },
+      "sourceAnchors": [
+        "service-card-switching",
+        "theme-display",
+        "watchlist-display"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-valuation-bubble",
+        "title": "小宝头像后的场景文案",
+        "requirementAnchor": "service-card-switching",
+        "visibleLanding": true,
+        "visibleText": "您"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-valuation-002",
+      "pageKey": "wealth-home-scenario-valuation",
+      "semanticSlot": "body-valuation",
+      "target": {
+        "selector": "#activeCard[data-card-kind=\"valuation\"] .body-panel",
+        "strategy": "selector"
+      },
+      "title": "实际估值分位与自选辅助信息",
+      "annotationType": "C",
+      "kind": "component",
+      "dimension": "区域说明",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 业务含义\n\n实际估值分位与自选辅助信息。正式要求见 PRD「watchlist-valuation」，只读编号用于对照当前可见区域。\n\n### 展示与交互\n\n沿用已确认结构与原点击区域；示例数值和文案不作为新增业务事实。\n\n### 状态与异常\n\n只在对应内容可见时展示编号；数据与异常处理以正式 PRD 为准。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#watchlist-valuation"
+      },
+      "sourceAnchors": [
+        "watchlist-valuation",
+        "watchlist-display",
+        "watchlist-common-info"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-valuation-body-valuation",
+        "title": "实际估值分位与自选辅助信息",
+        "requirementAnchor": "watchlist-valuation",
+        "visibleLanding": true,
+        "visibleText": "当前历史分位"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-fallback-product-001",
+      "pageKey": "wealth-home-scenario-fallback-product",
+      "semanticSlot": "bubble",
+      "target": {
+        "selector": "#activeCard .bubble-row",
+        "strategy": "selector"
+      },
+      "title": "小宝头像后的场景文案",
+      "annotationType": "P",
+      "kind": "component",
+      "dimension": "页面概览",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 页面功能介绍\n\n场景服务卡结构评审，当前状态：产品图文补位。\n\n### 业务流程\n\n从统一评审中心选择当前状态。\n\n### 核心内容\n\n对照当前可见的场景内容或加载反馈。\n\n### 主要操作\n\n点击编号定位正式需求；卡片交互沿用候选原型。\n\n### 状态与异常\n\n成功无内容整体隐藏；加载与失败不视为空内容。\n\n### 待确认\n\n当前仅为结构候选，图表细节、逐字文案与数据能力未决项仍按 PRD 保留。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#service-card-switching"
+      },
+      "sourceAnchors": [
+        "service-card-switching",
+        "theme-display",
+        "watchlist-display"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-fallback-product-bubble",
+        "title": "小宝头像后的场景文案",
+        "requirementAnchor": "service-card-switching",
+        "visibleLanding": true,
+        "visibleText": "您"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-fallback-product-002",
+      "pageKey": "wealth-home-scenario-fallback-product",
+      "semanticSlot": "body-product",
+      "target": {
+        "selector": "#activeCard[data-card-kind=\"product\"] .body-panel",
+        "strategy": "selector"
+      },
+      "title": "精选产品补位内容与原点击去向",
+      "annotationType": "C",
+      "kind": "component",
+      "dimension": "区域说明",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 业务含义\n\n精选产品补位内容与原点击去向。正式要求见 PRD「product-card-rules」，只读编号用于对照当前可见区域。\n\n### 展示与交互\n\n沿用已确认结构与原点击区域；示例数值和文案不作为新增业务事实。\n\n### 状态与异常\n\n只在对应内容可见时展示编号；数据与异常处理以正式 PRD 为准。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#product-card-rules"
+      },
+      "sourceAnchors": [
+        "product-card-rules",
+        "product-card-destination",
+        "selected-fallback-rule"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-fallback-product-body-product",
+        "title": "精选产品补位内容与原点击去向",
+        "requirementAnchor": "product-card-rules",
+        "visibleLanding": true,
+        "visibleText": "关注长期成长机会"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-fallback-productlink-001",
+      "pageKey": "wealth-home-scenario-fallback-productlink",
+      "semanticSlot": "bubble",
+      "target": {
+        "selector": "#activeCard .bubble-row",
+        "strategy": "selector"
+      },
+      "title": "小宝头像后的场景文案",
+      "annotationType": "P",
+      "kind": "component",
+      "dimension": "页面概览",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 页面功能介绍\n\n场景服务卡结构评审，当前状态：产品图文 · 配置跳转地址。\n\n### 业务流程\n\n从统一评审中心选择当前状态。\n\n### 核心内容\n\n对照当前可见的场景内容或加载反馈。\n\n### 主要操作\n\n点击编号定位正式需求；卡片交互沿用候选原型。\n\n### 状态与异常\n\n成功无内容整体隐藏；加载与失败不视为空内容。\n\n### 待确认\n\n当前仅为结构候选，图表细节、逐字文案与数据能力未决项仍按 PRD 保留。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#service-card-switching"
+      },
+      "sourceAnchors": [
+        "service-card-switching",
+        "theme-display",
+        "watchlist-display"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-fallback-productlink-bubble",
+        "title": "小宝头像后的场景文案",
+        "requirementAnchor": "service-card-switching",
+        "visibleLanding": true,
+        "visibleText": "您"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-fallback-productlink-002",
+      "pageKey": "wealth-home-scenario-fallback-productlink",
+      "semanticSlot": "body-product",
+      "target": {
+        "selector": "#activeCard[data-card-kind=\"product\"] .body-panel",
+        "strategy": "selector"
+      },
+      "title": "精选产品补位内容与原点击去向",
+      "annotationType": "C",
+      "kind": "component",
+      "dimension": "区域说明",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 业务含义\n\n精选产品补位内容与原点击去向。正式要求见 PRD「product-card-rules」，只读编号用于对照当前可见区域。\n\n### 展示与交互\n\n沿用已确认结构与原点击区域；示例数值和文案不作为新增业务事实。\n\n### 状态与异常\n\n只在对应内容可见时展示编号；数据与异常处理以正式 PRD 为准。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#product-card-rules"
+      },
+      "sourceAnchors": [
+        "product-card-rules",
+        "product-card-destination",
+        "selected-fallback-rule"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-fallback-productlink-body-product",
+        "title": "精选产品补位内容与原点击去向",
+        "requirementAnchor": "product-card-rules",
+        "visibleLanding": true,
+        "visibleText": "关注长期成长机会"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-fallback-advisory-001",
+      "pageKey": "wealth-home-scenario-fallback-advisory",
+      "semanticSlot": "bubble",
+      "target": {
+        "selector": "#activeCard .bubble-row",
+        "strategy": "selector"
+      },
+      "title": "小宝头像后的场景文案",
+      "annotationType": "P",
+      "kind": "component",
+      "dimension": "页面概览",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 页面功能介绍\n\n场景服务卡结构评审，当前状态：普通基金投顾 · 保留KYP。\n\n### 业务流程\n\n从统一评审中心选择当前状态。\n\n### 核心内容\n\n对照当前可见的场景内容或加载反馈。\n\n### 主要操作\n\n点击编号定位正式需求；卡片交互沿用候选原型。\n\n### 状态与异常\n\n成功无内容整体隐藏；加载与失败不视为空内容。\n\n### 待确认\n\n当前仅为结构候选，图表细节、逐字文案与数据能力未决项仍按 PRD 保留。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#service-card-switching"
+      },
+      "sourceAnchors": [
+        "service-card-switching",
+        "theme-display",
+        "watchlist-display"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-fallback-advisory-bubble",
+        "title": "小宝头像后的场景文案",
+        "requirementAnchor": "service-card-switching",
+        "visibleLanding": true,
+        "visibleText": "一起"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-fallback-advisory-002",
+      "pageKey": "wealth-home-scenario-fallback-advisory",
+      "semanticSlot": "body-product",
+      "target": {
+        "selector": "#activeCard[data-card-kind=\"product\"] .body-panel",
+        "strategy": "selector"
+      },
+      "title": "精选产品补位内容与原点击去向",
+      "annotationType": "C",
+      "kind": "component",
+      "dimension": "区域说明",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 业务含义\n\n精选产品补位内容与原点击去向。正式要求见 PRD「product-card-rules」，只读编号用于对照当前可见区域。\n\n### 展示与交互\n\n沿用已确认结构与原点击区域；示例数值和文案不作为新增业务事实。\n\n### 状态与异常\n\n只在对应内容可见时展示编号；数据与异常处理以正式 PRD 为准。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#product-card-rules"
+      },
+      "sourceAnchors": [
+        "product-card-rules",
+        "product-card-destination",
+        "selected-fallback-rule"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-fallback-advisory-body-product",
+        "title": "精选产品补位内容与原点击去向",
+        "requirementAnchor": "product-card-rules",
+        "visibleLanding": true,
+        "visibleText": "关注长期成长机会"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-fallback-topic-001",
+      "pageKey": "wealth-home-scenario-fallback-topic",
+      "semanticSlot": "bubble",
+      "target": {
+        "selector": "#activeCard .bubble-row",
+        "strategy": "selector"
+      },
+      "title": "小宝头像后的场景文案",
+      "annotationType": "P",
+      "kind": "component",
+      "dimension": "页面概览",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 页面功能介绍\n\n场景服务卡结构评审，当前状态：专题补位。\n\n### 业务流程\n\n从统一评审中心选择当前状态。\n\n### 核心内容\n\n对照当前可见的场景内容或加载反馈。\n\n### 主要操作\n\n点击编号定位正式需求；卡片交互沿用候选原型。\n\n### 状态与异常\n\n成功无内容整体隐藏；加载与失败不视为空内容。\n\n### 待确认\n\n当前仅为结构候选，图表细节、逐字文案与数据能力未决项仍按 PRD 保留。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#service-card-switching"
+      },
+      "sourceAnchors": [
+        "service-card-switching",
+        "theme-display",
+        "watchlist-display"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-fallback-topic-bubble",
+        "title": "小宝头像后的场景文案",
+        "requirementAnchor": "service-card-switching",
+        "visibleLanding": true,
+        "visibleText": "您"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-fallback-topic-002",
+      "pageKey": "wealth-home-scenario-fallback-topic",
+      "semanticSlot": "body-topic",
+      "target": {
+        "selector": "#activeCard[data-card-kind=\"topic\"] .body-panel",
+        "strategy": "selector"
+      },
+      "title": "精选专题补位内容与原点击去向",
+      "annotationType": "C",
+      "kind": "component",
+      "dimension": "区域说明",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 业务含义\n\n精选专题补位内容与原点击去向。正式要求见 PRD「topic-card-rules」，只读编号用于对照当前可见区域。\n\n### 展示与交互\n\n沿用已确认结构与原点击区域；示例数值和文案不作为新增业务事实。\n\n### 状态与异常\n\n只在对应内容可见时展示编号；数据与异常处理以正式 PRD 为准。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#topic-card-rules"
+      },
+      "sourceAnchors": [
+        "topic-card-rules",
+        "selected-fallback-rule"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-fallback-topic-body-topic",
+        "title": "精选专题补位内容与原点击去向",
+        "requirementAnchor": "topic-card-rules",
+        "visibleLanding": true,
+        "visibleText": "从产业变化中寻找投资线索"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-fallback-market-001",
+      "pageKey": "wealth-home-scenario-fallback-market",
+      "semanticSlot": "bubble",
+      "target": {
+        "selector": "#activeCard .bubble-row",
+        "strategy": "selector"
+      },
+      "title": "小宝头像后的场景文案",
+      "annotationType": "P",
+      "kind": "component",
+      "dimension": "页面概览",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 页面功能介绍\n\n场景服务卡结构评审，当前状态：市场主线补位。\n\n### 业务流程\n\n从统一评审中心选择当前状态。\n\n### 核心内容\n\n对照当前可见的场景内容或加载反馈。\n\n### 主要操作\n\n点击编号定位正式需求；卡片交互沿用候选原型。\n\n### 状态与异常\n\n成功无内容整体隐藏；加载与失败不视为空内容。\n\n### 待确认\n\n当前仅为结构候选，图表细节、逐字文案与数据能力未决项仍按 PRD 保留。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#service-card-switching"
+      },
+      "sourceAnchors": [
+        "service-card-switching",
+        "theme-display",
+        "watchlist-display"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-fallback-market-bubble",
+        "title": "小宝头像后的场景文案",
+        "requirementAnchor": "service-card-switching",
+        "visibleLanding": true,
+        "visibleText": "一起"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-fallback-market-002",
+      "pageKey": "wealth-home-scenario-fallback-market",
+      "semanticSlot": "body-market",
+      "target": {
+        "selector": "#activeCard[data-card-kind=\"market\"] .body-panel",
+        "strategy": "selector"
+      },
+      "title": "市场主线补位内容与两只关联基金",
+      "annotationType": "C",
+      "kind": "component",
+      "dimension": "区域说明",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 业务含义\n\n市场主线补位内容与两只关联基金。正式要求见 PRD「theme-market-rules」，只读编号用于对照当前可见区域。\n\n### 展示与交互\n\n沿用已确认结构与原点击区域；示例数值和文案不作为新增业务事实。\n\n### 状态与异常\n\n只在对应内容可见时展示编号；数据与异常处理以正式 PRD 为准。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#theme-market-rules"
+      },
+      "sourceAnchors": [
+        "theme-market-rules",
+        "theme-display",
+        "theme-content-rules",
+        "selected-fallback-rule"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-fallback-market-body-market",
+        "title": "市场主线补位内容与两只关联基金",
+        "requirementAnchor": "theme-market-rules",
+        "visibleLanding": true,
+        "visibleText": "市场主线"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-fallback-hotspot-001",
+      "pageKey": "wealth-home-scenario-fallback-hotspot",
+      "semanticSlot": "bubble",
+      "target": {
+        "selector": "#activeCard .bubble-row",
+        "strategy": "selector"
+      },
+      "title": "小宝头像后的场景文案",
+      "annotationType": "P",
+      "kind": "component",
+      "dimension": "页面概览",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 页面功能介绍\n\n场景服务卡结构评审，当前状态：短期热点补位。\n\n### 业务流程\n\n从统一评审中心选择当前状态。\n\n### 核心内容\n\n对照当前可见的场景内容或加载反馈。\n\n### 主要操作\n\n点击编号定位正式需求；卡片交互沿用候选原型。\n\n### 状态与异常\n\n成功无内容整体隐藏；加载与失败不视为空内容。\n\n### 待确认\n\n当前仅为结构候选，图表细节、逐字文案与数据能力未决项仍按 PRD 保留。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#service-card-switching"
+      },
+      "sourceAnchors": [
+        "service-card-switching",
+        "theme-display",
+        "watchlist-display"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-fallback-hotspot-bubble",
+        "title": "小宝头像后的场景文案",
+        "requirementAnchor": "service-card-switching",
+        "visibleLanding": true,
+        "visibleText": "一起"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-fallback-hotspot-002",
+      "pageKey": "wealth-home-scenario-fallback-hotspot",
+      "semanticSlot": "body-hotspot",
+      "target": {
+        "selector": "#activeCard[data-card-kind=\"hotspot\"] .body-panel",
+        "strategy": "selector"
+      },
+      "title": "短期热点补位内容与两只关联基金",
+      "annotationType": "C",
+      "kind": "component",
+      "dimension": "区域说明",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 业务含义\n\n短期热点补位内容与两只关联基金。正式要求见 PRD「theme-short-rules」，只读编号用于对照当前可见区域。\n\n### 展示与交互\n\n沿用已确认结构与原点击区域；示例数值和文案不作为新增业务事实。\n\n### 状态与异常\n\n只在对应内容可见时展示编号；数据与异常处理以正式 PRD 为准。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#theme-short-rules"
+      },
+      "sourceAnchors": [
+        "theme-short-rules",
+        "theme-display",
+        "theme-content-rules",
+        "selected-fallback-rule"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-fallback-hotspot-body-hotspot",
+        "title": "短期热点补位内容与两只关联基金",
+        "requirementAnchor": "theme-short-rules",
+        "visibleLanding": true,
+        "visibleText": "短期热点"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-fallback-only-001",
+      "pageKey": "wealth-home-scenario-fallback-only",
+      "semanticSlot": "bubble",
+      "target": {
+        "selector": "#activeCard .bubble-row",
+        "strategy": "selector"
+      },
+      "title": "小宝头像后的场景文案",
+      "annotationType": "P",
+      "kind": "component",
+      "dimension": "页面概览",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 页面功能介绍\n\n场景服务卡结构评审，当前状态：补位后下方精选为空。\n\n### 业务流程\n\n从统一评审中心选择当前状态。\n\n### 核心内容\n\n对照当前可见的场景内容或加载反馈。\n\n### 主要操作\n\n点击编号定位正式需求；卡片交互沿用候选原型。\n\n### 状态与异常\n\n成功无内容整体隐藏；加载与失败不视为空内容。\n\n### 待确认\n\n当前仅为结构候选，图表细节、逐字文案与数据能力未决项仍按 PRD 保留。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#service-card-switching"
+      },
+      "sourceAnchors": [
+        "service-card-switching",
+        "theme-display",
+        "watchlist-display"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-fallback-only-bubble",
+        "title": "小宝头像后的场景文案",
+        "requirementAnchor": "service-card-switching",
+        "visibleLanding": true,
+        "visibleText": "您"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-fallback-only-002",
+      "pageKey": "wealth-home-scenario-fallback-only",
+      "semanticSlot": "body-product",
+      "target": {
+        "selector": "#activeCard[data-card-kind=\"product\"] .body-panel",
+        "strategy": "selector"
+      },
+      "title": "精选产品补位内容与原点击去向",
+      "annotationType": "C",
+      "kind": "component",
+      "dimension": "区域说明",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 业务含义\n\n精选产品补位内容与原点击去向。正式要求见 PRD「product-card-rules」，只读编号用于对照当前可见区域。\n\n### 展示与交互\n\n沿用已确认结构与原点击区域；示例数值和文案不作为新增业务事实。\n\n### 状态与异常\n\n只在对应内容可见时展示编号；数据与异常处理以正式 PRD 为准。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#product-card-rules"
+      },
+      "sourceAnchors": [
+        "product-card-rules",
+        "product-card-destination",
+        "selected-fallback-rule"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-fallback-only-body-product",
+        "title": "精选产品补位内容与原点击去向",
+        "requirementAnchor": "product-card-rules",
+        "visibleLanding": true,
+        "visibleText": "关注长期成长机会"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-ranking-conditional-001",
+      "pageKey": "wealth-home-scenario-ranking-conditional",
+      "semanticSlot": "bubble",
+      "target": {
+        "selector": "#activeCard .bubble-row",
+        "strategy": "selector"
+      },
+      "title": "小宝头像后的场景文案",
+      "annotationType": "P",
+      "kind": "component",
+      "dimension": "页面概览",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 页面功能介绍\n\n场景服务卡结构评审，当前状态：榜单 · 条件结构。\n\n### 业务流程\n\n从统一评审中心选择当前状态。\n\n### 核心内容\n\n对照当前可见的场景内容或加载反馈。\n\n### 主要操作\n\n点击编号定位正式需求；卡片交互沿用候选原型。\n\n### 状态与异常\n\n成功无内容整体隐藏；加载与失败不视为空内容。\n\n### 待确认\n\n当前仅为结构候选，图表细节、逐字文案与数据能力未决项仍按 PRD 保留。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#service-card-switching"
+      },
+      "sourceAnchors": [
+        "service-card-switching",
+        "theme-display",
+        "watchlist-display"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-ranking-conditional-bubble",
+        "title": "小宝头像后的场景文案",
+        "requirementAnchor": "service-card-switching",
+        "visibleLanding": true,
+        "visibleText": "一起"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-ranking-conditional-002",
+      "pageKey": "wealth-home-scenario-ranking-conditional",
+      "semanticSlot": "body-ranking",
+      "target": {
+        "selector": "#activeCard[data-card-kind=\"ranking\"] .body-panel",
+        "strategy": "selector"
+      },
+      "title": "榜单结构示意与未决资格",
+      "annotationType": "C",
+      "kind": "component",
+      "dimension": "区域说明",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 业务含义\n\n榜单结构示意与未决资格。正式要求见 PRD「ranking-card-rules」，只读编号用于对照当前可见区域。\n\n### 展示与交互\n\n沿用已确认结构与原点击区域；示例数值和文案不作为新增业务事实。\n\n### 状态与异常\n\n只在对应内容可见时展示编号；数据与异常处理以正式 PRD 为准。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#ranking-card-rules"
+      },
+      "sourceAnchors": [
+        "ranking-card-rules",
+        "selected-fallback-rule"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-ranking-conditional-body-ranking",
+        "title": "榜单结构示意与未决资格",
+        "requirementAnchor": "ranking-card-rules",
+        "visibleLanding": true,
+        "visibleText": "所选榜单名称"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-loading-001",
+      "pageKey": "wealth-home-scenario-loading",
+      "semanticSlot": "loading",
+      "target": {
+        "selector": "#sceneRegion .loading-block",
+        "strategy": "selector"
+      },
+      "title": "推荐内容加载中",
+      "annotationType": "P",
+      "kind": "component",
+      "dimension": "页面概览",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 页面功能介绍\n\n场景服务卡结构评审，当前状态：首次加载。\n\n### 业务流程\n\n从统一评审中心选择当前状态。\n\n### 核心内容\n\n对照当前可见的场景内容或加载反馈。\n\n### 主要操作\n\n点击编号定位正式需求；卡片交互沿用候选原型。\n\n### 状态与异常\n\n成功无内容整体隐藏；加载与失败不视为空内容。\n\n### 待确认\n\n当前仅为结构候选，图表细节、逐字文案与数据能力未决项仍按 PRD 保留。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#empty-error-rule"
+      },
+      "sourceAnchors": [
+        "empty-error-rule"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-loading-loading",
+        "title": "推荐内容加载中",
+        "requirementAnchor": "empty-error-rule",
+        "visibleLanding": true,
+        "visibleText": "正在加载推荐内容"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-refreshing-001",
+      "pageKey": "wealth-home-scenario-refreshing",
+      "semanticSlot": "feedback",
+      "target": {
+        "selector": "#activeCard .feedback",
+        "strategy": "selector"
+      },
+      "title": "更新反馈与保留当前内容",
+      "annotationType": "S",
+      "kind": "state",
+      "dimension": "区域说明",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 业务含义\n\n更新反馈与保留当前内容。正式要求见 PRD「empty-error-rule」，只读编号用于对照当前可见区域。\n\n### 展示与交互\n\n沿用已确认结构与原点击区域；示例数值和文案不作为新增业务事实。\n\n### 状态与异常\n\n只在对应内容可见时展示编号；数据与异常处理以正式 PRD 为准。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#empty-error-rule"
+      },
+      "sourceAnchors": [
+        "empty-error-rule",
+        "fallback-joint-update"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-refreshing-feedback",
+        "title": "更新反馈与保留当前内容",
+        "requirementAnchor": "empty-error-rule",
+        "visibleLanding": true,
+        "visibleText": "正在更新推荐内容"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-refreshing-002",
+      "pageKey": "wealth-home-scenario-refreshing",
+      "semanticSlot": "bubble",
+      "target": {
+        "selector": "#activeCard .bubble-row",
+        "strategy": "selector"
+      },
+      "title": "小宝头像后的场景文案",
+      "annotationType": "P",
+      "kind": "component",
+      "dimension": "页面概览",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 页面功能介绍\n\n场景服务卡结构评审，当前状态：刷新中 · 保留旧内容。\n\n### 业务流程\n\n从统一评审中心选择当前状态。\n\n### 核心内容\n\n对照当前可见的场景内容或加载反馈。\n\n### 主要操作\n\n点击编号定位正式需求；卡片交互沿用候选原型。\n\n### 状态与异常\n\n成功无内容整体隐藏；加载与失败不视为空内容。\n\n### 待确认\n\n当前仅为结构候选，图表细节、逐字文案与数据能力未决项仍按 PRD 保留。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#service-card-switching"
+      },
+      "sourceAnchors": [
+        "service-card-switching",
+        "theme-display",
+        "watchlist-display"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-refreshing-bubble",
+        "title": "小宝头像后的场景文案",
+        "requirementAnchor": "service-card-switching",
+        "visibleLanding": true,
+        "visibleText": "您"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-refreshing-003",
+      "pageKey": "wealth-home-scenario-refreshing",
+      "semanticSlot": "body-board",
+      "target": {
+        "selector": "#activeCard[data-card-kind=\"board\"] .body-panel",
+        "strategy": "selector"
+      },
+      "title": "客户相关板块与关联基金",
+      "annotationType": "C",
+      "kind": "component",
+      "dimension": "区域说明",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 业务含义\n\n客户相关板块与关联基金。正式要求见 PRD「theme-customer-rules」，只读编号用于对照当前可见区域。\n\n### 展示与交互\n\n沿用已确认结构与原点击区域；示例数值和文案不作为新增业务事实。\n\n### 状态与异常\n\n只在对应内容可见时展示编号；数据与异常处理以正式 PRD 为准。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#theme-customer-rules"
+      },
+      "sourceAnchors": [
+        "theme-customer-rules",
+        "theme-display",
+        "theme-content-rules"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-refreshing-body-board",
+        "title": "客户相关板块与关联基金",
+        "requirementAnchor": "theme-customer-rules",
+        "visibleLanding": true,
+        "visibleText": "近3日累计涨跌幅"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-refreshing-004",
+      "pageKey": "wealth-home-scenario-refreshing",
+      "semanticSlot": "body-performance",
+      "target": {
+        "selector": "#activeCard[data-card-kind=\"performance\"] .body-panel",
+        "strategy": "selector"
+      },
+      "title": "实际命中周期的业绩比较",
+      "annotationType": "C",
+      "kind": "component",
+      "dimension": "区域说明",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 业务含义\n\n实际命中周期的业绩比较。正式要求见 PRD「watchlist-performance」，只读编号用于对照当前可见区域。\n\n### 展示与交互\n\n沿用已确认结构与原点击区域；示例数值和文案不作为新增业务事实。\n\n### 状态与异常\n\n只在对应内容可见时展示编号；数据与异常处理以正式 PRD 为准。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#watchlist-performance"
+      },
+      "sourceAnchors": [
+        "watchlist-performance",
+        "watchlist-display",
+        "watchlist-common-info"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-refreshing-body-performance",
+        "title": "实际命中周期的业绩比较",
+        "requirementAnchor": "watchlist-performance",
+        "visibleLanding": true,
+        "visibleText": "业绩基准"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-refreshing-005",
+      "pageKey": "wealth-home-scenario-refreshing",
+      "semanticSlot": "body-reopen",
+      "target": {
+        "selector": "#activeCard[data-card-kind=\"reopen\"] .body-panel",
+        "strategy": "selector"
+      },
+      "title": "恢复申购与自选辅助信息",
+      "annotationType": "C",
+      "kind": "component",
+      "dimension": "区域说明",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 业务含义\n\n恢复申购与自选辅助信息。正式要求见 PRD「watchlist-subscription」，只读编号用于对照当前可见区域。\n\n### 展示与交互\n\n沿用已确认结构与原点击区域；示例数值和文案不作为新增业务事实。\n\n### 状态与异常\n\n只在对应内容可见时展示编号；数据与异常处理以正式 PRD 为准。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#watchlist-subscription"
+      },
+      "sourceAnchors": [
+        "watchlist-subscription",
+        "watchlist-display",
+        "watchlist-common-info"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-refreshing-body-reopen",
+        "title": "恢复申购与自选辅助信息",
+        "requirementAnchor": "watchlist-subscription",
+        "visibleLanding": true,
+        "visibleText": "开放申购"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-refreshing-006",
+      "pageKey": "wealth-home-scenario-refreshing",
+      "semanticSlot": "body-cap",
+      "target": {
+        "selector": "#activeCard[data-card-kind=\"cap\"] .body-panel",
+        "strategy": "selector"
+      },
+      "title": "单日累计申购限额与自选辅助信息",
+      "annotationType": "C",
+      "kind": "component",
+      "dimension": "区域说明",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 业务含义\n\n单日累计申购限额与自选辅助信息。正式要求见 PRD「watchlist-limit」，只读编号用于对照当前可见区域。\n\n### 展示与交互\n\n沿用已确认结构与原点击区域；示例数值和文案不作为新增业务事实。\n\n### 状态与异常\n\n只在对应内容可见时展示编号；数据与异常处理以正式 PRD 为准。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#watchlist-limit"
+      },
+      "sourceAnchors": [
+        "watchlist-limit",
+        "watchlist-display",
+        "watchlist-common-info"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-refreshing-body-cap",
+        "title": "单日累计申购限额与自选辅助信息",
+        "requirementAnchor": "watchlist-limit",
+        "visibleLanding": true,
+        "visibleText": "单日累计申购限额"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-refreshing-007",
+      "pageKey": "wealth-home-scenario-refreshing",
+      "semanticSlot": "body-high",
+      "target": {
+        "selector": "#activeCard[data-card-kind=\"high\"] .body-panel",
+        "strategy": "selector"
+      },
+      "title": "复权净值新高与自选辅助信息",
+      "annotationType": "C",
+      "kind": "component",
+      "dimension": "区域说明",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 业务含义\n\n复权净值新高与自选辅助信息。正式要求见 PRD「watchlist-new-high」，只读编号用于对照当前可见区域。\n\n### 展示与交互\n\n沿用已确认结构与原点击区域；示例数值和文案不作为新增业务事实。\n\n### 状态与异常\n\n只在对应内容可见时展示编号；数据与异常处理以正式 PRD 为准。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#watchlist-new-high"
+      },
+      "sourceAnchors": [
+        "watchlist-new-high",
+        "watchlist-display",
+        "watchlist-common-info"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-refreshing-body-high",
+        "title": "复权净值新高与自选辅助信息",
+        "requirementAnchor": "watchlist-new-high",
+        "visibleLanding": true,
+        "visibleText": "复权净值"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-refreshing-008",
+      "pageKey": "wealth-home-scenario-refreshing",
+      "semanticSlot": "body-valuation",
+      "target": {
+        "selector": "#activeCard[data-card-kind=\"valuation\"] .body-panel",
+        "strategy": "selector"
+      },
+      "title": "实际估值分位与自选辅助信息",
+      "annotationType": "C",
+      "kind": "component",
+      "dimension": "区域说明",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 业务含义\n\n实际估值分位与自选辅助信息。正式要求见 PRD「watchlist-valuation」，只读编号用于对照当前可见区域。\n\n### 展示与交互\n\n沿用已确认结构与原点击区域；示例数值和文案不作为新增业务事实。\n\n### 状态与异常\n\n只在对应内容可见时展示编号；数据与异常处理以正式 PRD 为准。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#watchlist-valuation"
+      },
+      "sourceAnchors": [
+        "watchlist-valuation",
+        "watchlist-display",
+        "watchlist-common-info"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-refreshing-body-valuation",
+        "title": "实际估值分位与自选辅助信息",
+        "requirementAnchor": "watchlist-valuation",
+        "visibleLanding": true,
+        "visibleText": "当前历史分位"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-refreshing-009",
+      "pageKey": "wealth-home-scenario-refreshing",
+      "semanticSlot": "switch",
+      "target": {
+        "selector": "#nextCard",
+        "strategy": "selector"
+      },
+      "title": "多卡手动切换",
+      "annotationType": "A",
+      "kind": "interaction",
+      "dimension": "区域说明",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 业务含义\n\n多卡手动切换。正式要求见 PRD「service-card-switching」，只读编号用于对照当前可见区域。\n\n### 展示与交互\n\n沿用已确认结构与原点击区域；示例数值和文案不作为新增业务事实。\n\n### 状态与异常\n\n只在对应内容可见时展示编号；数据与异常处理以正式 PRD 为准。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#service-card-switching"
+      },
+      "sourceAnchors": [
+        "service-card-switching"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-refreshing-switch",
+        "title": "多卡手动切换",
+        "requirementAnchor": "service-card-switching",
+        "visibleLanding": true,
+        "visibleText": "下一个"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-error-old-001",
+      "pageKey": "wealth-home-scenario-error-old",
+      "semanticSlot": "feedback",
+      "target": {
+        "selector": "#activeCard .feedback",
+        "strategy": "selector"
+      },
+      "title": "更新反馈与保留当前内容",
+      "annotationType": "S",
+      "kind": "state",
+      "dimension": "区域说明",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 业务含义\n\n更新反馈与保留当前内容。正式要求见 PRD「empty-error-rule」，只读编号用于对照当前可见区域。\n\n### 展示与交互\n\n沿用已确认结构与原点击区域；示例数值和文案不作为新增业务事实。\n\n### 状态与异常\n\n只在对应内容可见时展示编号；数据与异常处理以正式 PRD 为准。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#empty-error-rule"
+      },
+      "sourceAnchors": [
+        "empty-error-rule",
+        "fallback-joint-update"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-error-old-feedback",
+        "title": "更新反馈与保留当前内容",
+        "requirementAnchor": "empty-error-rule",
+        "visibleLanding": true,
+        "visibleText": "刷新失败"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-error-old-002",
+      "pageKey": "wealth-home-scenario-error-old",
+      "semanticSlot": "bubble",
+      "target": {
+        "selector": "#activeCard .bubble-row",
+        "strategy": "selector"
+      },
+      "title": "小宝头像后的场景文案",
+      "annotationType": "P",
+      "kind": "component",
+      "dimension": "页面概览",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 页面功能介绍\n\n场景服务卡结构评审，当前状态：失败 · 有有效旧内容。\n\n### 业务流程\n\n从统一评审中心选择当前状态。\n\n### 核心内容\n\n对照当前可见的场景内容或加载反馈。\n\n### 主要操作\n\n点击编号定位正式需求；卡片交互沿用候选原型。\n\n### 状态与异常\n\n成功无内容整体隐藏；加载与失败不视为空内容。\n\n### 待确认\n\n当前仅为结构候选，图表细节、逐字文案与数据能力未决项仍按 PRD 保留。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#service-card-switching"
+      },
+      "sourceAnchors": [
+        "service-card-switching",
+        "theme-display",
+        "watchlist-display"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-error-old-bubble",
+        "title": "小宝头像后的场景文案",
+        "requirementAnchor": "service-card-switching",
+        "visibleLanding": true,
+        "visibleText": "您"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-error-old-003",
+      "pageKey": "wealth-home-scenario-error-old",
+      "semanticSlot": "body-board",
+      "target": {
+        "selector": "#activeCard[data-card-kind=\"board\"] .body-panel",
+        "strategy": "selector"
+      },
+      "title": "客户相关板块与关联基金",
+      "annotationType": "C",
+      "kind": "component",
+      "dimension": "区域说明",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 业务含义\n\n客户相关板块与关联基金。正式要求见 PRD「theme-customer-rules」，只读编号用于对照当前可见区域。\n\n### 展示与交互\n\n沿用已确认结构与原点击区域；示例数值和文案不作为新增业务事实。\n\n### 状态与异常\n\n只在对应内容可见时展示编号；数据与异常处理以正式 PRD 为准。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#theme-customer-rules"
+      },
+      "sourceAnchors": [
+        "theme-customer-rules",
+        "theme-display",
+        "theme-content-rules"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-error-old-body-board",
+        "title": "客户相关板块与关联基金",
+        "requirementAnchor": "theme-customer-rules",
+        "visibleLanding": true,
+        "visibleText": "近3日累计涨跌幅"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-error-old-004",
+      "pageKey": "wealth-home-scenario-error-old",
+      "semanticSlot": "body-performance",
+      "target": {
+        "selector": "#activeCard[data-card-kind=\"performance\"] .body-panel",
+        "strategy": "selector"
+      },
+      "title": "实际命中周期的业绩比较",
+      "annotationType": "C",
+      "kind": "component",
+      "dimension": "区域说明",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 业务含义\n\n实际命中周期的业绩比较。正式要求见 PRD「watchlist-performance」，只读编号用于对照当前可见区域。\n\n### 展示与交互\n\n沿用已确认结构与原点击区域；示例数值和文案不作为新增业务事实。\n\n### 状态与异常\n\n只在对应内容可见时展示编号；数据与异常处理以正式 PRD 为准。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#watchlist-performance"
+      },
+      "sourceAnchors": [
+        "watchlist-performance",
+        "watchlist-display",
+        "watchlist-common-info"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-error-old-body-performance",
+        "title": "实际命中周期的业绩比较",
+        "requirementAnchor": "watchlist-performance",
+        "visibleLanding": true,
+        "visibleText": "业绩基准"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-error-old-005",
+      "pageKey": "wealth-home-scenario-error-old",
+      "semanticSlot": "body-reopen",
+      "target": {
+        "selector": "#activeCard[data-card-kind=\"reopen\"] .body-panel",
+        "strategy": "selector"
+      },
+      "title": "恢复申购与自选辅助信息",
+      "annotationType": "C",
+      "kind": "component",
+      "dimension": "区域说明",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 业务含义\n\n恢复申购与自选辅助信息。正式要求见 PRD「watchlist-subscription」，只读编号用于对照当前可见区域。\n\n### 展示与交互\n\n沿用已确认结构与原点击区域；示例数值和文案不作为新增业务事实。\n\n### 状态与异常\n\n只在对应内容可见时展示编号；数据与异常处理以正式 PRD 为准。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#watchlist-subscription"
+      },
+      "sourceAnchors": [
+        "watchlist-subscription",
+        "watchlist-display",
+        "watchlist-common-info"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-error-old-body-reopen",
+        "title": "恢复申购与自选辅助信息",
+        "requirementAnchor": "watchlist-subscription",
+        "visibleLanding": true,
+        "visibleText": "开放申购"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-error-old-006",
+      "pageKey": "wealth-home-scenario-error-old",
+      "semanticSlot": "body-cap",
+      "target": {
+        "selector": "#activeCard[data-card-kind=\"cap\"] .body-panel",
+        "strategy": "selector"
+      },
+      "title": "单日累计申购限额与自选辅助信息",
+      "annotationType": "C",
+      "kind": "component",
+      "dimension": "区域说明",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 业务含义\n\n单日累计申购限额与自选辅助信息。正式要求见 PRD「watchlist-limit」，只读编号用于对照当前可见区域。\n\n### 展示与交互\n\n沿用已确认结构与原点击区域；示例数值和文案不作为新增业务事实。\n\n### 状态与异常\n\n只在对应内容可见时展示编号；数据与异常处理以正式 PRD 为准。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#watchlist-limit"
+      },
+      "sourceAnchors": [
+        "watchlist-limit",
+        "watchlist-display",
+        "watchlist-common-info"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-error-old-body-cap",
+        "title": "单日累计申购限额与自选辅助信息",
+        "requirementAnchor": "watchlist-limit",
+        "visibleLanding": true,
+        "visibleText": "单日累计申购限额"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-error-old-007",
+      "pageKey": "wealth-home-scenario-error-old",
+      "semanticSlot": "body-high",
+      "target": {
+        "selector": "#activeCard[data-card-kind=\"high\"] .body-panel",
+        "strategy": "selector"
+      },
+      "title": "复权净值新高与自选辅助信息",
+      "annotationType": "C",
+      "kind": "component",
+      "dimension": "区域说明",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 业务含义\n\n复权净值新高与自选辅助信息。正式要求见 PRD「watchlist-new-high」，只读编号用于对照当前可见区域。\n\n### 展示与交互\n\n沿用已确认结构与原点击区域；示例数值和文案不作为新增业务事实。\n\n### 状态与异常\n\n只在对应内容可见时展示编号；数据与异常处理以正式 PRD 为准。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#watchlist-new-high"
+      },
+      "sourceAnchors": [
+        "watchlist-new-high",
+        "watchlist-display",
+        "watchlist-common-info"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-error-old-body-high",
+        "title": "复权净值新高与自选辅助信息",
+        "requirementAnchor": "watchlist-new-high",
+        "visibleLanding": true,
+        "visibleText": "复权净值"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-error-old-008",
+      "pageKey": "wealth-home-scenario-error-old",
+      "semanticSlot": "body-valuation",
+      "target": {
+        "selector": "#activeCard[data-card-kind=\"valuation\"] .body-panel",
+        "strategy": "selector"
+      },
+      "title": "实际估值分位与自选辅助信息",
+      "annotationType": "C",
+      "kind": "component",
+      "dimension": "区域说明",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 业务含义\n\n实际估值分位与自选辅助信息。正式要求见 PRD「watchlist-valuation」，只读编号用于对照当前可见区域。\n\n### 展示与交互\n\n沿用已确认结构与原点击区域；示例数值和文案不作为新增业务事实。\n\n### 状态与异常\n\n只在对应内容可见时展示编号；数据与异常处理以正式 PRD 为准。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#watchlist-valuation"
+      },
+      "sourceAnchors": [
+        "watchlist-valuation",
+        "watchlist-display",
+        "watchlist-common-info"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-error-old-body-valuation",
+        "title": "实际估值分位与自选辅助信息",
+        "requirementAnchor": "watchlist-valuation",
+        "visibleLanding": true,
+        "visibleText": "当前历史分位"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-error-old-009",
+      "pageKey": "wealth-home-scenario-error-old",
+      "semanticSlot": "switch",
+      "target": {
+        "selector": "#nextCard",
+        "strategy": "selector"
+      },
+      "title": "多卡手动切换",
+      "annotationType": "A",
+      "kind": "interaction",
+      "dimension": "区域说明",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 业务含义\n\n多卡手动切换。正式要求见 PRD「service-card-switching」，只读编号用于对照当前可见区域。\n\n### 展示与交互\n\n沿用已确认结构与原点击区域；示例数值和文案不作为新增业务事实。\n\n### 状态与异常\n\n只在对应内容可见时展示编号；数据与异常处理以正式 PRD 为准。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#service-card-switching"
+      },
+      "sourceAnchors": [
+        "service-card-switching"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-error-old-switch",
+        "title": "多卡手动切换",
+        "requirementAnchor": "service-card-switching",
+        "visibleLanding": true,
+        "visibleText": "下一个"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-error-new-001",
+      "pageKey": "wealth-home-scenario-error-new",
+      "semanticSlot": "failure",
+      "target": {
+        "selector": "#sceneRegion .failure-block",
+        "strategy": "selector"
+      },
+      "title": "加载失败与重试",
+      "annotationType": "P",
+      "kind": "component",
+      "dimension": "页面概览",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 页面功能介绍\n\n场景服务卡结构评审，当前状态：失败 · 无可保留旧内容。\n\n### 业务流程\n\n从统一评审中心选择当前状态。\n\n### 核心内容\n\n对照当前可见的场景内容或加载反馈。\n\n### 主要操作\n\n点击编号定位正式需求；卡片交互沿用候选原型。\n\n### 状态与异常\n\n成功无内容整体隐藏；加载与失败不视为空内容。\n\n### 待确认\n\n当前仅为结构候选，图表细节、逐字文案与数据能力未决项仍按 PRD 保留。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#empty-error-rule"
+      },
+      "sourceAnchors": [
+        "empty-error-rule"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-error-new-failure",
+        "title": "加载失败与重试",
+        "requirementAnchor": "empty-error-rule",
+        "visibleLanding": true,
+        "visibleText": "重试"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-fallback-refreshing-001",
+      "pageKey": "wealth-home-scenario-fallback-refreshing",
+      "semanticSlot": "feedback",
+      "target": {
+        "selector": "#activeCard .feedback",
+        "strategy": "selector"
+      },
+      "title": "更新反馈与保留当前内容",
+      "annotationType": "S",
+      "kind": "state",
+      "dimension": "区域说明",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 业务含义\n\n更新反馈与保留当前内容。正式要求见 PRD「empty-error-rule」，只读编号用于对照当前可见区域。\n\n### 展示与交互\n\n沿用已确认结构与原点击区域；示例数值和文案不作为新增业务事实。\n\n### 状态与异常\n\n只在对应内容可见时展示编号；数据与异常处理以正式 PRD 为准。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#empty-error-rule"
+      },
+      "sourceAnchors": [
+        "empty-error-rule",
+        "fallback-joint-update"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-fallback-refreshing-feedback",
+        "title": "更新反馈与保留当前内容",
+        "requirementAnchor": "empty-error-rule",
+        "visibleLanding": true,
+        "visibleText": "正在更新推荐内容"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-fallback-refreshing-002",
+      "pageKey": "wealth-home-scenario-fallback-refreshing",
+      "semanticSlot": "bubble",
+      "target": {
+        "selector": "#activeCard .bubble-row",
+        "strategy": "selector"
+      },
+      "title": "小宝头像后的场景文案",
+      "annotationType": "P",
+      "kind": "component",
+      "dimension": "页面概览",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 页面功能介绍\n\n场景服务卡结构评审，当前状态：补位共同更新中。\n\n### 业务流程\n\n从统一评审中心选择当前状态。\n\n### 核心内容\n\n对照当前可见的场景内容或加载反馈。\n\n### 主要操作\n\n点击编号定位正式需求；卡片交互沿用候选原型。\n\n### 状态与异常\n\n成功无内容整体隐藏；加载与失败不视为空内容。\n\n### 待确认\n\n当前仅为结构候选，图表细节、逐字文案与数据能力未决项仍按 PRD 保留。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#service-card-switching"
+      },
+      "sourceAnchors": [
+        "service-card-switching",
+        "theme-display",
+        "watchlist-display"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-fallback-refreshing-bubble",
+        "title": "小宝头像后的场景文案",
+        "requirementAnchor": "service-card-switching",
+        "visibleLanding": true,
+        "visibleText": "一起"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-fallback-refreshing-003",
+      "pageKey": "wealth-home-scenario-fallback-refreshing",
+      "semanticSlot": "body-market",
+      "target": {
+        "selector": "#activeCard[data-card-kind=\"market\"] .body-panel",
+        "strategy": "selector"
+      },
+      "title": "市场主线补位内容与两只关联基金",
+      "annotationType": "C",
+      "kind": "component",
+      "dimension": "区域说明",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 业务含义\n\n市场主线补位内容与两只关联基金。正式要求见 PRD「theme-market-rules」，只读编号用于对照当前可见区域。\n\n### 展示与交互\n\n沿用已确认结构与原点击区域；示例数值和文案不作为新增业务事实。\n\n### 状态与异常\n\n只在对应内容可见时展示编号；数据与异常处理以正式 PRD 为准。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#theme-market-rules"
+      },
+      "sourceAnchors": [
+        "theme-market-rules",
+        "theme-display",
+        "theme-content-rules",
+        "selected-fallback-rule"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-fallback-refreshing-body-market",
+        "title": "市场主线补位内容与两只关联基金",
+        "requirementAnchor": "theme-market-rules",
+        "visibleLanding": true,
+        "visibleText": "市场主线"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-fallback-error-001",
+      "pageKey": "wealth-home-scenario-fallback-error",
+      "semanticSlot": "feedback",
+      "target": {
+        "selector": "#activeCard .feedback",
+        "strategy": "selector"
+      },
+      "title": "更新反馈与保留当前内容",
+      "annotationType": "S",
+      "kind": "state",
+      "dimension": "区域说明",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 业务含义\n\n更新反馈与保留当前内容。正式要求见 PRD「empty-error-rule」，只读编号用于对照当前可见区域。\n\n### 展示与交互\n\n沿用已确认结构与原点击区域；示例数值和文案不作为新增业务事实。\n\n### 状态与异常\n\n只在对应内容可见时展示编号；数据与异常处理以正式 PRD 为准。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#empty-error-rule"
+      },
+      "sourceAnchors": [
+        "empty-error-rule",
+        "fallback-joint-update"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-fallback-error-feedback",
+        "title": "更新反馈与保留当前内容",
+        "requirementAnchor": "empty-error-rule",
+        "visibleLanding": true,
+        "visibleText": "刷新失败"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-fallback-error-002",
+      "pageKey": "wealth-home-scenario-fallback-error",
+      "semanticSlot": "bubble",
+      "target": {
+        "selector": "#activeCard .bubble-row",
+        "strategy": "selector"
+      },
+      "title": "小宝头像后的场景文案",
+      "annotationType": "P",
+      "kind": "component",
+      "dimension": "页面概览",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 页面功能介绍\n\n场景服务卡结构评审，当前状态：补位共同更新失败。\n\n### 业务流程\n\n从统一评审中心选择当前状态。\n\n### 核心内容\n\n对照当前可见的场景内容或加载反馈。\n\n### 主要操作\n\n点击编号定位正式需求；卡片交互沿用候选原型。\n\n### 状态与异常\n\n成功无内容整体隐藏；加载与失败不视为空内容。\n\n### 待确认\n\n当前仅为结构候选，图表细节、逐字文案与数据能力未决项仍按 PRD 保留。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#service-card-switching"
+      },
+      "sourceAnchors": [
+        "service-card-switching",
+        "theme-display",
+        "watchlist-display"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-fallback-error-bubble",
+        "title": "小宝头像后的场景文案",
+        "requirementAnchor": "service-card-switching",
+        "visibleLanding": true,
+        "visibleText": "一起"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-fallback-error-003",
+      "pageKey": "wealth-home-scenario-fallback-error",
+      "semanticSlot": "body-market",
+      "target": {
+        "selector": "#activeCard[data-card-kind=\"market\"] .body-panel",
+        "strategy": "selector"
+      },
+      "title": "市场主线补位内容与两只关联基金",
+      "annotationType": "C",
+      "kind": "component",
+      "dimension": "区域说明",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 业务含义\n\n市场主线补位内容与两只关联基金。正式要求见 PRD「theme-market-rules」，只读编号用于对照当前可见区域。\n\n### 展示与交互\n\n沿用已确认结构与原点击区域；示例数值和文案不作为新增业务事实。\n\n### 状态与异常\n\n只在对应内容可见时展示编号；数据与异常处理以正式 PRD 为准。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#theme-market-rules"
+      },
+      "sourceAnchors": [
+        "theme-market-rules",
+        "theme-display",
+        "theme-content-rules",
+        "selected-fallback-rule"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-fallback-error-body-market",
+        "title": "市场主线补位内容与两只关联基金",
+        "requirementAnchor": "theme-market-rules",
+        "visibleLanding": true,
+        "visibleText": "市场主线"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-restoration-001",
+      "pageKey": "wealth-home-scenario-restoration",
+      "semanticSlot": "bubble",
+      "target": {
+        "selector": "#activeCard .bubble-row",
+        "strategy": "selector"
+      },
+      "title": "小宝头像后的场景文案",
+      "annotationType": "P",
+      "kind": "component",
+      "dimension": "页面概览",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 页面功能介绍\n\n场景服务卡结构评审，当前状态：场景恢复 · 等待下次获取。\n\n### 业务流程\n\n从统一评审中心选择当前状态。\n\n### 核心内容\n\n对照当前可见的场景内容或加载反馈。\n\n### 主要操作\n\n点击编号定位正式需求；卡片交互沿用候选原型。\n\n### 状态与异常\n\n成功无内容整体隐藏；加载与失败不视为空内容。\n\n### 待确认\n\n当前仅为结构候选，图表细节、逐字文案与数据能力未决项仍按 PRD 保留。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#service-card-switching"
+      },
+      "sourceAnchors": [
+        "service-card-switching",
+        "theme-display",
+        "watchlist-display"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-restoration-bubble",
+        "title": "小宝头像后的场景文案",
+        "requirementAnchor": "service-card-switching",
+        "visibleLanding": true,
+        "visibleText": "您"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-restoration-002",
+      "pageKey": "wealth-home-scenario-restoration",
+      "semanticSlot": "body-product",
+      "target": {
+        "selector": "#activeCard[data-card-kind=\"product\"] .body-panel",
+        "strategy": "selector"
+      },
+      "title": "精选产品补位内容与原点击去向",
+      "annotationType": "C",
+      "kind": "component",
+      "dimension": "区域说明",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 业务含义\n\n精选产品补位内容与原点击去向。正式要求见 PRD「product-card-rules」，只读编号用于对照当前可见区域。\n\n### 展示与交互\n\n沿用已确认结构与原点击区域；示例数值和文案不作为新增业务事实。\n\n### 状态与异常\n\n只在对应内容可见时展示编号；数据与异常处理以正式 PRD 为准。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#product-card-rules"
+      },
+      "sourceAnchors": [
+        "product-card-rules",
+        "product-card-destination",
+        "selected-fallback-rule"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-restoration-body-product",
+        "title": "精选产品补位内容与原点击去向",
+        "requirementAnchor": "product-card-rules",
+        "visibleLanding": true,
+        "visibleText": "关注长期成长机会"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-missing-001",
+      "pageKey": "wealth-home-scenario-missing",
+      "semanticSlot": "bubble",
+      "target": {
+        "selector": "#activeCard .bubble-row",
+        "strategy": "selector"
+      },
+      "title": "小宝头像后的场景文案",
+      "annotationType": "P",
+      "kind": "component",
+      "dimension": "页面概览",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 页面功能介绍\n\n场景服务卡结构评审，当前状态：无法取得有效加入日期。\n\n### 业务流程\n\n从统一评审中心选择当前状态。\n\n### 核心内容\n\n对照当前可见的场景内容或加载反馈。\n\n### 主要操作\n\n点击编号定位正式需求；卡片交互沿用候选原型。\n\n### 状态与异常\n\n成功无内容整体隐藏；加载与失败不视为空内容。\n\n### 待确认\n\n当前仅为结构候选，图表细节、逐字文案与数据能力未决项仍按 PRD 保留。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#service-card-switching"
+      },
+      "sourceAnchors": [
+        "service-card-switching",
+        "theme-display",
+        "watchlist-display"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-missing-bubble",
+        "title": "小宝头像后的场景文案",
+        "requirementAnchor": "service-card-switching",
+        "visibleLanding": true,
+        "visibleText": "您"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-missing-002",
+      "pageKey": "wealth-home-scenario-missing",
+      "semanticSlot": "body-reopen",
+      "target": {
+        "selector": "#activeCard[data-card-kind=\"reopen\"] .body-panel",
+        "strategy": "selector"
+      },
+      "title": "恢复申购与自选辅助信息",
+      "annotationType": "C",
+      "kind": "component",
+      "dimension": "区域说明",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 业务含义\n\n恢复申购与自选辅助信息。正式要求见 PRD「watchlist-subscription」，只读编号用于对照当前可见区域。\n\n### 展示与交互\n\n沿用已确认结构与原点击区域；示例数值和文案不作为新增业务事实。\n\n### 状态与异常\n\n只在对应内容可见时展示编号；数据与异常处理以正式 PRD 为准。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#watchlist-subscription"
+      },
+      "sourceAnchors": [
+        "watchlist-subscription",
+        "watchlist-display",
+        "watchlist-common-info"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-missing-body-reopen",
+        "title": "恢复申购与自选辅助信息",
+        "requirementAnchor": "watchlist-subscription",
+        "visibleLanding": true,
+        "visibleText": "开放申购"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-readded-001",
+      "pageKey": "wealth-home-scenario-readded",
+      "semanticSlot": "bubble",
+      "target": {
+        "selector": "#activeCard .bubble-row",
+        "strategy": "selector"
+      },
+      "title": "小宝头像后的场景文案",
+      "annotationType": "P",
+      "kind": "component",
+      "dimension": "页面概览",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 页面功能介绍\n\n场景服务卡结构评审，当前状态：删除重加 · 当天1天。\n\n### 业务流程\n\n从统一评审中心选择当前状态。\n\n### 核心内容\n\n对照当前可见的场景内容或加载反馈。\n\n### 主要操作\n\n点击编号定位正式需求；卡片交互沿用候选原型。\n\n### 状态与异常\n\n成功无内容整体隐藏；加载与失败不视为空内容。\n\n### 待确认\n\n当前仅为结构候选，图表细节、逐字文案与数据能力未决项仍按 PRD 保留。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#service-card-switching"
+      },
+      "sourceAnchors": [
+        "service-card-switching",
+        "theme-display",
+        "watchlist-display"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-readded-bubble",
+        "title": "小宝头像后的场景文案",
+        "requirementAnchor": "service-card-switching",
+        "visibleLanding": true,
+        "visibleText": "您"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-readded-002",
+      "pageKey": "wealth-home-scenario-readded",
+      "semanticSlot": "body-reopen",
+      "target": {
+        "selector": "#activeCard[data-card-kind=\"reopen\"] .body-panel",
+        "strategy": "selector"
+      },
+      "title": "恢复申购与自选辅助信息",
+      "annotationType": "C",
+      "kind": "component",
+      "dimension": "区域说明",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 业务含义\n\n恢复申购与自选辅助信息。正式要求见 PRD「watchlist-subscription」，只读编号用于对照当前可见区域。\n\n### 展示与交互\n\n沿用已确认结构与原点击区域；示例数值和文案不作为新增业务事实。\n\n### 状态与异常\n\n只在对应内容可见时展示编号；数据与异常处理以正式 PRD 为准。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#watchlist-subscription"
+      },
+      "sourceAnchors": [
+        "watchlist-subscription",
+        "watchlist-display",
+        "watchlist-common-info"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-readded-body-reopen",
+        "title": "恢复申购与自选辅助信息",
+        "requirementAnchor": "watchlist-subscription",
+        "visibleLanding": true,
+        "visibleText": "开放申购"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-long-001",
+      "pageKey": "wealth-home-scenario-long",
+      "semanticSlot": "bubble",
+      "target": {
+        "selector": "#activeCard .bubble-row",
+        "strategy": "selector"
+      },
+      "title": "小宝头像后的场景文案",
+      "annotationType": "P",
+      "kind": "component",
+      "dimension": "页面概览",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 页面功能介绍\n\n场景服务卡结构评审，当前状态：长名称与内容高度。\n\n### 业务流程\n\n从统一评审中心选择当前状态。\n\n### 核心内容\n\n对照当前可见的场景内容或加载反馈。\n\n### 主要操作\n\n点击编号定位正式需求；卡片交互沿用候选原型。\n\n### 状态与异常\n\n成功无内容整体隐藏；加载与失败不视为空内容。\n\n### 待确认\n\n当前仅为结构候选，图表细节、逐字文案与数据能力未决项仍按 PRD 保留。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#service-card-switching"
+      },
+      "sourceAnchors": [
+        "service-card-switching",
+        "theme-display",
+        "watchlist-display"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-long-bubble",
+        "title": "小宝头像后的场景文案",
+        "requirementAnchor": "service-card-switching",
+        "visibleLanding": true,
+        "visibleText": "您"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    },
+    {
+      "id": "ANN-wealth-home-scenario-long-002",
+      "pageKey": "wealth-home-scenario-long",
+      "semanticSlot": "body-cap",
+      "target": {
+        "selector": "#activeCard[data-card-kind=\"cap\"] .body-panel",
+        "strategy": "selector"
+      },
+      "title": "单日累计申购限额与自选辅助信息",
+      "annotationType": "C",
+      "kind": "component",
+      "dimension": "区域说明",
+      "topics": [
+        "business",
+        "interaction",
+        "state"
+      ],
+      "priority": "high",
+      "visible": true,
+      "contentMarkdown": "### 业务含义\n\n单日累计申购限额与自选辅助信息。正式要求见 PRD「watchlist-limit」，只读编号用于对照当前可见区域。\n\n### 展示与交互\n\n沿用已确认结构与原点击区域；示例数值和文案不作为新增业务事实。\n\n### 状态与异常\n\n只在对应内容可见时展示编号；数据与异常处理以正式 PRD 为准。",
+      "source": {
+        "type": "prd",
+        "ref": "source-document:wealth-feed-platform-prd.html#watchlist-limit"
+      },
+      "sourceAnchors": [
+        "watchlist-limit",
+        "watchlist-display",
+        "watchlist-common-info"
+      ],
+      "reviewRegion": {
+        "id": "region-m02c-long-body-cap",
+        "title": "单日累计申购限额与自选辅助信息",
+        "requirementAnchor": "watchlist-limit",
+        "visibleLanding": true,
+        "visibleText": "单日累计申购限额"
+      },
+      "review": {
+        "required": false,
+        "status": "reviewed"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-09-18"
+    }
+  ],
+  "reviewRequirementAnchors": [
+    "empty-error-rule",
+    "fallback-area-visibility",
+    "fallback-joint-update",
+    "product-card-destination",
+    "product-card-rules",
+    "ranking-card-rules",
+    "selected-fallback-rule",
+    "service-card-switching",
+    "theme-content-rules",
+    "theme-customer-rules",
+    "theme-display",
+    "theme-market-rules",
+    "theme-short-rules",
+    "topic-card-rules",
+    "watchlist-common-info",
+    "watchlist-display",
+    "watchlist-limit",
+    "watchlist-new-high",
+    "watchlist-performance",
+    "watchlist-subscription",
+    "watchlist-valuation"
+  ],
+  "numbering": "Canonical order filtered to currently visible targets; sequential 01..N. Hidden C has no badge."
+}</script>
+<script>/* Project-owned read-only bridge; deliberately outside annotator managed blocks. */
+(()=>{
+  const query=new URLSearchParams(location.search);
+  if(query.get('review')!=='1'&&query.get('mode')!=='review')return;
+  if(window.M02C_REVIEW)return;
+  let mapping=JSON.parse(document.getElementById('prototype-annotations-data').textContent);
+  let visible=[],selected=null,frame=0,lastSignature='';
+  const style=document.createElement('style');
+  style.textContent='.m02c-review-badge{position:absolute;left:2px;width:25px;height:25px;border:1px solid #1760bd;border-radius:50%;background:#fff;color:#1457ac;font:600 12px Arial;z-index:999;cursor:pointer;box-shadow:0 1px 3px #0002}.m02c-review-badge[aria-pressed="true"]{background:#1760bd;color:white}.m02c-review-highlight{outline:2px solid #1760bd!important;outline-offset:2px}body.standalone #sceneRegion{margin-left:40px}';
+  document.head.append(style);
+  const layer=document.createElement('div');layer.id='m02c-review-layer';layer.setAttribute('aria-label','只读需求编号');document.body.append(layer);
+  const pageKey=()=> 'wealth-home-scenario-'+currentState.key;
+  const emit=message=>{if(parent!==window)parent.postMessage(message,'*')};
+  const snapshot=()=>({type:'review-center:ready',pageKey:pageKey(),stateId:currentState.key,cardId:currentCard()?.id||null,visibleAnnotations:visible.map(({a,number})=>({annotationId:a.id,number,reviewSectionId:a.reviewRegion.requirementAnchor,title:a.title}))});
+  function highlight(id,scroll){
+    document.querySelectorAll('.m02c-review-highlight').forEach(e=>e.classList.remove('m02c-review-highlight'));
+    selected=id;const hit=visible.find(r=>r.a.id===id);if(!hit)return false;
+    hit.element.classList.add('m02c-review-highlight');
+    if(scroll)hit.element.scrollIntoView({block:'center',behavior:'instant'});
+    layer.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.annotationId===id)));return true;
+  }
+  function draw(){
+    frame=0;visible=[];
+    for(const a of mapping.annotations.filter(a=>a.pageKey===pageKey()&&a.visible)){
+      const element=document.querySelector(a.target.selector);
+      if(!element||!element.getClientRects().length||element.closest('[hidden]'))continue;
+      visible.push({a,element,number:String(visible.length+1).padStart(2,'0')});
+    }
+    layer.replaceChildren();let bottom=-100;
+    for(const item of visible){
+      const {a,element,number}=item,rect=element.getBoundingClientRect(),b=document.createElement('button');
+      b.type='button';b.className='m02c-review-badge';b.dataset.annotationId=a.id;b.textContent=number;b.title=a.title;b.setAttribute('aria-label',number+' '+a.title);b.setAttribute('aria-pressed',String(selected===a.id));
+      const top=Math.max(rect.top+scrollY,bottom+4);bottom=top+25;b.style.top=top+'px';
+      b.addEventListener('pointerdown',e=>e.stopPropagation());
+      b.addEventListener('click',e=>{e.stopPropagation();highlight(a.id,false);const detail={annotationId:a.id,pageKey:pageKey(),reviewRegion:a.reviewRegion};window.dispatchEvent(new CustomEvent('prototypeannotatorselect',{detail}));emit({type:'review-center:annotation-selected',...detail});});layer.append(b);
+    }
+    if(!highlight(selected,false))selected=null;
+    const payload=snapshot(),signature=JSON.stringify(payload);
+    if(signature!==lastSignature){lastSignature=signature;emit(payload);}
+  }
+  const schedule=()=>{if(!frame)frame=requestAnimationFrame(draw)};
+  new MutationObserver(schedule).observe(document.getElementById('sceneRegion'),{childList:true,subtree:true});
+  new ResizeObserver(schedule).observe(document.getElementById('phone'));
+  addEventListener('resize',schedule);addEventListener('hashchange',schedule);
+  addEventListener('message',event=>{
+    if(event.source!==parent||parent===window)return;const m=event.data;
+    if(!m||typeof m!=='object')return;
+    if(m.type==='review-center:request-state'){draw();emit(snapshot());return;}
+    if(m.type!=='review-center:focus-annotation'||m.pageKey!==pageKey()||typeof m.annotationId!=='string')return;
+    if(!highlight(m.annotationId,true))emit({type:'review-center:focus-unavailable',annotationId:m.annotationId,pageKey:pageKey()});
+    else emit({type:'review-center:annotation-focused',annotationId:m.annotationId,pageKey:pageKey()});
+  });
+  window.M02C_REVIEW=Object.freeze({getState:snapshot});draw();
+  if(location.protocol!=='file:')fetch('./.prototype-annotations/annotations.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('mapping unavailable');return r.json()}).then(data=>{if(data.workflowMode!=='review-center-readonly'||data.source.sha256!==mapping.source.sha256)throw Error('mapping source mismatch');mapping=data;draw()}).catch(()=>emit({type:'review-center:mapping-fallback',pageKey:pageKey()}));
+})();
+</script>
+<!-- M02C review bridge:end -->
+</body></html>

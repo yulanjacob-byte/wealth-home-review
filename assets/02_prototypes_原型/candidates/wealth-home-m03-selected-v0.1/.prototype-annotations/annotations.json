@@ -1,0 +1,147 @@
+{
+  "version": 1,
+  "projectId": "wealth-home-selected",
+  "workflowMode": "review-center-readonly",
+  "pages": [
+    {
+      "pageKey": "wealth-home-selected-normal",
+      "title": "精选推荐正常列表",
+      "path": "index.html"
+    }
+  ],
+  "reviewRequirementAnchors": [
+    "product-card-rules",
+    "product-kyp",
+    "topic-card-rules",
+    "theme-market-rules",
+    "theme-short-rules"
+  ],
+  "annotations": [
+    {
+      "id": "ANN-selected-product",
+      "pageKey": "wealth-home-selected-normal",
+      "title": "产品图文卡",
+      "annotationType": "P",
+      "visible": true,
+      "reviewSectionId": "product-card-rules",
+      "target": {
+        "selector": "#selected-product",
+        "strategy": "id"
+      },
+      "reviewRegion": {
+        "id": "region-selected-product",
+        "title": "产品图文卡",
+        "requirementAnchor": "product-card-rules",
+        "visibleLanding": true,
+        "visibleText": "产品名称"
+      },
+      "contentMarkdown": "### 页面功能介绍\n展示产品图文卡。\n### 核心内容\n标题、左侧介绍、右侧图片、关联产品及两个展示位。\n### 业务流程\n运营配置并审核后，按发布状态、排期和展示条件参与推荐。\n### 主要操作\n整卡点击去向见右侧产品图文卡说明。\n### 待确认\n填写和数据对接要求保留在完整 PRD 待确认事项。",
+      "dimension": "Page overview",
+      "source": {
+        "type": "prd",
+        "path": "wealth-feed-platform-prd.html",
+        "anchor": "product-card-rules"
+      }
+    },
+    {
+      "id": "ANN-selected-kyp",
+      "pageKey": "wealth-home-selected-normal",
+      "title": "普通基金投顾的 KYP",
+      "annotationType": "R",
+      "visible": true,
+      "reviewSectionId": "product-kyp",
+      "target": {
+        "selector": "#selected-advisory",
+        "strategy": "id"
+      },
+      "reviewRegion": {
+        "id": "region-selected-kyp",
+        "title": "普通基金投顾的 KYP",
+        "requirementAnchor": "product-kyp",
+        "visibleLanding": true,
+        "visibleText": "产品 KYP"
+      },
+      "contentMarkdown": "### 业务含义\n普通基金投顾在产品名称下方固定展示 KYP。",
+      "source": {
+        "type": "prd",
+        "path": "wealth-feed-platform-prd.html",
+        "anchor": "product-kyp"
+      }
+    },
+    {
+      "id": "ANN-selected-topic",
+      "pageKey": "wealth-home-selected-normal",
+      "title": "机动类专题",
+      "annotationType": "J",
+      "visible": true,
+      "reviewSectionId": "topic-card-rules",
+      "target": {
+        "selector": "#selected-topic",
+        "strategy": "id"
+      },
+      "reviewRegion": {
+        "id": "region-selected-topic",
+        "title": "机动类专题",
+        "requirementAnchor": "topic-card-rules",
+        "visibleLanding": true,
+        "visibleText": "专题标题"
+      },
+      "contentMarkdown": "### 业务含义\n运营配置图文及落地页，点击整卡打开配置地址。",
+      "source": {
+        "type": "prd",
+        "path": "wealth-feed-platform-prd.html",
+        "anchor": "topic-card-rules"
+      }
+    },
+    {
+      "id": "ANN-selected-market",
+      "pageKey": "wealth-home-selected-normal",
+      "title": "市场主线卡",
+      "annotationType": "R",
+      "visible": true,
+      "reviewSectionId": "theme-market-rules",
+      "target": {
+        "selector": "#selected-market",
+        "strategy": "id"
+      },
+      "reviewRegion": {
+        "id": "region-selected-market",
+        "title": "市场主线卡",
+        "requirementAnchor": "theme-market-rules",
+        "visibleLanding": true,
+        "visibleText": "市场主线｜板块名称"
+      },
+      "contentMarkdown": "### 业务含义\n市场主线卡的板块指标、关联基金和点击区域。",
+      "source": {
+        "type": "prd",
+        "path": "wealth-feed-platform-prd.html",
+        "anchor": "theme-market-rules"
+      }
+    },
+    {
+      "id": "ANN-selected-short",
+      "pageKey": "wealth-home-selected-normal",
+      "title": "短期热点卡",
+      "annotationType": "R",
+      "visible": true,
+      "reviewSectionId": "theme-short-rules",
+      "target": {
+        "selector": "#selected-short",
+        "strategy": "id"
+      },
+      "reviewRegion": {
+        "id": "region-selected-short",
+        "title": "短期热点卡",
+        "requirementAnchor": "theme-short-rules",
+        "visibleLanding": true,
+        "visibleText": "短期热点｜板块名称"
+      },
+      "contentMarkdown": "### 业务含义\n短期热点卡的板块指标、关联基金和点击区域。",
+      "source": {
+        "type": "prd",
+        "path": "wealth-feed-platform-prd.html",
+        "anchor": "theme-short-rules"
+      }
+    }
+  ]
+}

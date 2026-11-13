@@ -1,0 +1,277 @@
+{
+  "version": 1,
+  "project": {
+    "id": "wealth-home-v4-m04",
+    "name": "理财首页｜热点机会",
+    "source": "local"
+  },
+  "productProfile": {
+    "productName": "佣金宝理财首页",
+    "productType": "securities_mobile_app",
+    "productForms": [
+      "移动端用户前台",
+      "证券理财",
+      "行情热点"
+    ],
+    "primaryUsers": [
+      "理财首页所有用户"
+    ],
+    "annotationMode": "standard",
+    "enabledAnnotationTypes": [
+      "P",
+      "R",
+      "FALLBACK",
+      "C",
+      "DATA"
+    ]
+  },
+  "productContext": {
+    "pageRole": "理财首页热点机会业务区域",
+    "businessGoal": "帮助用户查看当前热点板块，并继续阅读板块解读、查看关联基金或通过底部热点提示定位板块",
+    "deliveryBoundary": "业务事实以正式 Living Spec v8 为准；V4.2 是当前高保真评审候选"
+  },
+  "pages": [
+    {
+      "pageKey": "wealth-home-v4-m04-hotspot-opportunity",
+      "title": "理财首页／热点机会",
+      "path": "wealth-home-business-consensus-interactive-v4.2.html",
+      "route": "/wealth-home-business-consensus-interactive-v4.2.html?annotation-review=m04"
+    }
+  ],
+  "annotations": [
+    {
+      "id": "ANN-wealth-home-v4-m04-hotspot-opportunity-001",
+      "candidateId": "CAND-M04-001",
+      "pageKey": "wealth-home-v4-m04-hotspot-opportunity",
+      "target": {
+        "selector": "[data-ann=\"m04-scope-categories\"]",
+        "fallbackText": "市场主线 短期热点 近日大涨",
+        "strategy": "data",
+        "sourceElementId": "M04-E001"
+      },
+      "title": "01 热点分类与列表入口",
+      "contentMarkdown": "### 页面功能介绍\n用三个时间视角帮助用户查看当前热点板块，并在同一页面继续查看板块解读和关联基金。\n\n### 核心内容\n- 只展示 **市场主线／短期热点／近日大涨** 三个热点分类。\n- 首次进入默认选中市场主线；切换分类后更新对应板块列表。\n- 热点分类与板块列表使用连续白色容器，底部热点提示独立于该容器。\n- 正常展示时不增加“盘中实时更新”或常驻更新时间。\n\n### 业务流程\n进入热点机会 → 默认查看市场主线 → 切换热点分类 → 查看板块卡片 → 继续阅读板块解读或关联基金。\n\n### 主要操作\n1. 点击热点机会后进入本区域。\n2. 点击分类名称切换内容。\n3. 每次进入或切换分类后，默认展开当前分类第一张板块卡片，其余卡片收起。\n4. 三个热点分类及最终结果由行情中心提供，App 只展示，不自行生成分类或调整顺序。\n\n### 待确认\n正式接口字段与盘中刷新协议待提供；其余页面名称、默认状态与容器关系按当前页面要求验收。",
+      "annotationType": "P",
+      "kind": "note",
+      "dimension": "Page overview",
+      "topics": [
+        "business",
+        "scope",
+        "flow",
+        "dependency"
+      ],
+      "priority": "high",
+      "visible": true,
+      "source": {
+        "type": "living-spec",
+        "ref": "v8 第2章、第3章、第4.1节"
+      },
+      "evidence": [
+        "正式 Living Spec v8",
+        "V4.2 高保真页面"
+      ],
+      "dependencies": [
+        "行情中心热点分类结果",
+        "理财首页公共页面框架"
+      ],
+      "openQuestions": [
+        "正式接口字段与盘中刷新协议待提供"
+      ],
+      "review": {
+        "required": true,
+        "status": "pending"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-08-27T23:13:41+08:00",
+      "order": 1
+    },
+    {
+      "id": "ANN-wealth-home-v4-m04-hotspot-opportunity-002",
+      "candidateId": "CAND-M04-002",
+      "pageKey": "wealth-home-v4-m04-hotspot-opportunity",
+      "target": {
+        "selector": "[data-ann=\"m04-board-card-primary\"]",
+        "fallbackText": "今日涨幅 热度",
+        "strategy": "data",
+        "sourceElementId": "M04-E002"
+      },
+      "title": "02 板块卡片、指标与板块解读",
+      "contentMarkdown": "### 业务含义\n板块卡片用于展示每个热点板块的核心行情、所属热点分类口径和板块解读，帮助用户先比较板块，再继续查看基金。\n\n### 页面要求\n- 卡片先展示名次和板块名称，再分列展示三项指标，避免名称与指标挤在同一行。\n- 点击卡片头部展开或收起详情；展开后先显示板块解读，再显示关联基金。\n- 板块解读有内容时显示标题与正文，不展示 AI 属性标签；正文默认两行，可在当前卡片内展开全文和收起。\n- 数仓没有解读时隐藏整个解读区域；不跳转小宝，不新增解读详情页。\n\n### 分类指标与顺序\n| 热点分类 | 展示指标 | 入选条件 | 页面顺序 |\n| --- | --- | --- | --- |\n| 市场主线 | 今日涨幅、近10日涨幅、热度 | 近10个交易日平均热度前10，且近10日累计涨幅 ≥5% | 按最新热度降序，使用行情中心最终名次 |\n| 短期热点 | 今日涨幅、近5日涨幅、热度 | 热度前30，且近5日累计涨幅 ≥3% | 按最新热度降序，使用行情中心最终名次 |\n| 近日大涨 | 今日涨幅、近3日涨幅、量能 | 综合评分前30，且近3日累计涨幅 ≥3% | 按量能降序，使用行情中心最终名次 |\n\n### 数据含义\n- 热度范围为 0—100，保留两位小数。\n- 量能 = 近期均量／长期均量；近期均量取板块近3日成交额，长期均量取板块3天前的20日成交额。页面显示两位小数纯数字，例如 3.78。\n- 板块解读直接使用数仓现有 AI板块诊断内容，App 不生成、改写或总结。\n\n### 完成标准\n字段、精度、最终名次和顺序与上游结果一致；App 不进行二次筛选或排序；板块解读的名称、显隐和展开状态符合上述规则。",
+      "annotationType": "DATA",
+      "kind": "data",
+      "dimension": "Data explanation",
+      "topics": [
+        "business",
+        "data",
+        "recommendation",
+        "ai",
+        "dependency"
+      ],
+      "priority": "high",
+      "visible": true,
+      "source": {
+        "type": "living-spec",
+        "ref": "v8 第4.2节、第4.3节、第6章"
+      },
+      "evidence": [
+        "正式 Living Spec v8",
+        "V4.2 板块卡片和板块解读"
+      ],
+      "dependencies": [
+        "行情中心最终分类与名次",
+        "数仓 AI板块诊断内容"
+      ],
+      "risks": [
+        "App 不得根据演示数值反推算法或二次排序",
+        "板块解读不展示 AI 属性标签，App 不得改写数仓内容"
+      ],
+      "openQuestions": [
+        "正式字段、涨幅精度、空值与更新时间协议待提供"
+      ],
+      "review": {
+        "required": true,
+        "status": "pending"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-08-27T23:13:41+08:00",
+      "order": 2
+    },
+    {
+      "id": "ANN-wealth-home-v4-m04-hotspot-opportunity-003",
+      "candidateId": "CAND-M04-003",
+      "pageKey": "wealth-home-v4-m04-hotspot-opportunity",
+      "target": {
+        "selector": "[data-ann=\"m04-related-funds\"]",
+        "fallbackText": "基金名称 板块持仓占比 近1年",
+        "strategy": "data",
+        "sourceElementId": "M04-E003"
+      },
+      "title": "03 关联基金、详情与自选",
+      "contentMarkdown": "### 业务含义\n把数仓已计算好的关联场外基金展示在板块卡片内，用户可以继续查看基金详情或直接管理自选。\n\n### 页面要求\n- 有数据时只显示一行三列表头：**基金名称／板块持仓占比／近1年**。\n- 未自选时在基金名称旁显示红色“+”；已自选时显示可识别、可删除的已自选状态。\n- 近1年根据正负复用 App 基金收益涨跌色。\n\n### 字段与数据\n| 字段 | 页面规则 | App 职责 |\n| --- | --- | --- |\n| 基金名称 | 按数仓返回展示 | 不改名、不重排 |\n| 板块持仓占比 | 百分比 | 直接展示，不计算 |\n| 近1年 | 百分比 | 直接展示，不计算 |\n| 自选状态 | 红色加号或删除状态 | 复用 App 现有自选能力 |\n\n### 操作与返回\n1. 点击基金名称或基金行非自选区域，进入 App 现有基金详情页，不直接进入购买。\n2. 点击自选按钮只执行加自选或删自选，不触发基金详情。\n3. 所有用户都可以直接加／删自选，不进入登录流程。\n4. 从基金详情返回后，恢复原热点分类和原板块位置。\n\n### 状态与异常\n空结果显示“暂无关联基金”；请求失败显示“关联基金暂时无法获取”，均不影响板块行情和板块解读。\n\n### 完成标准\n基金顺序、字段和数值与数仓结果一致；自选无需登录且不会误触基金详情；详情返回位置正确。",
+      "annotationType": "R",
+      "kind": "table",
+      "dimension": "Table and list",
+      "topics": [
+        "business",
+        "data",
+        "interaction",
+        "navigation"
+      ],
+      "priority": "high",
+      "visible": true,
+      "source": {
+        "type": "living-spec",
+        "ref": "v8 第2.3节、第4.4节、第5章"
+      },
+      "evidence": [
+        "正式 Living Spec v8",
+        "V4.2 关联基金与自选交互"
+      ],
+      "nextActions": [
+        "App 现有基金详情页",
+        "App 现有自选能力"
+      ],
+      "dependencies": [
+        "数仓关联基金结果",
+        "基金详情页",
+        "自选结果协议"
+      ],
+      "risks": [
+        "关联基金不得直接绕过详情页进入购买",
+        "App 不得自行计算关联关系或基金指标"
+      ],
+      "openQuestions": [
+        "板块持仓占比和近1年的正式口径、空值及更新时间待提供"
+      ],
+      "review": {
+        "required": true,
+        "status": "pending"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-08-27T23:13:41+08:00",
+      "order": 3
+    },
+    {
+      "id": "ANN-wealth-home-v4-m04-hotspot-opportunity-005",
+      "candidateId": "CAND-M04-005",
+      "pageKey": "wealth-home-v4-m04-hotspot-opportunity",
+      "target": {
+        "selector": "[data-ann=\"m04-bottom-hotspot\"]",
+        "fallbackText": "热点 查看",
+        "strategy": "data",
+        "sourceElementId": "M04-E005"
+      },
+      "title": "04 底部热点提示",
+      "contentMarkdown": "### 业务含义\n底部热点提示用于提醒三个热点分类中当天出现明显上涨异动的板块，并带用户回到对应分类和板块。它是单条提示，不轮播。\n\n### 候选与展示规则\n| 规则 | 已确认要求 |\n| --- | --- |\n| 候选范围 | 市场主线、短期热点、近日大涨当前覆盖的板块，只提示上涨 |\n| 触发阈值 | 当日涨幅 ≥2.00% |\n| 多候选比较 | 先比较当日涨幅；相同再比较近5个交易日累计涨幅；仍相同由行情中心给出唯一结果 |\n| 跨分类重复 | 同一板块只提示一次，由行情中心返回唯一正式热点分类 |\n| 展示数量 | 最多一条；没有候选时整条隐藏 |\n\n### 刷新、失败与跳转\n1. 交易时段每 60 秒刷新；App 回到前台时立即刷新。\n2. 当前板块不再满足条件时替换为最新候选；无候选时隐藏。\n3. 请求失败时立即隐藏，不保留旧提示；下次成功后按最新结果展示。\n4. 点击后进入上游返回的热点分类并定位、高亮对应板块。\n5. 如果点击时目标已退出，进入原指定热点分类首屏并提示“行情已更新，该板块当前已不在此热点分类中”，不改定位其他板块。\n\n### 完成标准\n页面不出现多条轮播；候选、阈值、唯一分类、刷新、失败隐藏和定位结果均符合上述规则。",
+      "annotationType": "R",
+      "kind": "flow",
+      "dimension": "Bottom hotspot rule and navigation",
+      "topics": [
+        "business",
+        "recommendation",
+        "refresh",
+        "navigation",
+        "dependency"
+      ],
+      "priority": "high",
+      "visible": true,
+      "source": {
+        "type": "living-spec",
+        "ref": "v8 第4.5节、第5章、第6章"
+      },
+      "evidence": [
+        "正式 Living Spec v8",
+        "V4.2 单条底部热点提示"
+      ],
+      "nextActions": [
+        "指定热点分类",
+        "对应板块定位"
+      ],
+      "dependencies": [
+        "行情中心唯一候选和唯一热点分类",
+        "理财首页公共页面框架"
+      ],
+      "risks": [
+        "App 不得设置热点分类优先级或二次排序",
+        "目标退出时不得定位其他板块"
+      ],
+      "openQuestions": [
+        "正式接口字段、失败协议、板块唯一标识和埋点技术名称待提供"
+      ],
+      "review": {
+        "required": true,
+        "status": "pending"
+      },
+      "createdBy": "ai",
+      "updatedAt": "2026-08-27T23:13:41+08:00",
+      "order": 4
+    }
+  ],
+  "history": [
+    {
+      "version": 1,
+      "updatedAt": "2026-08-24T19:39:00+08:00",
+      "updatedBy": "ai",
+      "summary": "依据 V4.1 与当时的需求说明建立六个产品评审标注。"
+    },
+    {
+      "version": 2,
+      "updatedAt": "2026-08-25T14:47:50+08:00",
+      "updatedBy": "ai",
+      "summary": "从正式 Living Spec v7 重新派生可读标注，更新至 V4.2，并把自选规则改为所有用户无需登录直接操作。"
+    },
+    {
+      "version": 3,
+      "updatedAt": "2026-08-25T22:40:57+08:00",
+      "updatedBy": "ai",
+      "summary": "将可视化区域标注收敛为四个真实页面区域：分类入口、板块卡片与 AI解读、关联基金与自选、底部热点提示；状态与合规规则保留在 Living Spec 和右侧需求中，不再强行占用页面编号。"
+    },
+    {
+      "version": 4,
+      "updatedAt": "2026-08-27T23:13:41+08:00",
+      "updatedBy": "ai",
+      "summary": "同步 Living Spec v8：用户可见名称统一为板块解读，依据最新合规确认移除 AI 属性标签，其他展示和降级规则不变。"
+    }
+  ],
+  "workflowMode": "dual-track-annotation-edit"
+}
