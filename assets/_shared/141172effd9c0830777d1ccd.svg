@@ -1,0 +1,16 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="678" height="255.688" viewBox="0 0 678 255.688" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path id="Vector 1802" d="M28.1588 8.39766L17.1828 8.27227C8.27534 8.17051 1 15.3632 1 24.2712V238.688C1 247.525 8.16344 254.688 17 254.688H661C669.837 254.688 677 247.525 677 238.688V24.0954C677 15.2557 669.832 8.09097 660.992 8.09538L54.7605 8.39766L42.3288 1.26524C41.7069 0.908424 40.9416 0.91183 40.3229 1.27416L28.1588 8.39766Z" fill="url(#paint0_linear_0_188)" stroke-width="2" stroke="url(#paint1_linear_0_188)"/>
+<defs>
+<linearGradient id="paint0_linear_0_188" x1="358.739" y1="-4.81169" x2="358.739" y2="34.3961" gradientUnits="userSpaceOnUse">
+<stop stop-color="white" stop-opacity="0.2"/>
+<stop offset="1" stop-color="white"/>
+</linearGradient>
+<linearGradient id="paint1_linear_0_188" x1="1" y1="6.23776" x2="716.478" y2="6.23776" gradientUnits="userSpaceOnUse">
+<stop stop-color="white" stop-opacity="0"/>
+<stop offset="0.0349623" stop-color="white"/>
+<stop offset="0.0727582" stop-color="white"/>
+<stop offset="0.7" stop-color="white"/>
+<stop offset="1" stop-color="white" stop-opacity="0"/>
+</linearGradient>
+</defs>
+</svg>

@@ -832,26 +832,26 @@
             <div class="prototype-stage">
               <div class="phone-wrap">
                 <div class="phone-frame">
-                  <iframe id="m04Preview" src="../wealth-home-business-consensus-interactive-v4.3.html?review-center=m04&amp;review-state=normal&amp;review-ui=20260911-m05" title="热点机会模块聚焦高保真原型"></iframe>
+                  <iframe id="m04Preview" data-src="../wealth-home-business-consensus-interactive-v4.3.html?review-center=m04&amp;review-state=normal&amp;review-ui=20260911-m05" title="热点机会模块聚焦高保真原型"></iframe>
                 </div>
               </div>
             </div>
           </section>
 
           <section class="requirements-pane has-detail-document" aria-label="热点机会完整需求说明">
-            <iframe class="requirements-detail-frame" id="requirementsDetailFrame" src="./m04-requirements-detail.html" title="热点机会产品评审说明"></iframe>
+            <iframe class="requirements-detail-frame" id="requirementsDetailFrame" data-src="./m04-requirements-detail.html" title="热点机会产品评审说明"></iframe>
           </section>
         </div>
       </section>
 
       <section class="view" id="m02bView" data-page-key="wealth-home-review-center-m02b">
-        <iframe id="m02bReviewFrame" src="./m02b-review.html?v=20260912-1" title="常用理财服务宫格展示示例与需求" style="width:100%;height:100%;border:0;display:block"></iframe>
+        <iframe id="m02bReviewFrame" data-src="./m02b-review.html?v=20260912-1" title="常用理财服务宫格展示示例与需求" style="width:100%;height:100%;border:0;display:block"></iframe>
       </section>
 
       <section class="view" id="m02cView" data-page-key="wealth-home-review-center-m02c"><iframe id="m02cReviewFrame" title="小宝服务区结构候选与完整业务说明" style="width:100%;height:100%;border:0;display:block"></iframe></section>
 
       <section class="view" id="m03ResourcesView" data-page-key="wealth-home-review-center-m03-normal">
-        <iframe id="m03ReviewFrame" src="./m03-review.html?v=1.58-language-20260914" title="精选推荐正常列表示例与业务说明" style="width:100%;height:100%;border:0;display:block"></iframe>
+        <iframe id="m03ReviewFrame" data-src="./m03-review.html?v=1.58-language-20260914" title="精选推荐正常列表示例与业务说明" style="width:100%;height:100%;border:0;display:block"></iframe>
       </section>
 
       <section class="view" id="m06View" data-page-key="wealth-home-review-center-m06"><iframe id="m06ReviewFrame" title="自主选基原型与完整需求" style="width:100%;height:100%;border:0;display:block"></iframe></section>
@@ -860,7 +860,7 @@
       <section class="view" id="g01View" data-page-key="wealth-home-review-center-g01">
         <div class="global-layout">
           <div class="global-preview">
-            <div class="global-preview-head"><strong id="g01LoadStatus" role="status">完整首页 · 首次加载约 27 MB</strong><button type="button" id="g01Reset">恢复首页</button></div>
+            <div class="global-preview-head"><strong id="g01LoadStatus" role="status">完整首页 · 正在加载…</strong><button type="button" id="g01Reset">恢复首页</button></div>
             <iframe id="g01Preview" title="理财首页最新完整交互原型" data-src="../wealth-home-interactive-ui-20261112.html?review-center=g01&amp;rev=20261114"></iframe>
           </div>
           <article class="global-reading" aria-label="全局页面框架说明">
@@ -1036,6 +1036,9 @@
       activateModule(card.dataset.openModule);
     });
 
+      document.querySelectorAll('.view.is-active iframe[data-src]').forEach(frame => {
+        if (!frame.getAttribute('src')) frame.src = frame.dataset.src;
+      });
       if (updateHash) history.replaceState(null, "", target === "overview" ? "#overview" : `#${target}`);
     }
 
@@ -1142,7 +1145,8 @@
 (()=>{const frame=document.getElementById('m02cReviewFrame'),allowed=["scenes", "held", "watched", "browsed", "week", "month", "quarter", "negative", "reopen", "cap", "unlimited", "high", "valuation", "fallback-product", "fallback-productlink", "fallback-advisory", "fallback-topic", "fallback-market", "fallback-hotspot", "fallback-only", "ranking-conditional", "loading", "refreshing", "error-old", "error-new", "empty", "fallback-refreshing", "fallback-error", "restoration", "missing", "readded", "long"];
 const requested=new URLSearchParams(location.search).get('m02c-state');
 const state=allowed.includes(requested)?requested:'scenes';
-frame.src='./m02c-review.html?v=20260918-1&state='+encodeURIComponent(state);
+frame.dataset.src='./m02c-review.html?v=20260918-1&state='+encodeURIComponent(state);
+if(frame.closest('.view').classList.contains('is-active')) frame.src=frame.dataset.src;
 window.addEventListener('message',event=>{const d=event.data;if(event.source!==frame.contentWindow||!d||d.type!=='m02c-review:state-changed'||!allowed.includes(d.stateId))return;const url=new URL(location.href);url.searchParams.set('m02c-state',d.stateId);history.replaceState(null,'',url);});
 })();
 </script>
