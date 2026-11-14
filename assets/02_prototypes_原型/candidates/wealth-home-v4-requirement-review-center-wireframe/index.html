@@ -860,7 +860,7 @@
       <section class="view" id="g01View" data-page-key="wealth-home-review-center-g01">
         <div class="global-layout">
           <div class="global-preview">
-            <div class="global-preview-head"><strong>完整首页 · 可交互</strong><button type="button" id="g01Reset">恢复首页</button></div>
+            <div class="global-preview-head"><strong id="g01LoadStatus" role="status">完整首页 · 首次加载约 27 MB</strong><button type="button" id="g01Reset">恢复首页</button></div>
             <iframe id="g01Preview" title="理财首页最新完整交互原型" data-src="../wealth-home-interactive-ui-20261112.html?review-center=g01&amp;rev=20261114"></iframe>
           </div>
           <article class="global-reading" aria-label="全局页面框架说明">
@@ -891,7 +891,7 @@
             <div class="global-notice"><strong>整体演示与模块需求的差异</strong><p>本页用来评审首页框架，不代表所有卡片、投放规则与数据口径均已确认。示例金额、收益和场景组合不作为研发规则。</p></div>
             <ul>
               <li>整合稿第三个 Tab 仍写“自主选基”，正式模块名为“榜单选基”；具体榜单规则请进入 <button type="button" data-module="M06">榜单选基评审</button> 核对。</li>
-              <li>整合稿保留外部资产诊断演示，与本期范围不同。以本页范围说明及总控决策为准。</li>
+              <li>整合稿保留外部资产诊断与小宝语音球演示，两者本期均不做。以本页范围说明及总控决策为准。</li>
               <li>小宝场景和精选推荐的新视觉示例不自动替代模块正式需求；选卡、推荐、排序、准入仍以对应模块需求为准。</li>
             </ul>
             <h3>全局评审关注点</h3>
@@ -1047,7 +1047,11 @@
       if (cardTrigger) activateModule(cardTrigger.dataset.openModule);
     });
 
+    document.getElementById("g01Preview").addEventListener("load", () => {
+      document.getElementById("g01LoadStatus").textContent = "完整首页 · 可交互";
+    });
     document.getElementById("g01Reset").addEventListener("click", () => {
+      document.getElementById("g01LoadStatus").textContent = "正在恢复首页…";
       const frame = document.getElementById("g01Preview");
       frame.src = frame.dataset.src;
     });
