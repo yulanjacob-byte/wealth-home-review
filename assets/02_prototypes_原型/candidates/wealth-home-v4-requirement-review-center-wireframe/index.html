@@ -717,7 +717,7 @@
         <button class="nav-item" type="button" data-module="M03"><span class="nav-code">M03</span><span class="nav-name">精选推荐</span><span class="nav-state is-review" title="正常列表示例与卡片、运营、排序及统计说明已接入，待阅读确认"></span></button>
         <button class="nav-item" type="button" data-module="M04"><span class="nav-code">M04</span><span class="nav-name">热点机会</span><span class="nav-state is-review"></span></button>
         <button class="nav-item" type="button" data-module="M06"><span class="nav-code">M06</span><span class="nav-name">榜单选基</span><span class="nav-state is-review" title="原型、完整需求与映射已接入，待页面验收"></span></button>
-        <button class="nav-item" type="button" data-module="M07"><span class="nav-code">M07</span><span class="nav-name">全局小宝问答服务</span><span class="nav-state"></span></button>
+        <button class="nav-item" type="button" data-module="M07"><span class="nav-code">M07</span><span class="nav-name">理财首页小宝语音球</span><span class="nav-state"></span></button>
       </nav>
 
       <div class="side-foot">
@@ -766,7 +766,7 @@
             <article class="module-card m03-module-card" data-open-module="M03" role="button" tabindex="0"><div class="module-card-top"><span class="module-card-code">WHV4-M03</span><span class="module-card-status">正常列表待确认</span></div><h4>精选推荐</h4><p>左侧查看正常列表示例，右侧阅读卡片、发布审核、推荐排序、首页更新和效果统计。榜单内容与配置说明已收录；客户卡片及其他状态演示后续补充。</p></article>
             <article class="module-card is-featured" data-open-module="M04" role="button" tabindex="0"><div class="module-card-top"><span class="module-card-code">WHV4-M04</span><span class="module-card-status">进入评审</span></div><h4>热点机会</h4><p>市场主线、短期热点、近日大涨及底部热点条。</p></article>
             <article class="module-card" data-open-module="M06" role="button" tabindex="0"><div class="module-card-top"><span class="module-card-code">WHV4-M06</span><span class="module-card-status">已接入 · 待页面验收</span></div><h4>榜单选基</h4><p>17榜规则与页面方案已确认；查看首页、完整榜单、双指标排序及异常状态，支持原型与需求双向定位。数据为演示样例。</p></article>
-            <article class="module-card" data-open-module="M07" role="button" tabindex="0"><div class="module-card-top"><span class="module-card-code">WHV4-M07</span><span class="module-card-status">未接入评审</span></div><h4>全局小宝问答服务</h4><p>常驻入口、问答层、上下文和失败兜底。</p></article>
+            <article class="module-card" data-open-module="M07" role="button" tabindex="0"><div class="module-card-top"><span class="module-card-code">WHV4-M07</span><span class="module-card-status">本期不做，后续完善</span></div><h4>理财首页小宝语音球</h4><p>本期不做，后续完善。暂不纳入本期需求评审与验收。</p></article>
           </section>
 
           <details class="version-details" id="versionDetails">
@@ -783,7 +783,7 @@
                 <tr><td>M03 精选推荐</td><td>正常列表线框稿 v0.1</td><td>中台线框稿 v0.11</td><td>卡片、运营、排序、首页更新与统计说明派生自 PRD v1.58</td><td>正常列表左右对照待确认；非完整状态验收</td></tr>
                 <tr data-module="M04"><td><strong>M04 热点机会</strong></td><td>冻结 V4</td><td><strong>V4.3 本期范围候选</strong></td><td><strong>v8</strong></td><td>隐藏延期 Tab；业务规则不变，待评审</td></tr>
                 <tr><td>M06 榜单选基</td><td>M06 v0.1</td><td>325个登记入口；只读评审映射</td><td>正式 Living Spec v1.6</td><td>已接入待复核；真实页面与数据联调待验收</td></tr>
-                <tr><td>M07 全局小宝问答服务</td><td>冻结 V4</td><td>未接入评审</td><td>正式来源待接入核验</td><td>评审页未接入；需求进展待核对</td></tr>
+                <tr><td>M07 理财首页小宝语音球</td><td>冻结 V4（历史参考）</td><td>本期不做，后续完善</td><td>后续完善</td><td>不纳入本期需求评审与验收</td></tr>
               </tbody>
             </table>
             </div>
@@ -857,7 +857,7 @@
       M03: "精选推荐",
       M04: "热点机会",
       M06: "榜单选基",
-      M07: "全局小宝问答服务"
+      M07: "理财首页小宝语音球"
     };
 
     const views = {
@@ -928,6 +928,16 @@
         reviewStatus.className = "chip is-warn";
         document.querySelector('meta[name="prototype-page-key"]').content = "wealth-home-review-center-m04";
         requestAnimationFrame(syncPreviewScale);
+      } else if (target === "M07") {
+        views.placeholder.classList.add("is-active");
+        crumbCode.textContent = "理财首页 / 理财首页小宝语音球";
+        crumbTitle.textContent = "理财首页小宝语音球";
+        reviewStatus.textContent = "本期不做，后续完善";
+        reviewStatus.className = "chip";
+        placeholderCode.textContent = "WHV4-M07";
+        placeholderTitle.textContent = "理财首页小宝语音球";
+        placeholderCopy.textContent = "本期不做，后续完善。暂不纳入本期需求评审与验收。";
+        document.querySelector('meta[name="prototype-page-key"]').content = "wealth-home-review-center-m07-deferred";
       } else {
         views.placeholder.classList.add("is-active");
         const name = moduleNames[target] || "待接入模块";
