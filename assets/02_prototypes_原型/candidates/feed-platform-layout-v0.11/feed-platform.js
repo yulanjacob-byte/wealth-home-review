@@ -6,7 +6,7 @@ const e=escapeHTML, clone=v=>JSON.parse(JSON.stringify(v));
 const T=[
  {id:'product',name:'产品图文卡',kind:'配置图文、关联产品'},
  {id:'topic',name:'机动类专题',kind:'配置图文、填写落地页'},
- {id:'ranking',name:'榜单卡片',kind:'选择已有榜单，内容沿用榜单选基'},
+ {id:'ranking',name:'榜单卡片',kind:'选择已有榜单，内容沿用自主选基'},
  {id:'theme',name:'板块投资',auto:true,kind:'内容由系统生成'},
  {id:'watch',name:'自选服务',auto:true,kind:'内容由系统生成'}
 ], scenes=['近期表现不错','开放申购','提高单日申购限额','创新高','进入低估值区域'];
@@ -519,7 +519,7 @@ function bindSlots(){
 const rankingOptions=[{id:'demo-rank-1',name:'榜单示例一'},{id:'demo-rank-2',name:'榜单示例二'}];
 const rankingName=d=>rankingOptions.find(x=>x.id===d.rankingId)?.name||'尚未选择榜单';
 function rankingFields(d,c){
- return row('选择榜单','<select id="rankingId" aria-label="选择榜单" '+(c?.formal?'disabled':'')+'><option value="">请选择一个榜单</option>'+rankingOptions.map(x=>'<option value="'+x.id+'" '+(x.id===d.rankingId?'selected':'')+'>'+e(x.name)+'</option>').join('')+'</select><p class="help">一张配置对应一个榜单。此处使用演示选项，正式榜单由“榜单选基”提供。</p>')+
+ return row('选择榜单','<select id="rankingId" aria-label="选择榜单" '+(c?.formal?'disabled':'')+'><option value="">请选择一个榜单</option>'+rankingOptions.map(x=>'<option value="'+x.id+'" '+(x.id===d.rankingId?'selected':'')+'>'+e(x.name)+'</option>').join('')+'</select><p class="help">一张配置对应一个榜单。此处使用演示选项，正式榜单由“自主选基”提供。</p>')+
  '<p>基金名单、榜内排序和指标沿用所选榜单，无需重复填写。榜单数据正常更新无需重新审核。</p>'+
  (c?.formal?'<p class="help">已有配置能否更换榜单仍待确认，本次演示保留原榜单。目标客群和展示时间可正常修改并提交审核。</p>':'');
 }
@@ -627,7 +627,7 @@ function saveCard(action){
 }
 function contentDetails(d){
  const t=template(d.tpl),rows=[['卡片模板',t.name]];
- if(d.tpl==='ranking')rows.push(['所选榜单',rankingName(d)],['内容来源','榜单选基；基金名单、排序和指标按榜单规则更新，无需逐项审核实时数据。']);
+ if(d.tpl==='ranking')rows.push(['所选榜单',rankingName(d)],['内容来源','自主选基；基金名单、排序和指标按榜单规则更新，无需逐项审核实时数据。']);
  if(!t.auto&&d.tpl!=='ranking')rows.push(['卡片标题',d.title],['左侧介绍',d.bullets.join('\n')],['右侧图片',d.imageName||'未选择图片']);
  if(d.tpl==='product'){
   rows.push(['关联产品',d.product?d.product.name+' / '+d.product.id+' / '+typeNames[d.product.type]:'未选择']);

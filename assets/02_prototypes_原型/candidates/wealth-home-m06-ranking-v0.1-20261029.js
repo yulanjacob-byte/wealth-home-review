@@ -755,7 +755,7 @@
     observer.disconnect();
     document.querySelectorAll('[data-tab="metric"]').forEach(tab=>{
       const label=tab.querySelector('.main-tab-title')||tab.querySelector('span');
-      if(label) label.textContent='榜单选基';
+      if(label) label.textContent='自主选基';
     });
     content.closest('[data-panel="metric"]')?.querySelector(':scope > .pill-tabs')?.remove();
     content.dataset.m06PageKey='wealth-home-m06-ranking';

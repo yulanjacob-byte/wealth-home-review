@@ -2,7 +2,7 @@
   "version": 1,
   "project": {
     "id": "wealth-home-m06",
-    "name": "榜单选基",
+    "name": "自主选基",
     "source": "local"
   },
   "workflowMode": "review-center-readonly",
@@ -34,7 +34,7 @@
   "pages": [
     {
       "pageKey": "wealth-home-m06-ranking",
-      "title": "榜单选基",
+      "title": "自主选基",
       "path": "wealth-home-m06-ranking-candidate-v0.1-20261029.html",
       "route": "?m06=1"
     },
@@ -151,7 +151,7 @@
     {
       "id": "ANN-wealth-home-m06-ranking-001",
       "pageKey": "wealth-home-m06-ranking",
-      "title": "榜单选基入口",
+      "title": "自主选基入口",
       "annotationType": "P",
       "kind": "business",
       "contentMarkdown": "### 页面功能介绍\n首页按榜单浏览并进入对应完整结果。\n### 核心内容\n榜单名称、规则与基金指标。\n### 业务流程\n浏览并核对榜单内容。\n### 主要操作\n查看规则和完整结果。\n### 待确认\n本页面无待确认的功能事项。",
@@ -165,10 +165,10 @@
       "reviewSectionId": "m06-flow",
       "reviewRegion": {
         "id": "region-m06-home-navigation",
-        "title": "榜单选基入口",
+        "title": "自主选基入口",
         "requirementAnchor": "m06-flow",
         "visibleLanding": true,
-        "visibleText": "榜单选基"
+        "visibleText": "自主选基"
       },
       "source": {
         "type": "living-spec",
