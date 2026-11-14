@@ -685,6 +685,27 @@
     .m03-resources a:focus-visible,.m03-module-card:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
     @media (max-width: 1120px) { .m03-resources { padding: 24px; } .m03-pending { grid-template-columns: 1fr; gap: 12px; } }
     @media (max-width: 800px) { .m03-document-grid,.m03-link-grid { grid-template-columns: 1fr; } .m03-resources { padding: 18px; } .m03-intro h2 { font-size: 24px; } }
+
+    /* G01: full interactive home and source-derived global reading, no business rule duplication. */
+    .global-layout {display:grid;grid-template-columns:minmax(310px,45%) minmax(0,55%);height:100%;min-height:0}
+    .global-preview {display:flex;flex-direction:column;min-width:0;min-height:0;border-right:1px solid var(--line)}
+    .global-preview-head {display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 20px;background:var(--panel);border-bottom:1px solid var(--line);font-size:13px}
+    .global-preview-head button {background:transparent;border:1px solid var(--line);padding:6px 10px;cursor:pointer;font-size:12px}
+    #g01Preview {display:block;flex:1;width:100%;min-height:0;border:0}
+    .global-reading {overflow-y:auto;overflow-x:hidden;padding:28px 32px;background:var(--panel);min-width:0;line-height:1.85;font-size:14px}
+    .global-reading h2 {font-size:25px;line-height:1.4;margin:10px 0 14px}
+    .global-reading h3 {font-size:17px;margin:28px 0 10px}
+    .global-reading p {margin:8px 0;color:var(--muted)}
+    .global-reading ul,.global-reading ol {padding-left:20px}
+    .global-reading li {margin:8px 0}
+    .global-version {font-size:12px;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:16px}
+    .global-notice {padding:14px 16px;background:var(--warn-soft);border-left:3px solid var(--warn);margin-top:20px}
+    .global-reading table {border-collapse:collapse;width:100%;font-size:13px;table-layout:fixed}
+    .global-reading th,.global-reading td {border:1px solid var(--line);padding:10px 12px;vertical-align:top;text-align:left;overflow-wrap:anywhere}
+    .global-reading th {background:var(--canvas)}
+    .global-reading button {border:0;background:none;color:var(--blue);padding:0;cursor:pointer;text-align:left}
+    @media(max-width:1050px){.global-layout{grid-template-columns:minmax(290px,43%) minmax(0,57%)}.global-reading{padding:20px}.global-preview-head{padding:12px}}
+    @media(max-width:720px){.global-layout{display:block;overflow-y:auto}.global-preview{height:620px;border-right:0;border-bottom:1px solid var(--line)}.global-reading{overflow:visible;padding:20px}}
   </style>
 </head>
 <body>
@@ -759,7 +780,7 @@
             <p>理财规划本期不上线，不设评审入口、不纳入本期验收；历史范围保留在总控。</p>
           </div>
           <section class="module-grid" id="moduleGrid">
-            <article class="module-card is-global" data-open-module="G01" role="button" tabindex="0"><div class="module-card-top"><span class="module-card-code">WHV4-G01</span><span class="module-card-status">规则已建立</span></div><h4>全局页面框架</h4><p>公共 Tab 外壳、底部导航、安全区与固定入口层级。</p></article>
+            <article class="module-card is-global" data-open-module="G01" role="button" tabindex="0"><div class="module-card-top"><span class="module-card-code">WHV4-G01</span><span class="module-card-status">完整原型已接入</span></div><h4>全局页面框架</h4><p>查看完整首页交互、三个 Tab、本期范围与全局说明。</p></article>
             <article class="module-card" data-open-module="M01" role="button" tabindex="0"><div class="module-card-top"><span class="module-card-code">WHV4-M01</span><span class="module-card-status">需求细化中 · 未接入</span></div><h4>顶部资产与账户服务区</h4><p>资产卡、外部资产卡与账户服务区。</p></article>
             <article class="module-card" data-open-module="M02" role="button" tabindex="0"><div class="module-card-top"><span class="module-card-code">WHV4-M02</span><span class="module-card-status">宫格已接入</span></div><h4>宫格区</h4><p>常用理财服务宫格独立展示，与小宝服务区并列。小宝提示与下方卡片请从“小宝服务区”入口查看。</p></article>
             <article class="module-card" data-open-module="M02-C" role="button" tabindex="0"><div class="module-card-top"><span class="module-card-code">WHV4-M02-C</span><span class="module-card-status">结构候选待评审</span></div><h4>小宝服务区</h4><p>范围为小宝提示入口与下方场景服务卡、精选补位卡及切换操作，不包含宫格。当前可查看卡片结构与提示示例，小宝入口最终文案和点击承接待细化。右侧连续阅读相关规则与验收要求；补位使用预置示例。</p></article>
@@ -776,7 +797,7 @@
             <table>
               <thead><tr><th>模块</th><th>需求引用原型</th><th>模块候选原型</th><th>需求来源</th><th>当前状态</th></tr></thead>
               <tbody>
-                <tr><td>G01 全局页面框架</td><td>冻结 V4</td><td>—</td><td>由总控与模块规则引用</td><td>规则已建立</td></tr>
+                <tr><td>G01 全局页面框架</td><td>冻结 V4（需求初始基线）</td><td>2026.11.12 完整交互整合版</td><td>总控公共规则及来源说明；不新增独立业务事实源</td><td>框架已确认 · 完整原型已接入；模块差异已列明</td></tr>
                 <tr><td>M01 顶部资产与账户服务区</td><td>冻结 V4</td><td>未接入评审</td><td>正式来源待接入核验</td><td>需求细化中；评审页未接入</td></tr>
                 <tr><td>M02-B 宫格区</td><td>宫格展示示例 v0.1</td><td>仅常用理财服务宫格已接入</td><td>宫格正式需求 v1.0</td><td>宫格规则已确认，阅读效果待评审；小宝服务区见独立条目</td></tr>
                 <tr><td>M02-A/C 小宝服务区</td><td>结构候选 v0.2</td><td>32 个状态只读评审</td><td>完整相关说明派生自 PRD v1.61</td><td>结构待评审；非最终 UI 或共享推荐实现验收</td></tr>
@@ -835,6 +856,50 @@
 
       <section class="view" id="m06View" data-page-key="wealth-home-review-center-m06"><iframe id="m06ReviewFrame" title="榜单选基原型与完整需求" style="width:100%;height:100%;border:0;display:block"></iframe></section>
 
+
+      <section class="view" id="g01View" data-page-key="wealth-home-review-center-g01">
+        <div class="global-layout">
+          <div class="global-preview">
+            <div class="global-preview-head"><strong>完整首页 · 可交互</strong><button type="button" id="g01Reset">恢复首页</button></div>
+            <iframe id="g01Preview" title="理财首页最新完整交互原型" data-src="../wealth-home-interactive-ui-20261112.html?review-center=g01&amp;rev=20261114"></iframe>
+          </div>
+          <article class="global-reading" aria-label="全局页面框架说明">
+            <div class="global-version">完整交互整合版 · 2026.11.12<br>框架已确认 · 各模块需求分别评审</div>
+            <h2>首页整体框架</h2>
+            <p>查看首页的整体布局、内容切换及进入二级页面后的返回表现。左侧采用已确认的新 UI 整合稿；没有新 UI 的部分继续沿用原交互原型。</p>
+            <h3>页面结构与公共交互</h3>
+            <ol>
+              <li><strong>顶部资产与账户服务：</strong>展示资产概览，支持金额隐藏、资产明细展开与收起；账户服务提醒位于资产区下方、宫格区上方，随展开区域下移。</li>
+              <li><strong>常用服务与小宝服务区：</strong>宫格提供常用服务入口，“全部功能”进入服务目录；小宝内容区在宫格下方展示场景卡片。</li>
+              <li><strong>三个内容 Tab：</strong>精选推荐、热点机会、榜单选基。点击切换对应内容；“理财规划”本期不上线，不保留 Tab 占位。</li>
+              <li><strong>底部导航与页面层级：</strong>底部导航与内容滚动区分开；二级页提供返回入口。安全区、固定入口的层级、遮挡与互斥由全局统一管理。</li>
+            </ol>
+            <h3>本期范围</h3>
+            <table><thead><tr><th>范围</th><th>评审口径</th></tr></thead><tbody>
+              <tr><td>资产与账户服务、宫格、精选推荐、热点机会、榜单选基</td><td>按各模块已确认需求和待评审事项分别核对。</td></tr>
+              <tr><td>小宝服务区</td><td>保留整体位置和场景展示；具体场景后续讨论，不以展示数量认定上线范围。</td></tr>
+              <tr><td>理财规划、理财首页小宝语音球</td><td>本期不做，后续完善；不纳入本期验收。</td></tr>
+              <tr><td>外部资产卡及诊断入口</td><td>本期不做；整合稿中的既有演示不扩大本期范围。</td></tr>
+            </tbody></table>
+            <h3>可操作的页面链路</h3>
+            <ul>
+              <li>资产展开、收起与隐藏金额。</li>
+              <li>账户服务提醒 → 按月排列的账户服务时间线 → 返回。</li>
+              <li>全部功能 → 分类查看、横滑和编辑常用服务 → 返回首页。</li>
+              <li>三个 Tab 切换、热点分类和基金自选、榜单查看与返回。</li>
+            </ul>
+            <div class="global-notice"><strong>整体演示与模块需求的差异</strong><p>本页用来评审首页框架，不代表所有卡片、投放规则与数据口径均已确认。示例金额、收益和场景组合不作为研发规则。</p></div>
+            <ul>
+              <li>整合稿第三个 Tab 仍写“自主选基”，正式模块名为“榜单选基”；具体榜单规则请进入 <button type="button" data-module="M06">榜单选基评审</button> 核对。</li>
+              <li>整合稿保留外部资产诊断演示，与本期范围不同。以本页范围说明及总控决策为准。</li>
+              <li>小宝场景和精选推荐的新视觉示例不自动替代模块正式需求；选卡、推荐、排序、准入仍以对应模块需求为准。</li>
+            </ul>
+            <h3>全局评审关注点</h3>
+            <p>核对三 Tab 顺序与切换、资产展开后的位置关系、内容滚动与底部导航、二级页返回，以及窄屏下按钮和内容是否被遮挡。安全区尺寸、层级数值及其他未明确参数不由此页补定。</p>
+          </article>
+        </div>
+      </section>
+
       <section class="view" id="placeholderView">
         <div class="placeholder-view">
           <article class="placeholder-card">
@@ -861,6 +926,7 @@
     };
 
     const views = {
+      G01: document.getElementById("g01View"),
       overview: document.getElementById("overviewView"),
       M02: document.getElementById("m02bView"),
       "M02-C": document.getElementById("m02cView"),
@@ -889,6 +955,15 @@
         reviewStatus.textContent = "框架已确认";
         reviewStatus.className = "chip";
         document.querySelector('meta[name="prototype-page-key"]').content = "wealth-home-review-center-overview";
+      } else if (target === "G01") {
+        views.G01.classList.add("is-active");
+        const frame = document.getElementById("g01Preview");
+        if (!frame.getAttribute("src")) frame.src = frame.dataset.src;
+        crumbCode.textContent = "理财首页 / 全局页面框架";
+        crumbTitle.textContent = "全局页面框架 · 完整原型与说明";
+        reviewStatus.textContent = "框架已确认 · 模块分别评审";
+        reviewStatus.className = "chip";
+        document.querySelector('meta[name="prototype-page-key"]').content = "wealth-home-review-center-g01";
       } else if (target === "M02" || target === "M02-B") {
         views.M02.classList.add("is-active");
         document.querySelector('[data-module="M02-B"]').classList.add("is-active");
@@ -972,6 +1047,10 @@
       if (cardTrigger) activateModule(cardTrigger.dataset.openModule);
     });
 
+    document.getElementById("g01Reset").addEventListener("click", () => {
+      const frame = document.getElementById("g01Preview");
+      frame.src = frame.dataset.src;
+    });
     const previewFrame = document.getElementById("m04Preview");
     const requirementsDetailFrame = document.getElementById("requirementsDetailFrame");
     const previewStage = previewFrame.closest(".prototype-stage");
