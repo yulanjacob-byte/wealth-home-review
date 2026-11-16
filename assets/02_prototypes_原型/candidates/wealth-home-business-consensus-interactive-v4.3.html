@@ -11022,12 +11022,12 @@
                 </main>
               </div>
 
-              <button class="bottom-hotspot-info gj-ibi" id="bottomHotspotInfo" type="button" data-ann="m04-bottom-hotspot" data-hotspot-key="innovationDrug" data-hotspot-category="rise" aria-label="查看热点：近日大涨 创新药今日上涨 4.48%">
+              <button class="bottom-hotspot-info gj-ibi" id="bottomHotspotInfo" type="button" data-ann="m04-bottom-hotspot" data-hotspot-key="innovationDrug" data-hotspot-category="rise" aria-label="查看热点：创新药今日上涨 4.48%">
                 <span class="gj-ibi-row">
                   <span class="bottom-hotspot-tag"><img src="../../_shared/42bf8d3d06eabd1a7d1d84f2.svg" alt="" aria-hidden="true" /><span>热点</span></span>
                   <span class="bottom-hotspot-viewport">
                     <span class="bottom-hotspot-track" id="bottomHotspotTrack" aria-hidden="true">
-                      <span class="bottom-hotspot-item">近日大涨｜创新药今日上涨 4.48%</span>
+                      <span class="bottom-hotspot-item">创新药今日上涨 4.48%</span>
                     </span>
                   </span>
                   <span class="bottom-hotspot-action">查看<i class="iconfont icon-shixinjiantou-you" aria-hidden="true"></i></span>
@@ -14312,6 +14312,8 @@ const metricFilterState = {
       });
     }
 
+    // 行情中心返回结果的演示快照；不在前端推断或计算候选排序。
+    // 此示例板块在当前正式分类样例中仅属于近日大涨，故目标为 rise。
     const m04BottomHotspotResult = {
       key:"innovationDrug",
       category:"rise",
@@ -14333,7 +14335,7 @@ const metricFilterState = {
       const valid = item && item.dayRise >= 2;
       trigger.hidden = !valid;
       if (!valid) return;
-      const title = `${item.categoryLabel}｜${item.sector}今日上涨 ${item.dayRise.toFixed(2)}%`;
+      const title = `${item.sector}今日上涨 ${item.dayRise.toFixed(2)}%`;
       trigger.dataset.hotspotKey = item.key;
       trigger.dataset.hotspotCategory = item.category;
       trigger.setAttribute("aria-label", `查看热点：${title}`);
@@ -14388,7 +14390,7 @@ const metricFilterState = {
         title:`${m04BottomHotspotResult.categoryLabel}：${m04BottomHotspotResult.sector}`,
         copy:"热点条每次只显示一个板块。点击后进入对应热点分类，并定位到该板块卡片。",
         problem:"旧版多条轮播及旧分类名称与当前确认规则不一致。",
-        principles:["只提示当日上涨达到2.00%的板块","多候选时由行情中心按当日涨幅、近5日涨幅返回唯一结果","同一板块只提示一次，并带回唯一正式热点分类"],
+        principles:["只提示当日上涨达到2.00%的板块","行情中心按当日涨幅降序、近5日涨幅降序、板块代码升序返回唯一结果","同一板块只提示一次；点击目标按市场主线、短期热点、近日大涨顺序在实际所属分类中选定","热点条不显示分类名称"],
         advantages:["信息更稳定，不用等待多条轮播","从提醒直接回到对应行情卡片","没有符合条件的板块时整条隐藏"],
         metrics:["热点条查看与点击","定位成功","板块已退出时的到达结果"],
         dev:["交易时段每60秒更新，App回到前台立即更新","位置、层级、遮挡和安全区继续引用WHV4-G01","板块已退出时停留原分类首屏并给出行情更新提示"]
@@ -16160,7 +16162,7 @@ window.PROTOTYPE_ANNOTATOR_CONFIG = Object.assign({}, window.PROTOTYPE_ANNOTATOR
         "sourceElementId": "M04-E005"
       },
       "title": "04 底部热点提示",
-      "contentMarkdown": "### 业务含义\n底部热点提示用于提醒三个热点分类中当天出现明显上涨异动的板块，并带用户回到对应分类和板块。它是单条提示，不轮播。\n\n### 候选与展示规则\n| 规则 | 已确认要求 |\n| --- | --- |\n| 候选范围 | 市场主线、短期热点、近日大涨当前覆盖的板块，只提示上涨 |\n| 触发阈值 | 当日涨幅 ≥2.00% |\n| 多候选比较 | 先比较当日涨幅；相同再比较近5个交易日累计涨幅；仍相同由行情中心给出唯一结果 |\n| 跨分类重复 | 同一板块只提示一次，由行情中心返回唯一正式热点分类 |\n| 展示数量 | 最多一条；没有候选时整条隐藏 |\n\n### 刷新、失败与跳转\n1. 交易时段每 60 秒刷新；App 回到前台时立即刷新。\n2. 当前板块不再满足条件时替换为最新候选；无候选时隐藏。\n3. 请求失败时立即隐藏，不保留旧提示；下次成功后按最新结果展示。\n4. 点击后进入上游返回的热点分类并定位、高亮对应板块。\n5. 如果点击时目标已退出，进入原指定热点分类首屏并提示“行情已更新，该板块当前已不在此热点分类中”，不改定位其他板块。\n\n### 完成标准\n页面不出现多条轮播；候选、阈值、唯一分类、刷新、失败隐藏和定位结果均符合上述规则。",
+      "contentMarkdown": "### 业务含义\n底部热点提示用于提醒三个热点分类中当天出现明显上涨异动的板块，并带用户回到对应分类和板块。它是单条提示，不轮播。\n\n### 候选与展示规则\n| 规则 | 已确认要求 |\n| --- | --- |\n| 候选范围 | 市场主线、短期热点、近日大涨当前覆盖的板块，只提示上涨 |\n| 触发阈值 | 当日涨幅 ≥2.00% |\n| 多候选比较 | 先比较当日涨幅；相同再比较近5个交易日累计涨幅；两项涨幅仍相同时按板块唯一代码升序取第一项，由行情中心返回结果 |\n| 跨分类重复 | 同一板块只提示一次；行情中心在实际所属分类中按市场主线、短期热点、近日大涨顺序返回点击目标 |\n| 提示文案 | 只显示板块名称和当日涨幅，保留“热点”标识与“查看”入口，不显示分类名称 |\n| 展示数量 | 最多一条；没有候选时整条隐藏 |\n\n### 刷新、失败与跳转\n1. 交易时段每 60 秒刷新；App 回到前台时立即刷新。\n2. 当前板块不再满足条件时替换为最新候选；无候选时隐藏。\n3. 请求失败时立即隐藏，不保留旧提示；下次成功后按最新结果展示。\n4. 点击后进入上游返回的热点分类并定位、高亮对应板块。\n5. 如果点击时目标已退出，进入原指定热点分类首屏并提示“行情已更新，该板块当前已不在此热点分类中”，不改定位其他板块。\n\n### 完成标准\n页面不出现多条轮播；候选、阈值、唯一分类、刷新、失败隐藏和定位结果均符合上述规则。",
       "annotationType": "R",
       "kind": "flow",
       "dimension": "Bottom hotspot rule and navigation",
@@ -16175,11 +16177,11 @@ window.PROTOTYPE_ANNOTATOR_CONFIG = Object.assign({}, window.PROTOTYPE_ANNOTATOR
       "visible": true,
       "source": {
         "type": "living-spec",
-        "ref": "v8 第4.5节、第5章、第6章"
+        "ref": "v8.2 第4.5节、第5章、第6章；用户2026-11-16确认"
       },
       "evidence": [
-        "正式 Living Spec v8",
-        "V4.2 单条底部热点提示"
+        "正式 Living Spec v8.2",
+        "V4.3 2026-11-16 热点条同步修订（候选）"
       ],
       "nextActions": [
         "指定热点分类",
@@ -16190,7 +16192,7 @@ window.PROTOTYPE_ANNOTATOR_CONFIG = Object.assign({}, window.PROTOTYPE_ANNOTATOR
         "理财首页公共页面框架"
       ],
       "risks": [
-        "App 不得设置热点分类优先级或二次排序",
+        "App 按行情中心返回的唯一板块及目标分类展示，不自行重算候选排序或改变已确认分类优先级",
         "目标退出时不得定位其他板块"
       ],
       "openQuestions": [
@@ -16201,7 +16203,7 @@ window.PROTOTYPE_ANNOTATOR_CONFIG = Object.assign({}, window.PROTOTYPE_ANNOTATOR
         "status": "pending"
       },
       "createdBy": "ai",
-      "updatedAt": "2026-08-27T23:13:41+08:00",
+      "updatedAt": "2026-11-16T15:00:00+08:00",
       "order": 4
     }
   ],

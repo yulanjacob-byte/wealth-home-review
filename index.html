@@ -802,7 +802,7 @@
                 <tr><td>M02-B 宫格区</td><td>宫格展示示例 v0.1</td><td>仅常用理财服务宫格已接入</td><td>宫格正式需求 v1.0</td><td>宫格规则已确认，阅读效果待评审；小宝服务区见独立条目</td></tr>
                 <tr><td>M02-A/C 小宝服务区</td><td>结构候选 v0.2</td><td>32 个状态只读评审</td><td>完整相关说明派生自 PRD v1.61</td><td>结构待评审；非最终 UI 或共享推荐实现验收</td></tr>
                 <tr><td>M03 精选推荐</td><td>正常列表线框稿 v0.1</td><td>中台线框稿 v0.11</td><td>卡片、运营、排序、首页更新与统计说明派生自 PRD v1.58</td><td>正常列表左右对照待确认；非完整状态验收</td></tr>
-                <tr data-module="M04"><td><strong>M04 热点机会</strong></td><td>冻结 V4</td><td><strong>V4.3 本期范围候选</strong></td><td><strong>v8</strong></td><td>隐藏延期 Tab；业务规则不变，待评审</td></tr>
+                <tr data-module="M04"><td><strong>M04 热点机会</strong></td><td>冻结 V4</td><td><strong>V4.3 本期范围候选</strong></td><td><strong>v8.2</strong></td><td>热点条展示、点击定位及标注已同步；待评审</td></tr>
                 <tr><td>M06 自主选基</td><td>M06 v0.1</td><td>325个登记入口；只读评审映射</td><td>正式 Living Spec v1.6</td><td>已接入待复核；真实页面与数据联调待验收</td></tr>
                 <tr><td>M07 理财首页小宝语音球</td><td>冻结 V4（历史参考）</td><td>本期不做，后续完善</td><td>后续完善</td><td>不纳入本期需求评审与验收</td></tr>
               </tbody>
@@ -832,14 +832,14 @@
             <div class="prototype-stage">
               <div class="phone-wrap">
                 <div class="phone-frame">
-                  <iframe id="m04Preview" data-src="../wealth-home-business-consensus-interactive-v4.3.html?review-center=m04&amp;review-state=normal&amp;review-ui=20260911-m05" title="热点机会模块聚焦高保真原型"></iframe>
+                  <iframe id="m04Preview" data-src="../wealth-home-business-consensus-interactive-v4.3.html?review-center=m04&amp;review-state=normal&amp;review-ui=20261116-m04-v82" title="热点机会模块聚焦高保真原型"></iframe>
                 </div>
               </div>
             </div>
           </section>
 
           <section class="requirements-pane has-detail-document" aria-label="热点机会完整需求说明">
-            <iframe class="requirements-detail-frame" id="requirementsDetailFrame" data-src="./m04-requirements-detail.html" title="热点机会产品评审说明"></iframe>
+            <iframe class="requirements-detail-frame" id="requirementsDetailFrame" data-src="./m04-requirements-detail.html?v=20261116-v82" title="热点机会产品评审说明"></iframe>
           </section>
         </div>
       </section>
@@ -1132,7 +1132,7 @@
       button.addEventListener("click", () => {
         const state = button.dataset.previewState;
         document.querySelectorAll("[data-preview-state]").forEach(item => item.classList.toggle("is-active", item === button));
-        const source = `../wealth-home-business-consensus-interactive-v4.3.html?review-center=m04&review-state=${state}&review-ui=20260911-m05`;
+        const source = `../wealth-home-business-consensus-interactive-v4.3.html?review-center=m04&review-state=${state}&review-ui=20261116-m04-v82`;
         previewFrame.src = source;
       });
     });
