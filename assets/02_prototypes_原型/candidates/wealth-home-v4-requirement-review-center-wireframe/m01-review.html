@@ -1,0 +1,575 @@
+<!doctype html>
+<html lang="zh-CN" data-review-mode="review-center-readonly">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>理财首页 · 资产与账户服务评审</title>
+  <style>:root {
+  color-scheme: light;
+  --bg: #f4f5f7;
+  --paper: #ffffff;
+  --ink: #17191d;
+  --muted: #6f7580;
+  --line: #e2e4e8;
+  --accent: #ff4040;
+  --accent-soft: #fff1f1;
+  --nav: #171819;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  overflow-x: hidden;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Microsoft YaHei", "PingFang SC", system-ui, sans-serif;
+}
+
+body {
+  display: grid;
+  grid-template-columns: minmax(220px, 272px) minmax(0, 1fr);
+}
+
+button,
+a {
+  font: inherit;
+}
+
+.project-nav {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  min-width: 0;
+  overflow: hidden;
+  background: var(--nav);
+  color: #ffffff;
+}
+
+.brand {
+  padding: 28px 24px 22px;
+  border-bottom: 1px solid rgba(255,255,255,.12);
+}
+
+.brand h1 {
+  margin: 6px 0 8px;
+  font-size: 22px;
+}
+
+.brand p {
+  margin: 0;
+  color: rgba(255,255,255,.62);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.brand .eyebrow {
+  letter-spacing: .12em;
+  font-size: 11px;
+}
+
+.module-nav {
+  height: calc(100vh - 142px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 18px 12px 36px;
+  scrollbar-width: none;
+}
+
+.module-nav::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.module-button {
+  width: 100%;
+  border: 0;
+  border-left: 3px solid transparent;
+  padding: 14px 16px;
+  background: transparent;
+  color: rgba(255,255,255,.78);
+  text-align: left;
+  cursor: pointer;
+}
+
+.module-button span {
+  display: block;
+  margin-top: 5px;
+  color: rgba(255,255,255,.45);
+  font-size: 12px;
+}
+
+.module-button.is-active {
+  border-left-color: var(--accent);
+  background: rgba(255,255,255,.1);
+  color: #ffffff;
+}
+
+.review-main {
+  min-width: 0;
+  min-height: 100vh;
+}
+
+.review-header {
+  min-height: 92px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 18px 28px;
+  border-bottom: 1px solid var(--line);
+  background: var(--paper);
+}
+
+.review-header h2 {
+  margin: 5px 0 0;
+  font-size: 24px;
+}
+
+.breadcrumb {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.status-chip {
+  padding: 7px 10px;
+  border: 1px solid #f2c98f;
+  background: #fff9ec;
+  color: #93651f;
+  font-size: 12px;
+}
+
+.review-workspace {
+  min-width: 0;
+  height: calc(100vh - 92px);
+  display: grid;
+  grid-template-columns: minmax(390px, 46%) minmax(480px, 54%);
+  overflow: hidden;
+}
+
+.prototype-column,
+.requirements-column {
+  min-width: 0;
+  min-height: 0;
+  background: var(--paper);
+}
+
+.prototype-column {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  border-right: 1px solid var(--line);
+}
+
+.column-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.column-head p {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.state-controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.state-button {
+  border: 1px solid #cfd2d8;
+  padding: 8px 12px;
+  background: #ffffff;
+  cursor: pointer;
+}
+
+.state-button + .state-button {
+  margin-left: -1px;
+}
+
+.state-button.is-active {
+  border-color: #1c1d20;
+  background: #1c1d20;
+  color: #ffffff;
+}
+
+.prototype-stage {
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background:
+    linear-gradient(#e7e8eb 1px, transparent 1px),
+    linear-gradient(90deg, #e7e8eb 1px, transparent 1px),
+    #f1f2f3;
+  background-size: 24px 24px;
+}
+
+#prototypeFrame {
+  display: block;
+  width: min(100%, 520px);
+  height: 100%;
+  min-height: 560px;
+  border: 0;
+  background: transparent;
+}
+
+.requirements-column {
+  display: grid;
+  grid-template-columns: minmax(170px, 210px) minmax(0, 1fr);
+  overflow: hidden;
+}
+
+.requirements-nav {
+  min-width: 0;
+  overflow-y: auto;
+  padding: 22px 12px;
+  border-right: 1px solid var(--line);
+  scrollbar-width: thin;
+}
+
+.requirements-nav button {
+  width: 100%;
+  border: 0;
+  border-left: 2px solid transparent;
+  padding: 10px 12px;
+  background: transparent;
+  color: #5e636c;
+  text-align: left;
+  cursor: pointer;
+}
+
+.requirements-nav button.is-active {
+  border-left-color: var(--accent);
+  background: #f5f5f5;
+  color: #111214;
+}
+
+.requirements-body {
+  min-width: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 28px clamp(24px, 4vw, 64px) 80px;
+  background: #fffefa;
+  line-height: 1.75;
+}
+
+.requirements-body h1,
+.requirements-body h2,
+.requirements-body h3 {
+  scroll-margin-top: 18px;
+  line-height: 1.35;
+}
+
+.requirements-body h1 {
+  margin: 0 0 28px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #1d1e20;
+  font-size: 30px;
+}
+
+.requirements-body h2 {
+  margin: 44px 0 18px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+  font-size: 24px;
+}
+
+.requirements-body h3 {
+  margin: 28px 0 12px;
+  font-size: 18px;
+}
+
+.requirements-body table {
+  width: 100%;
+  border-collapse: collapse;
+  display: block;
+  overflow-x: auto;
+}
+
+.requirements-body th,
+.requirements-body td {
+  min-width: 130px;
+  padding: 12px 14px;
+  border: 1px solid #d8d9dc;
+  vertical-align: top;
+  text-align: left;
+}
+
+.requirements-body th {
+  background: #f3f3f1;
+}
+
+.review-link {
+  float: right;
+  margin: 0 0 8px 14px;
+  border: 1px solid #ffb4b4;
+  padding: 4px 8px;
+  background: var(--accent-soft);
+  color: #c52929;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.review-linked.is-highlighted {
+  outline: 3px solid rgba(255,64,64,.2);
+  outline-offset: 6px;
+}
+
+@media (max-width: 1100px) {
+  body {
+    grid-template-columns: 210px minmax(0, 1fr);
+  }
+
+  .review-workspace {
+    grid-template-columns: minmax(360px, 48%) minmax(430px, 52%);
+  }
+
+  .requirements-column {
+    grid-template-columns: 1fr;
+  }
+
+  .requirements-nav {
+    display: none;
+  }
+}
+
+body{display:block}.project-nav{display:none}.review-main{min-width:0}
+.review-workspace{grid-template-columns:minmax(300px,40%) minmax(0,1fr)}
+.requirements-column{grid-template-columns:150px minmax(0,1fr)}
+.requirements-body{padding:20px 24px 70px}.requirements-body h2{font-size:20px}
+.requirements-body table td,.requirements-body table th{min-width:100px;padding:9px}
+.requirements-nav{scrollbar-width:none}.prototype-stage{padding:8px}
+.event-config-link{display:inline-block;padding:12px 18px;background:#1e406a;color:white;border-radius:8px;text-decoration:none;margin:8px 0;overflow-wrap:anywhere}
+@media(max-width:1000px){.requirements-column{grid-template-columns:1fr}.requirements-nav{display:none}}
+#prototypeFrame{min-height:0}.column-head{flex-wrap:wrap;padding:12px}
+@media(max-width:680px){.review-workspace{display:flex;flex-direction:column;height:auto;overflow:visible}.prototype-column{height:520px}.requirements-column{height:75vh}.review-header{flex-wrap:wrap}}
+</style>
+<meta name="m01-source-version" content="living-spec-v0.6"></head>
+<body>
+  <aside class="project-nav" aria-label="项目模块导航">
+    <div class="brand">
+      <p class="eyebrow">REQUIREMENT REVIEW</p>
+      <h1>理财首页 · 资产与账户服务评审</h1>
+      <p>左侧查看原型，右侧评审完整需求</p>
+    </div>
+    <nav class="module-nav"></nav>
+  </aside>
+  <main class="review-main">
+    <header class="review-header">
+      <div>
+        <p id="moduleBreadcrumb" class="breadcrumb"></p>
+        <h2 id="moduleTitle"></h2>
+      </div>
+      <span id="moduleStatus" class="status-chip"></span>
+    </header>
+    <section class="review-workspace">
+      <section class="prototype-column" aria-label="聚焦原型">
+        <div class="column-head">
+          <div>
+            <strong>原型与状态</strong>
+            <p>展示样例；轮播、空态、失败及90天过滤见右侧，未接生产</p>
+          </div>
+          <div id="stateControls" class="state-controls"></div>
+        </div>
+        <div class="prototype-stage" aria-label="展示样例；多消息轮播、空态、失败及90天过滤见右侧规则，未接生产">
+          <iframe id="prototypeFrame" title="当前模块原型"></iframe>
+        </div>
+      </section>
+      <section class="requirements-column" aria-label="完整需求说明">
+        <nav id="requirementsNav" class="requirements-nav" aria-label="需求章节"></nav>
+        <article id="requirementsBody" class="requirements-body"></article>
+      </section>
+    </section>
+  </main>
+  <script id="review-center-data" type="application/json">{"version":1,"mode":"review-center-readonly","projectTitle":"理财首页 · 资产与账户服务评审","modules":[{"id":"M01","title":"资产卡与账户服务","status":"公共规则已整理 · 候选参数待复核","states":[{"id":"collapsed","label":"首页收起","prototype":"../wealth-home-m01-review-v0.1-20261117/home.html?state=collapsed","pageKey":"m01-collapsed"},{"id":"expanded","label":"资产展开","prototype":"../wealth-home-m01-review-v0.1-20261117/home.html?state=expanded","pageKey":"m01-expanded"},{"id":"timeline","label":"账户服务页","prototype":"../wealth-home-m01-review-v0.1-20261117/timeline.html","pageKey":"m01-timeline"}],"requirementsHtml":"\u003ch2 id=\"asset-card\" data-annotation-id=\"ANN-m01-collapsed-asset ANN-m01-expanded-asset\" class=\"review-linked\">\u003cbutton type=\"button\" class=\"review-link\" data-annotation-id=\"ANN-m01-collapsed-asset\">页面对应 01\u003c/button>\u003cbutton type=\"button\" class=\"review-link\" data-annotation-id=\"ANN-m01-expanded-asset\">页面对应 03\u003c/button>本期范围与资产卡展示\u003c/h2>\n\u003cp>资产金额、收益口径、登录态对应的资产内容、金额隐藏、数据时效及异常表现沿用现有生产逻辑。本次新增首页资产分类的展开与状态保留交互。\u003c/p>\n\u003cp>资产分类复用生产持仓列表页已有分类、数据和对应分类持仓去向；首页采用双列紧凑排版，最后不足两列时左对齐。账户服务区保留在资产卡区域，展开资产分类时随布局向下移动。外部资产及诊断入口不纳入本期。\u003c/p>\n\u003ch2 id=\"asset-expand\" data-annotation-id=\"ANN-m01-expanded-categories\" class=\"review-linked\">\u003cbutton type=\"button\" class=\"review-link\" data-annotation-id=\"ANN-m01-expanded-categories\">页面对应 04\u003c/button>展开资产分类与返回\u003c/h2>\n\u003ctable>\u003cthead>\u003ctr>\u003cth>场景\u003c/th>\u003cth>已确认规则\u003c/th>\u003c/tr>\u003c/thead>\u003ctbody>\u003ctr>\u003ctd>本次 App 使用首次进入理财首页\u003c/td>\u003ctd>资产卡默认收起，不自动展开资产分类。\u003c/td>\u003c/tr>\u003ctr>\u003ctd>用户主动下拉资产卡\u003c/td>\u003ctd>展开资产分类；账户服务区随之向下移动。用户可以主动收起。\u003c/td>\u003c/tr>\u003ctr>\u003ctd>从分类持仓、账户服务或其他二级页面返回\u003c/td>\u003ctd>保留离开前的展开／收起状态，并恢复首页原滚动位置。\u003c/td>\u003c/tr>\u003ctr>\u003ctd>同一次 App 使用期间切换底部频道再回来\u003c/td>\u003ctd>保留资产卡展开／收起状态。\u003c/td>\u003c/tr>\u003ctr>\u003ctd>首页刷新或资产数据更新\u003c/td>\u003ctd>保留展开／收起状态；数据更新及异常表现沿用生产逻辑。\u003c/td>\u003c/tr>\u003ctr>\u003ctd>重启 App 后重新进入\u003c/td>\u003ctd>恢复默认收起，不沿用上次 App 使用的展开状态。\u003c/td>\u003c/tr>\u003ctr>\u003ctd>退出登录或切换账号\u003c/td>\u003ctd>清除旧账号展开状态，恢复收起；资产内容按新的登录／账号状态及生产规则展示。\u003c/td>\u003c/tr>\u003c/tbody>\u003c/table>\n\u003cp>展开状态只影响分类展示，不改变资产统计范围、金额、收益计算或服务事件优先级。\u003c/p>\n\u003ch2 id=\"asset-acceptance\">资产卡验收要点\u003c/h2>\n\u003col>\u003cli>首次进入收起；下拉后分类展开，服务区顺序不变、随布局向下移动。\u003c/li>\u003cli>分别在展开和收起状态进入二级页面后返回，状态和原滚动位置均保留。\u003c/li>\u003cli>切换底部频道再返回，以及刷新或更新数据后，展开状态不变。\u003c/li>\u003cli>重启 App、退出登录、切换账号后均收起，不继承旧账号状态。\u003c/li>\u003cli>金额、隐藏及刷新失败等生产行为不因上述状态记忆而被改写。\u003c/li>\u003c/ol>\n\u003ch2 id=\"score-stability\">服务消息得分与首页刷新\u003c/h2>\n\u003cp>&gt; 同一条消息的得分确定后保持不变；新产生的消息单独计算。刷新首页会更新消息列表，不会改变原有消息的得分。\u003c/p>\n\u003cp>这里保持不变的是服务消息的排序得分，不影响资产金额、收益等生产数据正常更新。得分保持不变也不代表展示位置固定：新消息加入、消息失效或已从首页成功查看后，符合展示条件的消息仍按既定优先级规则重新排列。\u003c/p>\n\u003ch2 id=\"retention\">账户服务记录展示期限\u003c/h2>\n\u003cp>前端账户服务页展示近 \u003cstrong>90 个自然日\u003c/strong>的记录，按事件发生时间计算展示窗口，超过该窗口的记录不在本页展示。该期限只定义前端历史记录的展示范围，不改变各类事件的首页有效期，也不定义或调整后台数据保存、删除期限。\u003c/p>\n\u003cp>90 天为当前产品方案，仍需业务／合规二次复核。\u003c/p>\n\u003ch2 id=\"service-display\" data-annotation-id=\"ANN-m01-collapsed-service ANN-m01-expanded-service\" class=\"review-linked\">\u003cbutton type=\"button\" class=\"review-link\" data-annotation-id=\"ANN-m01-collapsed-service\">页面对应 02\u003c/button>\u003cbutton type=\"button\" class=\"review-link\" data-annotation-id=\"ANN-m01-expanded-service\">页面对应 05\u003c/button>服务区展示哪些消息\u003c/h2>\n\u003cp>账户服务区仅对登录用户展示。首页消息由业务标签和内容组成，最多两行文字；两行指一条消息的文字空间，不是一次展示两条消息。标签使用事件配置表中的业务定义。\u003c/p>\n\u003cp>同一业务事件重复推送时去重，不同产品、不同订单、不同业务事项分别保留。\u003c/p>\n\u003cp>账户服务事件以共享事件配置表为准。全部符合业务触发和展示条件、尚未从首页成功查看的有效消息参与展示，不设数量上限；多条消息按优先级轮播。内容缺失时按“空态、加载与失败”处理。\u003c/p>\n\u003ch2 id=\"service-order\">多条消息谁先展示\u003c/h2>\n\u003cp>先判断消息是否可以展示，再按重要程度分组，最后比较同组消息的得分。\u003c/p>\n\u003ctable>\u003cthead>\u003ctr>\u003cth>排序步骤\u003c/th>\u003cth>规则说明\u003c/th>\u003c/tr>\u003c/thead>\u003ctbody>\u003ctr>\u003ctd>三级优先级\u003c/td>\u003ctd>核心事件（L1）在前，其次是重要事件（L2），最后是信息事件（L3）。任何分数都不能跨层反超；每条事件归属以事件配置表为准。\u003c/td>\u003c/tr>\u003ctr>\u003ctd>同层打分\u003c/td>\u003ctd>最终得分＝基础权重 × 本次命中系数，得分高的先展示。基础权重是每类事件固定的 1～5 整数。\u003c/td>\u003c/tr>\u003ctr>\u003ctd>得分相同\u003c/td>\u003ctd>事件发生时间较新的先展示。\u003c/td>\u003c/tr>\u003ctr>\u003ctd>仍然相同\u003c/td>\u003ctd>依次按消息生成时间、消息唯一编号保证顺序稳定；这两项仅用于同分且事件时间相同时的稳定排序，不代表业务重要性。\u003c/td>\u003c/tr>\u003c/tbody>\u003c/table>\n\u003cp>系数统一使用 \u003cstrong>1.0、1.1、1.2、1.3、1.5\u003c/strong>。没有动态加权条件时固定取 1.0；同时命中多个条件时只取最高系数，不叠加、不连乘。允许高系数事件在同层内反超基础权重高一档的事件。\u003c/p>\n\u003cp>以下消息同时有效时，展示顺序示例如下：\u003c/p>\n\u003ctable>\u003cthead>\u003ctr>\u003cth>顺序\u003c/th>\u003cth>事件\u003c/th>\u003cth>层级和得分\u003c/th>\u003cth>为什么排在这里\u003c/th>\u003c/tr>\u003c/thead>\u003ctbody>\u003ctr>\u003ctd>1\u003c/td>\u003ctd>暂停赎回\u003c/td>\u003ctd>L1，4 × 1.0＝4\u003c/td>\u003ctd>核心事件先于其他层级。\u003c/td>\u003c/tr>\u003ctr>\u003ctd>2\u003c/td>\u003ctd>本笔确认金额 6 万元的申购份额确认\u003c/td>\u003ctd>L2，4 × 1.5＝6\u003c/td>\u003ctd>同层得分更高。\u003c/td>\u003c/tr>\u003ctr>\u003ctd>3\u003c/td>\u003ctd>未选择自动跟调的建议型调仓提醒\u003c/td>\u003ctd>L2，5 × 1.0＝5\u003c/td>\u003ctd>同层按得分排在申购确认之后。\u003c/td>\u003c/tr>\u003ctr>\u003ctd>4\u003c/td>\u003ctd>收益率首次突破 20%\u003c/td>\u003ctd>L3，3 × 1.5＝4.5\u003c/td>\u003ctd>得分不能跨越硬优先级。\u003c/td>\u003c/tr>\u003c/tbody>\u003c/table>\n\u003cp>例子用于理解计算方法。各事件具体层级、权重、金额／收益档位及理由通过共享表核对。\u003c/p>\n\u003ch2 id=\"carousel\">消息怎样轮播\u003c/h2>\n\u003ctable>\u003cthead>\u003ctr>\u003cth>场景\u003c/th>\u003cth>展示规则\u003c/th>\u003c/tr>\u003c/thead>\u003ctbody>\u003ctr>\u003ctd>没有符合条件的消息\u003c/td>\u003ctd>不展示服务消息区。\u003c/td>\u003c/tr>\u003ctr>\u003ctd>只有一条\u003c/td>\u003ctd>静态展示，不轮播。\u003c/td>\u003c/tr>\u003ctr>\u003ctd>两条及以上\u003c/td>\u003ctd>自动纵向轮播，支持手动滑动；每条停留 5 秒，全部符合条件的消息都参与。\u003c/td>\u003c/tr>\u003ctr>\u003ctd>用户手动滑动\u003c/td>\u003ctd>暂停自动轮播 10 秒，之后恢复。\u003c/td>\u003c/tr>\u003ctr>\u003ctd>新的高优先级消息到达\u003c/td>\u003ctd>不打断当前阅读；当前条结束后更新队列，下一条从最新排序第一条开始。\u003c/td>\u003c/tr>\u003ctr>\u003ctd>离开首页或 App 进入后台\u003c/td>\u003ctd>停止轮播计时。\u003c/td>\u003c/tr>\u003ctr>\u003ctd>返回首页\u003c/td>\u003ctd>重新计算符合条件的队列，从最高优先级开始。资产卡状态和首页浏览位置仍按前述返回规则保留。\u003c/td>\u003c/tr>\u003c/tbody>\u003c/table>\n\u003cp>优先级和分数仅用于内部排序，不作为对客标签展示。\u003c/p>\n\u003ch2 id=\"expiry\">消息何时退出首页\u003c/h2>\n\u003cp>每类事件的首页有效期分别配置。判断时优先采用明确的业务状态或截止日期，其次采用事件专属规则，再采用已经确认适用的类别默认规则。具体执行值查看事件配置表。\u003c/p>\n\u003ctable>\u003cthead>\u003ctr>\u003cth>情况\u003c/th>\u003cth>处理方式\u003c/th>\u003c/tr>\u003c/thead>\u003ctbody>\u003ctr>\u003ctd>未点击但已过首页有效期\u003c/td>\u003ctd>退出首页消息队列；在记录展示期限内仍可在二级页回看。\u003c/td>\u003c/tr>\u003ctr>\u003ctd>当前展示的消息刚好失效\u003c/td>\u003ctd>保持当前条至本轮结束，期间点击仍应正常打开；后续不再进入首页队列。\u003c/td>\u003c/tr>\u003ctr>\u003ctd>从首页成功打开消息并定位对应内容\u003c/td>\u003ctd>记为“首页已查看”，下一轮不再在首页轮播；二级页仍保留该消息。\u003c/td>\u003c/tr>\u003ctr>\u003ctd>只曝光、滑过或打开失败\u003c/td>\u003ctd>不算“首页已查看”。\u003c/td>\u003c/tr>\u003c/tbody>\u003c/table>\n\u003cp>“首页已查看”仅用于首页队列判断。二级页不显示已读／未读状态，不提供已读操作、未读筛选、未读数量或红点。进入二级页本身不批量将消息视为已查看。\u003c/p>\n\u003ch2 id=\"timeline\" data-annotation-id=\"ANN-m01-timeline-timeline\" class=\"review-linked\">\u003cbutton type=\"button\" class=\"review-link\" data-annotation-id=\"ANN-m01-timeline-timeline\">页面对应 06\u003c/button>点击后在哪里查看\u003c/h2>\n\u003cp>首页消息统一进入“账户服务”二级页，并定位对应事件卡片；“记录”入口也进入该页，供用户回看，入口不显示未读数和红点。\u003c/p>\n\u003cp>二级页使用一条按月份分组、按事件发生时间由近到远排列的时间线。\u003cstrong>首页按优先级轮播，二级页按时间回看。\u003c/strong>\u003c/p>\n\u003cp>卡片展示业务标签、主要内容、必要的金额／收益率／日期／状态等字段及事件发生时间。可选字段按业务定义展示，不自行补写数据。\u003c/p>\n\u003ctable>\u003cthead>\u003ctr>\u003cth>卡片类型\u003c/th>\u003cth>展示与操作\u003c/th>\u003c/tr>\u003c/thead>\u003ctbody>\u003ctr>\u003ctd>仅展示信息\u003c/td>\u003ctd>直接呈现完整信息，不放跳转箭头或按钮，也不伪装成可点击状态。\u003c/td>\u003c/tr>\u003ctr>\u003ctd>有明确后续去向\u003c/td>\u003ctd>提供箭头或业务按钮，可点击前往已确认的现有业务页面；具体方式查事件表。\u003c/td>\u003c/tr>\u003c/tbody>\u003c/table>\n\u003cp>页面中展示为可点击状态的消息，点击后应正常打开。从业务页面返回时保留月份和滚动位置；再返回首页时保留首页浏览位置，并更新首页消息队列。跳转失败按“空态、加载与失败”处理。\u003c/p>\n\u003cp>本期覆盖账户服务信息展示及跳转至已确认的现有业务页面，后续办理流程沿用现有业务页面。\u003c/p>\n\u003ch2 id=\"exceptions\">空态、加载与失败\u003c/h2>\n\u003ctable>\u003cthead>\u003ctr>\u003cth>场景\u003c/th>\u003cth>处理方式\u003c/th>\u003c/tr>\u003c/thead>\u003ctbody>\u003ctr>\u003ctd>仅加权辅助字段缺失\u003c/td>\u003ctd>事件有效且必需内容、核心数据完整时，系数取 1.0。\u003c/td>\u003c/tr>\u003ctr>\u003ctd>必需文案、核心数据或有效状态缺失\u003c/td>\u003ctd>暂不在首页和二级页展示该条消息。例如收益率是里程碑核心判断字段，缺失时不能直接用 1.0 生成事件。可选字段缺失按该事件配置处理。\u003c/td>\u003c/tr>\u003ctr>\u003ctd>成功加载但没有记录\u003c/td>\u003ctd>展示统一空态，不当作加载失败。\u003c/td>\u003c/tr>\u003ctr>\u003ctd>已有数据，更新失败\u003c/td>\u003ctd>保留已加载内容，提示“更新失败，下拉刷新”，支持下拉重试。\u003c/td>\u003c/tr>\u003ctr>\u003ctd>首次进入未加载出内容\u003c/td>\u003ctd>展示页面级失败状态和“重新加载”按钮，同时支持下拉刷新。\u003c/td>\u003c/tr>\u003ctr>\u003ctd>卡片业务跳转失败\u003c/td>\u003ctd>保留原消息，提示“暂时无法打开，请稍后再试”。列表下拉刷新仅重新获取消息列表。\u003c/td>\u003c/tr>\u003c/tbody>\u003c/table>\n\u003ch2 id=\"event-config\">查看事件配置表\u003c/h2>\n\u003cp>30 条事件的业务标签、文案、优先级、基础权重、命中系数条件、首页有效期及承接方式，以企微共享事件配置表为准。此处说明公共规则，具体事件配置通过以下入口查看。\u003c/p>\n\u003cp>\u003ca class=\"event-config-link\" target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://doc.weixin.qq.com/sheet/e3_AaYA3AZgACUCN15fHkNlPQYy8nS11?scode=AK4ABAemABEcNmyEaBAUQAWwZJAHM&amp;tab=7qc5m4\">查看事件配置表（企微共享文档）↗\u003c/a>\u003c/p>\n\u003cp>开发采用版本／业务确认日期：尚未登记。共享文档后续修改不自动等同于本次开发需求变更；已确认与候选配置保留各自状态。\u003c/p>\n\u003ch2 id=\"pending\">仍需复核的内容\u003c/h2>\n\u003ctable>\u003cthead>\u003ctr>\u003cth>内容\u003c/th>\u003cth>当前状态\u003c/th>\u003c/tr>\u003c/thead>\u003ctbody>\u003ctr>\u003ctd>近 90 个自然日记录展示\u003c/td>\u003ctd>当前产品方案，待业务／合规二次复核。\u003c/td>\u003c/tr>\u003ctr>\u003ctd>周／月／季度超额收益触发阈值\u003c/td>\u003ctd>0.5%／1.5%／5% 仍为待数据验证的候选阈值。\u003c/td>\u003c/tr>\u003ctr>\u003ctd>月／季度绝对收益触发阈值\u003c/td>\u003ctd>10%／15% 仍为待数据验证的候选阈值。\u003c/td>\u003c/tr>\u003ctr>\u003ctd>事件级文案、字段和承接方式\u003c/td>\u003ctd>以共享表逐条已确认内容为准，表中建议或待确认项不自动视为定稿。\u003c/td>\u003c/tr>\u003ctr>\u003ctd>共享表采用版本\u003c/td>\u003ctd>需登记本次开发采用的确认版本或业务确认日期。\u003c/td>\u003c/tr>\u003ctr>\u003ctd>数据接入与同分排序细节\u003c/td>\u003ctd>消息如何唯一识别、必需字段是否可提供、列表刷新频率，以及生成时间与编号如何比较，待产品、研发／数据共同核对。排序层次按前述规则执行。\u003c/td>\u003c/tr>\u003c/tbody>\u003c/table>\n\u003ch2 id=\"service-acceptance\">服务区验收场景\u003c/h2>\n\u003ctable>\u003cthead>\u003ctr>\u003cth>场景\u003c/th>\u003cth>预期结果\u003c/th>\u003c/tr>\u003c/thead>\u003ctbody>\u003ctr>\u003ctd>核心事件与高分重要事件同时出现\u003c/td>\u003ctd>核心事件仍在前。\u003c/td>\u003c/tr>\u003ctr>\u003ctd>同层内低基础分事件获得更高最终得分\u003c/td>\u003ctd>按最终得分前置，不另按基础分锁定顺序。\u003c/td>\u003c/tr>\u003ctr>\u003ctd>同层同分\u003c/td>\u003ctd>按事件发生时间及已确认兜底层次稳定排序。\u003c/td>\u003c/tr>\u003ctr>\u003ctd>刷新首页\u003c/td>\u003ctd>原消息得分不变，新事件单独计算，队列顺序可变化。\u003c/td>\u003c/tr>\u003ctr>\u003ctd>多条消息轮播中手动滑动\u003c/td>\u003ctd>暂停 10 秒后恢复，全部符合条件的消息都能参与。\u003c/td>\u003c/tr>\u003ctr>\u003ctd>正在阅读的消息失效\u003c/td>\u003ctd>当前条不被切走，点击仍能打开，后续退出首页。\u003c/td>\u003c/tr>\u003ctr>\u003ctd>首页消息成功打开后返回\u003c/td>\u003ctd>该条下一轮不再在首页轮播，二级页仍能按时间回看。\u003c/td>\u003c/tr>\u003ctr>\u003ctd>进入账户服务页\u003c/td>\u003ctd>一条按月倒序时间线，无已读／未读 Tab、筛选、数量或红点。\u003c/td>\u003c/tr>\u003ctr>\u003ctd>更新失败或业务跳转失败\u003c/td>\u003ctd>按各自失败规则处理，不把失败显示成无消息。\u003c/td>\u003c/tr>\u003c/tbody>\u003c/table>","requirementsNav":"\u003cbutton type=\"button\" data-section-id=\"asset-card\">本期范围与资产卡展示\u003c/button>\u003cbutton type=\"button\" data-section-id=\"asset-expand\">展开资产分类与返回\u003c/button>\u003cbutton type=\"button\" data-section-id=\"asset-acceptance\">资产卡验收要点\u003c/button>\u003cbutton type=\"button\" data-section-id=\"score-stability\">服务消息得分与首页刷新\u003c/button>\u003cbutton type=\"button\" data-section-id=\"retention\">账户服务记录展示期限\u003c/button>\u003cbutton type=\"button\" data-section-id=\"service-display\">服务区展示哪些消息\u003c/button>\u003cbutton type=\"button\" data-section-id=\"service-order\">多条消息谁先展示\u003c/button>\u003cbutton type=\"button\" data-section-id=\"carousel\">消息怎样轮播\u003c/button>\u003cbutton type=\"button\" data-section-id=\"expiry\">消息何时退出首页\u003c/button>\u003cbutton type=\"button\" data-section-id=\"timeline\">点击后在哪里查看\u003c/button>\u003cbutton type=\"button\" data-section-id=\"exceptions\">空态、加载与失败\u003c/button>\u003cbutton type=\"button\" data-section-id=\"event-config\">查看事件配置表\u003c/button>\u003cbutton type=\"button\" data-section-id=\"pending\">仍需复核的内容\u003c/button>\u003cbutton type=\"button\" data-section-id=\"service-acceptance\">服务区验收场景\u003c/button>","annotationIndex":{"ANN-m01-collapsed-asset":{"pageKey":"m01-collapsed","reviewSectionId":"asset-card","number":"01","title":"资产卡"},"ANN-m01-collapsed-service":{"pageKey":"m01-collapsed","reviewSectionId":"service-display","number":"02","title":"账户服务消息"},"ANN-m01-expanded-asset":{"pageKey":"m01-expanded","reviewSectionId":"asset-card","number":"03","title":"资产卡"},"ANN-m01-expanded-categories":{"pageKey":"m01-expanded","reviewSectionId":"asset-expand","number":"04","title":"资产分类"},"ANN-m01-expanded-service":{"pageKey":"m01-expanded","reviewSectionId":"service-display","number":"05","title":"账户服务消息"},"ANN-m01-timeline-timeline":{"pageKey":"m01-timeline","reviewSectionId":"timeline","number":"06","title":"账户服务时间线"}},"source":{"livingSpec":"project/03_product_docs_产品文档/WHV4-M01_顶部资产与账户服务区/living-spec.md","annotations":"project/03_product_docs_产品文档/WHV4-M01_顶部资产与账户服务区/annotations.json"}}]}</script>
+  <script>(function () {
+  "use strict";
+
+  var dataNode = document.getElementById("review-center-data");
+  var reviewData = JSON.parse(dataNode.textContent);
+  var frame = document.getElementById("prototypeFrame");
+  var moduleTitle = document.getElementById("moduleTitle");
+  var moduleStatus = document.getElementById("moduleStatus");
+  var breadcrumb = document.getElementById("moduleBreadcrumb");
+  var stateControls = document.getElementById("stateControls");
+  var requirementsNav = document.getElementById("requirementsNav");
+  var requirementsBody = document.getElementById("requirementsBody");
+  var activeModule = null;
+  var activeState = null;
+  var pendingFocus = null; var lastHomeState = null;
+
+  function findModule(moduleId) {
+    return reviewData.modules.find(function (item) { return item.id === moduleId; });
+  }
+
+  function findState(module, pageKey) {
+    return module.states.find(function (item) { return item.pageKey === pageKey; }) || module.states[0];
+  }
+
+  function setActiveModuleButton(moduleId) {
+    document.querySelectorAll(".module-button").forEach(function (button) {
+      button.classList.toggle("is-active", button.getAttribute("data-module-id") === moduleId);
+    });
+  }
+
+  function renderRequirements(module) {
+    requirementsBody.innerHTML = module.requirementsHtml;
+    requirementsNav.innerHTML = module.requirementsNav;
+  }
+
+  function setState(state, focusAfterLoad) {
+    activeState = state; if(state.id !== 'timeline') lastHomeState = state;
+    pendingFocus = focusAfterLoad || null;
+    frame.setAttribute("src", state.prototype);
+    frame.setAttribute("data-page-key", state.pageKey);
+    stateControls.querySelectorAll(".state-button").forEach(function (button) {
+      button.classList.toggle("is-active", button.getAttribute("data-state-id") === state.id);
+    });
+  }
+
+  function renderStates(module) {
+    stateControls.innerHTML = "";
+    module.states.forEach(function (state) {
+      var button = document.createElement("button");
+      button.type = "button";
+      button.className = "state-button";
+      button.setAttribute("data-state-id", state.id);
+      button.textContent = state.label;
+      button.addEventListener("click", function () { setState(state); });
+      stateControls.appendChild(button);
+    });
+  }
+
+  function renderModule(moduleId) {
+    var module = findModule(moduleId);
+    if (!module) {
+      return;
+    }
+    activeModule = module;
+    moduleTitle.textContent = module.title + "｜需求说明";
+    moduleStatus.textContent = module.status;
+    breadcrumb.textContent = reviewData.projectTitle + " / " + module.title;
+    setActiveModuleButton(module.id);
+    renderStates(module);
+    renderRequirements(module);
+    setState(module.states[0]);
+  }
+
+  function focusRight(annotationId) {
+    requirementsBody.querySelectorAll(".review-linked").forEach(function (node) {
+      node.classList.toggle(
+        "is-highlighted",
+        (node.getAttribute("data-annotation-id") || "").split(/\s+/).indexOf(annotationId) >= 0
+      );
+    });
+    var target = requirementsBody.querySelector('[data-annotation-id~="' + CSS.escape(annotationId) + '"]');
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }
+
+  function sendFocus(annotationId) {
+    if (!activeModule) {
+      return;
+    }
+    var mapping = activeModule.annotationIndex[annotationId];
+    if (!mapping) {
+      return;
+    }
+    if (!activeState || activeState.pageKey !== mapping.pageKey) {
+      var targetState = findState(activeModule, mapping.pageKey);
+      setState(targetState, annotationId);
+      return;
+    }
+    frame.contentWindow.postMessage(
+      {
+        type: "review-center:focus-annotation",
+        annotationId: annotationId,
+        pageKey: activeState.pageKey
+      },
+      "*"
+    );
+  }
+
+  requirementsBody.addEventListener("click", function (event) {
+    var trigger = event.target.closest("[data-annotation-id]");
+    if (!trigger) {
+      return;
+    }
+    var annotationId = (trigger.getAttribute("data-annotation-id") || "").split(/\s+/)[0];
+    if (annotationId) {
+      focusRight(annotationId);
+      sendFocus(annotationId);
+    }
+  });
+
+  requirementsNav.addEventListener("click", function (event) {
+    var button = event.target.closest("[data-section-id]");
+    if (!button) {
+      return;
+    }
+    var target = requirementsBody.querySelector("#" + CSS.escape(button.getAttribute("data-section-id")));
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  });
+
+  frame.addEventListener("load", function () {
+    if (pendingFocus) {
+      var annotationId = pendingFocus;
+      pendingFocus = null;
+      sendFocus(annotationId);
+    }
+  });
+
+  window.addEventListener("message", function (event) {
+    if (event.source !== frame.contentWindow || !event.data) {
+      return;
+    }
+    if (event.data.type === "m01-review:navigate") {
+      var chosen = event.data.state === 'return' ? (lastHomeState || activeModule.states[0]) : activeModule.states.find(function(s){return s.id===event.data.state;});
+      if(chosen){ setState(chosen); if(chosen.id==='timeline' && event.data.eventId==='event-risk') frame.src=chosen.prototype+'#event-risk'; }
+      return;
+    }
+    if (event.data.type === "m01-review:state-changed") {
+      var changed=activeModule.states.find(function(s){return s.pageKey===event.data.pageKey;});
+      if(changed){activeState=changed;lastHomeState=changed;frame.dataset.pageKey=changed.pageKey;stateControls.querySelectorAll('.state-button').forEach(function(btn){btn.classList.toggle('is-active',btn.dataset.stateId===changed.id);});}
+      return;
+    }
+    if (event.data.type !== "review-center:annotation-selected") {
+      return;
+    }
+    if (!activeState || event.data.pageKey !== activeState.pageKey) {
+      return;
+    }
+    if (!activeModule.annotationIndex[event.data.annotationId]) {
+      return;
+    }
+    focusRight(event.data.annotationId);
+  });
+
+  document.querySelectorAll(".module-button").forEach(function (button) {
+    button.addEventListener("click", function () {
+      renderModule(button.getAttribute("data-module-id"));
+    });
+  });
+
+  renderModule(reviewData.modules[0].id);
+}());
+</script>
+</body>
+</html>

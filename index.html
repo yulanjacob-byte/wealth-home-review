@@ -736,7 +736,7 @@
         </button>
 
         <div class="nav-group-label" style="margin-top:16px">Modules</div>
-        <button class="nav-item" type="button" data-module="M01"><span class="nav-code">M01</span><span class="nav-name">顶部资产与账户服务区</span><span class="nav-state"></span></button>
+        <button class="nav-item" type="button" data-module="M01"><span class="nav-code">M01</span><span class="nav-name">顶部资产与账户服务区</span><span class="nav-state is-review" title="公共规则与共享事件表入口已接入"></span></button>
         <button class="nav-item" type="button" data-module="M02-B"><span class="nav-code">M02-B</span><span class="nav-name">宫格区</span><span class="nav-state is-review" title="常用理财服务宫格已接入，待阅读"></span></button>
         <button class="nav-item" type="button" data-module="M02-C"><span class="nav-code">M02-C</span><span class="nav-name">小宝服务区</span><span class="nav-state is-review" title="结构候选与完整相关需求已接入，待评审"></span></button>
         <button class="nav-item" type="button" data-module="M03"><span class="nav-code">M03</span><span class="nav-name">精选推荐</span><span class="nav-state is-review" title="正常列表示例与卡片、运营、排序及统计说明已接入，待阅读确认"></span></button>
@@ -785,7 +785,7 @@
           </div>
           <section class="module-grid" id="moduleGrid">
             <article class="module-card is-global" data-open-module="G01" role="button" tabindex="0"><div class="module-card-top"><span class="module-card-code">WHV4-G01</span><span class="module-card-status">完整原型已接入</span></div><h4>全局页面框架</h4><p>查看完整首页交互、三个 Tab、本期范围与全局说明。</p></article>
-            <article class="module-card" data-open-module="M01" role="button" tabindex="0"><div class="module-card-top"><span class="module-card-code">WHV4-M01</span><span class="module-card-status">需求细化中 · 未接入</span></div><h4>顶部资产与账户服务区</h4><p>资产卡、外部资产卡与账户服务区。</p></article>
+            <article class="module-card" data-open-module="M01" role="button" tabindex="0"><div class="module-card-top"><span class="module-card-code">WHV4-M01</span><span class="module-card-status">已接入 · 待评审</span></div><h4>顶部资产与账户服务区</h4><p>资产展示与返回、服务消息排序与轮播、账户服务时间线；事件配置查企微共享表。外部资产本期不做。</p></article>
             <article class="module-card" data-open-module="M02" role="button" tabindex="0"><div class="module-card-top"><span class="module-card-code">WHV4-M02</span><span class="module-card-status">宫格已接入</span></div><h4>宫格区</h4><p>常用理财服务宫格独立展示，与小宝服务区并列。小宝提示与下方卡片请从“小宝服务区”入口查看。</p></article>
             <article class="module-card" data-open-module="M02-C" role="button" tabindex="0"><div class="module-card-top"><span class="module-card-code">WHV4-M02-C</span><span class="module-card-status">结构候选待评审</span></div><h4>小宝服务区</h4><p>范围为小宝提示入口与下方场景服务卡、精选补位卡及切换操作，不包含宫格。当前可查看卡片结构与提示示例，小宝入口最终文案和点击承接待细化。右侧连续阅读相关规则与验收要求；补位使用预置示例。</p></article>
             <article class="module-card m03-module-card" data-open-module="M03" role="button" tabindex="0"><div class="module-card-top"><span class="module-card-code">WHV4-M03</span><span class="module-card-status">正常列表待确认</span></div><h4>精选推荐</h4><p>左侧查看正常列表示例，右侧阅读卡片、发布审核、推荐排序、首页更新和效果统计。榜单内容与配置说明已收录；客户卡片及其他状态演示后续补充。</p></article>
@@ -802,7 +802,7 @@
               <thead><tr><th>模块</th><th>需求引用原型</th><th>模块候选原型</th><th>需求来源</th><th>当前状态</th></tr></thead>
               <tbody>
                 <tr><td>G01 全局页面框架</td><td>冻结 V4（需求初始基线）</td><td>2026.11.12 完整交互整合版</td><td>总控公共规则及来源说明；不新增独立业务事实源</td><td>框架已确认 · 完整原型已接入；模块差异已列明</td></tr>
-                <tr><td>M01 顶部资产与账户服务区</td><td>冻结 V4</td><td>未接入评审</td><td>正式来源待接入核验</td><td>需求细化中；评审页未接入</td></tr>
+                <tr><td>M01 顶部资产与账户服务区</td><td>冻结 V4（历史基线）</td><td>资产与账户服务聚焦示例 v0.1</td><td>公共需求 v0.6＋企微事件配置表</td><td>已接入；候选参数及真实页面验收待完成</td></tr>
                 <tr><td>M02-B 宫格区</td><td>宫格展示示例 v0.1</td><td>仅常用理财服务宫格已接入</td><td>宫格正式需求 v1.0</td><td>宫格规则已确认，阅读效果待评审；小宝服务区见独立条目</td></tr>
                 <tr><td>M02-A/C 小宝服务区</td><td>结构候选 v0.2</td><td>32 个状态只读评审</td><td>完整相关说明派生自 PRD v1.61</td><td>结构待评审；非最终 UI 或共享推荐实现验收</td></tr>
                 <tr><td>M03 精选推荐</td><td>正常列表线框稿 v0.1</td><td>中台线框稿 v0.11</td><td>卡片、运营、排序、首页更新与统计说明派生自 PRD v1.58</td><td>正常列表左右对照待确认；非完整状态验收</td></tr>
@@ -905,6 +905,7 @@
         </div>
       </section>
 
+      <section class="view" id="m01View"><iframe id="m01ReviewFrame" title="资产卡与账户服务需求评审" style="width:100%;height:calc(100vh - 100px);border:0;display:block" data-src="./m01-review.html?v=20261117-v06"></iframe></section>
       <section class="view" id="placeholderView">
         <div class="placeholder-view">
           <article class="placeholder-card">
@@ -931,6 +932,7 @@
     };
 
     const views = {
+      M01: document.getElementById("m01View"),
       G01: document.getElementById("g01View"),
       overview: document.getElementById("overviewView"),
       M02: document.getElementById("m02bView"),
@@ -969,6 +971,15 @@
         reviewStatus.textContent = "框架已确认 · 模块分别评审";
         reviewStatus.className = "chip";
         document.querySelector('meta[name="prototype-page-key"]').content = "wealth-home-review-center-g01";
+      } else if (target === "M01") {
+        views.M01.classList.add("is-active");
+        const frame = document.getElementById("m01ReviewFrame");
+        if (!frame.getAttribute("src")) frame.src = frame.dataset.src;
+        crumbCode.textContent = "理财首页 / 资产卡与账户服务";
+        crumbTitle.textContent = "资产卡与账户服务 · 左示例＋右说明";
+        reviewStatus.textContent = "已接入 · 候选参数待复核";
+        reviewStatus.className = "chip is-warn";
+        document.querySelector('meta[name="prototype-page-key"]').content = "wealth-home-review-center-m01";
       } else if (target === "M02" || target === "M02-B") {
         views.M02.classList.add("is-active");
         document.querySelector('[data-module="M02-B"]').classList.add("is-active");

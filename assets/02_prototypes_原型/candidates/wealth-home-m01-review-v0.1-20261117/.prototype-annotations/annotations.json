@@ -1,0 +1,126 @@
+{
+  "version": 1,
+  "workflowMode": "review-center-readonly",
+  "reviewRequirementAnchors": [
+    "asset-card",
+    "asset-expand",
+    "service-display",
+    "timeline"
+  ],
+  "annotations": [
+    {
+      "id": "ANN-m01-collapsed-asset",
+      "pageKey": "m01-collapsed",
+      "title": "资产卡",
+      "visible": true,
+      "reviewSectionId": "asset-card",
+      "number": "01",
+      "target": {
+        "selector": "#holdingUi",
+        "strategy": "id"
+      },
+      "reviewRegion": {
+        "id": "region-m01-collapsed-asset",
+        "title": "资产卡",
+        "requirementAnchor": "asset-card",
+        "visibleLanding": true,
+        "visibleText": "我的理财持仓"
+      }
+    },
+    {
+      "id": "ANN-m01-collapsed-service",
+      "pageKey": "m01-collapsed",
+      "title": "账户服务消息",
+      "visible": true,
+      "reviewSectionId": "service-display",
+      "number": "02",
+      "target": {
+        "selector": "#accountServices",
+        "strategy": "id"
+      },
+      "reviewRegion": {
+        "id": "region-m01-collapsed-service",
+        "title": "账户服务消息",
+        "requirementAnchor": "service-display",
+        "visibleLanding": true,
+        "visibleText": "订单"
+      }
+    },
+    {
+      "id": "ANN-m01-expanded-asset",
+      "pageKey": "m01-expanded",
+      "title": "资产卡",
+      "visible": true,
+      "reviewSectionId": "asset-card",
+      "number": "03",
+      "target": {
+        "selector": "#holdingUi",
+        "strategy": "id"
+      },
+      "reviewRegion": {
+        "id": "region-m01-expanded-asset",
+        "title": "资产卡",
+        "requirementAnchor": "asset-card",
+        "visibleLanding": true,
+        "visibleText": "我的理财持仓"
+      }
+    },
+    {
+      "id": "ANN-m01-expanded-categories",
+      "pageKey": "m01-expanded",
+      "title": "资产分类",
+      "visible": true,
+      "reviewSectionId": "asset-expand",
+      "number": "04",
+      "target": {
+        "selector": "#assetDetails",
+        "strategy": "id"
+      },
+      "reviewRegion": {
+        "id": "region-m01-expanded-categories",
+        "title": "资产分类",
+        "requirementAnchor": "asset-expand",
+        "visibleLanding": true,
+        "visibleText": "现金理财"
+      }
+    },
+    {
+      "id": "ANN-m01-expanded-service",
+      "pageKey": "m01-expanded",
+      "title": "账户服务消息",
+      "visible": true,
+      "reviewSectionId": "service-display",
+      "number": "05",
+      "target": {
+        "selector": "#accountServices",
+        "strategy": "id"
+      },
+      "reviewRegion": {
+        "id": "region-m01-expanded-service",
+        "title": "账户服务消息",
+        "requirementAnchor": "service-display",
+        "visibleLanding": true,
+        "visibleText": "订单"
+      }
+    },
+    {
+      "id": "ANN-m01-timeline-timeline",
+      "pageKey": "m01-timeline",
+      "title": "账户服务时间线",
+      "visible": true,
+      "reviewSectionId": "timeline",
+      "number": "06",
+      "target": {
+        "selector": "#m01Timeline",
+        "strategy": "id"
+      },
+      "reviewRegion": {
+        "id": "region-m01-timeline-timeline",
+        "title": "账户服务时间线",
+        "requirementAnchor": "timeline",
+        "visibleLanding": true,
+        "visibleText": "11月"
+      }
+    }
+  ]
+}

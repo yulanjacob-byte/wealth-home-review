@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=750, initial-scale=1, viewport-fit=cover">
+  <title>账户服务｜二级页面视觉讨论稿</title>
+  <style>/* ============================================================
+ * 国金证券客户端设计系统 · design-tokens.css(数值真源)
+ * version: v2.6.2 · 750 设计稿基准
+ * 唯一颜色/尺寸来源。ALWAYS 用 var(--xxx),NEVER 硬编码色值。
+ * 深色模式:容器加 [data-theme="dark"] 即自动切换语义色。
+ * ============================================================ */
+
+:root {
+  /* ---------- 原子色盘:7 彩色族×19阶 + 灰18阶,锚点在第6阶 ---------- */
+  /* R · 品牌红(★R6 主色/涨红) */
+  --R1:#FFF2F0; --R2:#FFE0DB; --R3:#FFBAB3; --R4:#FF928A; --R5:#FF6661; --R6:#F93838; --R7:#D4242A; --R8:#AD151F; --R9:#870916; --R10:#610612; --R11:#281B26; --R12:#551313; --R13:#7E1C1C; --R14:#A72626; --R15:#D02F2F; --R16:#FA6060; --R17:#FB8888; --R18:#FDAFAF; --R19:#FED7D7;
+  /* O · 辅色橙 */
+  --O1:#FFF8F0; --O2:#FFECD6; --O3:#FFD6AD; --O4:#FFBE85; --O5:#FFA35C; --O6:#FF8533; --O7:#D96421; --O8:#B34712; --O9:#8C2F07; --O10:#661E04; --O11:#282024; --O12:#572D11; --O13:#81431A; --O14:#AB5922; --O15:#D56F2B; --O16:#FF9D5C; --O17:#FFB685; --O18:#FFCEAD; --O19:#FFE7D6;
+  /* Y · 辅色黄 */
+  --Y1:#FFFBE6; --Y2:#FFF2B8; --Y3:#FFE78F; --Y4:#FFD966; --Y5:#FFC83D; --Y6:#FFB415; --Y7:#D98F07; --Y8:#B36E00; --Y9:#8C5200; --Y10:#663800; --Y11:#291D1C; --Y12:#543313; --Y13:#7D4F1B; --Y14:#A66E26; --Y15:#CC8C1E; --Y16:#FDC74E; --Y17:#FADB87; --Y18:#FCEAAC; --Y19:#FFF7D6;
+  /* J · 辅色金(广告/会员) */
+  --J1:#FFF6EA; --J2:#F5E2C4; --J3:#E8C595; --J4:#DBA869; --J5:#CF8B42; --J6:#C36E20; --J7:#9C4F11; --J8:#753507; --J9:#4F1F01; --J10:#290E00; --J11:#24180C; --J12:#462F16; --J13:#694621; --J14:#8B5D2C; --J15:#AD7437; --J16:#D9A268; --J17:#E2B98E; --J18:#ECD1B3; --J19:#F5E8D9;
+  /* G · 辅色绿(★G6 跌绿) */
+  --G1:#E3FAEC; --G2:#B7EBD1; --G3:#8ADCB5; --G4:#5ECE9A; --G5:#31BF7E; --G6:#05B063; --G7:#048A4E; --G8:#03643A; --G9:#013D25; --G10:#001710; --G11:#16252A; --G12:#02321D; --G13:#044A2B; --G14:#05633A; --G15:#067B48; --G16:#37C082; --G17:#69D0A1; --G18:#9BDFC1; --G19:#CDEFE0;
+  /* B · 辅色蓝(★B6 卖/链接) */
+  --B1:#F0F7FF; --B2:#CFE5FF; --B3:#A6CCFF; --B4:#7DB1FF; --B5:#5493FF; --B6:#2B73FF; --B7:#1A53D9; --B8:#0C39B3; --B9:#03238C; --B10:#011566; --B11:#181F36; --B12:#0F2757; --B13:#163A81; --B14:#1D4DAB; --B15:#2460D5; --B16:#558FFF; --B17:#80ABFF; --B18:#AAC7FF; --B19:#D5E3FF;
+  /* P · 辅色紫(智能体) */
+  --P1:#F4F0FF; --P2:#EEE8FF; --P3:#CEBFFF; --P4:#AB96FF; --P5:#866EFF; --P6:#5E44FF; --P7:#4130D9; --P8:#281EB3; --P9:#15118C; --P10:#0B0B66; --P11:#100C2D; --P12:#201757; --P13:#2F2281; --P14:#3F2EAB; --P15:#4F39D5; --P16:#7E69FF; --P17:#9E8FFF; --P18:#BFB4FF; --P19:#DFDAFF;
+  /* H · 基础灰(★H9 主文本) */
+  --H1:#FFFFFF; --H2:#F2F4F8; --H3:#E2E8F2; --H4:#EEEEEE; --H5:#DDDDDD; --H6:#CCCCCC; --H7:#87878D; --H8:#55555E; --H9:#0F0F1B; --H10:#000000; --H11:#161824; --H12:#0F0F1B; --H13:#21212D; --H14:#373746; --H15:#55555E; --H16:#87878D; --H17:#87878D; --H18:#DDDDDD;
+  /* ---------- 品牌渐变 ---------- */
+  --grad-red:linear-gradient(180deg, var(--CP1) 0%, var(--CP0) 100%);
+  --grad-ai:linear-gradient(135deg, var(--CP2) 0%, var(--CP3) 100%);
+  --grad-peach:linear-gradient(180deg, var(--O1) 0%, #FFFBF7 100%);
+  --grad-iris:linear-gradient(180deg, #F6FBFF 0%, #FFF9FF 50%, #F3F5FF 100%);
+  --grad-glass:linear-gradient(180deg, #FFFFFF 0%, rgba(255,255,255,0.2) 100%);
+  --grad-orb:radial-gradient(circle, rgba(179,160,255,.55) 0%, rgba(255,223,252,.55) 35%, rgba(199,229,255,.55) 70%, rgba(124,181,255,.55) 100%);
+  /* ---------- 语义别名(开发友好) ---------- */
+  --red-50:var(--R1); --red-100:var(--R2); --red-200:var(--R3); --red-300:var(--R4); --red-400:var(--R5); --red-500:var(--R6); --red-600:var(--R7); --red-700:var(--R8); --gold-50:var(--J1); --gold-100:var(--J2); --gold-200:var(--J3); --gold-300:var(--J4); --gold-400:var(--J5); --gold-500:var(--J6); --gold-600:var(--J7); --gold-700:var(--J8); --blue-50:var(--B1); --blue-100:var(--B2); --blue-300:var(--B5); --blue-500:var(--B6); --blue-700:var(--B7); --ink-900:var(--H9); --ink-700:var(--H8); --ink-500:var(--H8); --ink-400:var(--H7); --ink-300:var(--H6); --line:var(--H4); --bg-1:var(--H1); --bg-2:var(--H2); --bg-3:#F8F9FB;
+  /* ---------- 圆角 / 间距 ---------- */
+  /* 750 基准(v1.6.2 起全系统统一 750,不再 ÷2;基线单位 8) */
+  --r-4:4px; --r-6:6px; --r-8:8px; --r-12:12px; --r-16:16px; --r-20:20px; --r-24:24px; --r-32:32px; --r-pill:999px; --s-4:4px; --s-8:8px; --s-12:12px; --s-16:16px; --s-20:20px; --s-24:24px; --s-32:32px; --s-40:40px; --s-48:48px; --s-64:64px; /* ---------- 字体 ---------- */
+  --font-sans:"PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-num:"GJType", "PingFang SC", system-ui, sans-serif;
+
+  /* ===================================================
+   * 语义 token(白版/默认)— 按用途取用,而非按颜色
+   * =================================================== */
+  /* 01 品牌色 · CP · Brand */
+  --CP0:var(--R6); /* 品牌色(对应色盘 R6) */
+  --CP1:#FF7067; /* 品牌渐变浅色端 */
+  --CP2:#667FFF; /* 智能体品牌渐变色蓝 */
+  --CP3:#8B52FF; /* 智能体品牌渐变色紫 */
+  /* 02 文字色 · CT · Text */
+  --CT1:var(--H9); /* 主要文本 / 标题 */
+  --CT2:var(--H9); /* 大面积主要文本的黑肤特殊处理（例：资讯） */
+  --CT3:var(--H8); /* 次要文本 / 副标题 */
+  --CT4:var(--H7); /* 辅助文本 / 提示说明 */
+  --CT5:var(--H8); /* 弱文本 / 失效文本 */
+  --CT6:var(--H1); /* 反白文字 */
+  --CT7:var(--H1); /* 顶部标题栏文字 */
+  --CT8:rgba(255,255,255,0.3); /* 禁用按钮上的反白文字 */
+  /* 03 涨跌色 · CS · Rise / Fall */
+  --CS1:var(--R6); /* 涨红 */
+  --CS2:var(--G6); /* 跌绿 */
+  --CS3:var(--H8); /* 平灰 */
+  --CS4:var(--B6); /* 部分交易场景的跌 / 卖 */
+  /* 04 功能色 · CF · Functional */
+  --CF1:var(--R6); /* 警告 / 失败 */
+  --CF2:#FF7015; /* 警示 / 次要提示 */
+  --CF3:var(--B6); /* 成功 / 链接色 */
+  --CF4:#059BB0; /* 市场情绪-大盘指数-"偏低"功能色 */
+  --CF5:#32BFDE; /* 市场情绪-北向净卖入-"深股通"线条 / 选中色值 */
+  --CF6:var(--J6); /* 辅助棕 - 广告词 */
+  --CF7:var(--G6); /* 成功(操作结果,如结果页"操作成功"提示);与跌绿 --CS2 同色值不同语义,价格语境的"跌"仍用 --CS2 */
+  /* 05 线框色 · CL · Line / Border */
+  --CL1:var(--H5); /* 一级分割线 / 默认描边 */
+  --CL2:var(--H4); /* 常规分割线 */
+  --CL3:var(--R6); /* 红色边框 */
+  --CL4:var(--O6); /* 橙色边框 */
+  --CL5:var(--B6); /* 蓝色边框 */
+  --CL6:var(--P6); /* 紫色边框 */
+  --CL8:rgba(43,115,255,0.5); /* 市场情绪选中边框 */
+  --CL9:var(--B6); /* 分时图背景 */
+  /* 06 按钮色 · CN · Button / Action */
+  --CN1:var(--R6); /* 交易买 / 默认主按钮 */
+  --CN2:var(--R7); /* 交易买 - 按下 */
+  --CN3:var(--B6); /* 交易卖 / 期权平 */
+  --CN4:var(--B7); /* 交易卖 / 期权平 - 按下 */
+  --CN5:var(--G6); /* 期权卖 */
+  --CN6:var(--G7); /* 期权卖 - 按下 */
+  --CN7:var(--R7); /* 融买 */
+  --CN8:var(--R8); /* 融买 - 按下 */
+  --CN9:var(--B7); /* 融卖 */
+  --CN10:var(--B8); /* 融卖 - 按下 */
+  --CN11:rgba(249,56,56,0.3); /* 常规按钮禁用状态 */
+  --CN12:var(--R1); /* 浅色主按钮背景色 */
+  --CN13:var(--R2); /* 浅色主按钮背景色 - 按下 */
+  --CN14:var(--H2); /* 灰色辅助按钮背景色 */
+  --CN15:var(--H3); /* 灰色辅助按钮背景色 - 按下 */
+  /* 07 图标色 · CI · Icon */
+  --CI1:var(--H9); /* 主要图标 */
+  --CI2:var(--H8); /* 次要图标，搭配次要文本 */
+  --CI3:var(--H7); /* 辅助图标，搭配辅助文本及提示说明 */
+  --CI4:var(--H6); /* 弱图标 / 失效图标，搭配弱文本及失效文本 */
+  --CI5:var(--H1); /* 反白图标，搭配反白文字 */
+  /* 08 图表色 · CH · Chart */
+  --CH1:var(--R6); /* 主品牌色 / 高亮 (图表) */
+  --CH2:var(--R5); /* 红 - 浅一阶 */
+  --CH3:var(--O6); /* 橙 - 主 */
+  --CH4:var(--O4); /* 橙 - 浅 */
+  --CH5:var(--Y6); /* 黄 - 主 */
+  --CH6:var(--Y4); /* 黄 - 浅 */
+  --CH7:var(--G5); /* 绿 - 主 */
+  --CH8:var(--G4); /* 绿 - 浅 */
+  --CH9:var(--B5); /* 蓝 - 主 */
+  --CH10:var(--B3); /* 蓝 - 浅 */
+  --CH11:var(--P5); /* 紫 - 主 */
+  --CH12:var(--P3); /* 紫 - 浅 */
+  --CH13:var(--J3); /* 金 - 主 */
+  --CH14:var(--J2); /* 金 - 浅 */
+  /* 09 背景色 · CB · Background */
+  --CB1:var(--H1); /* 卡片背景色 */
+  --CB2:var(--H2); /* 页面背景色 */
+  --CB3:var(--H2); /* 二层卡片 / 二级未选中 Tab */
+  --CB35:#FCFDFF; /* 瓷片区卡片背景 */
+  --CB41:#F6F8FC; /* 用于常规文字模块背景 */
+  --CB7:var(--H2); /* 三层卡片 / 需要提亮特殊处理模块 */
+  --CB8:var(--H1); /* 浅色浮层 */
+  --CB4:var(--R1); /* 红色标签背景 */
+  --CB43:var(--R2); /* 红色标签背景（深） */
+  --CB5:var(--O1); /* 橙色标签背景 */
+  --CB44:var(--O2); /* 橙色标签背景（深） */
+  --CB6:var(--B1); /* 蓝色标签背景 */
+  --CB45:var(--B2); /* 蓝色标签背景（深） */
+  --CB9:var(--G1); /* 绿色标签背景 */
+  --CB37:#FBF4EE; /* 金色标签背景 */
+  --CB10:rgba(249,56,56,0.05); /* 指数涨背景 */
+  --CB11:rgba(5,176,99,0.05); /* 指数跌背景 */
+  --CB12:rgba(85,85,94,0.05); /* 指数平背景 */
+  --CB36:rgba(255,112,21,0.05); /* 自选底部通知条 / 交易公告背景 */
+  --CB13:rgba(249,56,56,0.08); /* 红色透明标签背景 */
+  --CB14:rgba(43,115,255,0.08); /* 蓝色透明标签背景 */
+  --CB15:rgba(255,112,21,0.08); /* 橙色透明标签背景 */
+  --CB16:rgba(94,68,255,0.08); /* 紫色透明标签背景 */
+  --CB27:rgba(5,176,99,0.08); /* 自选个股列表跌 / 理财热点 / 指数定投气泡背景 */
+  --CB17:rgba(43,115,255,0.1); /* 自选 / 行情图表蓝色走势线背景色 */
+  --CB18:rgba(0,0,0,0.8); /* 深色浮层背景 */
+  --CB19:rgba(0,0,0,0.6); /* 常规遮罩色 */
+  --CB20:rgba(249,56,56,0.25); /* 自选分时上涨 / 国金策略涨 */
+  --CB21:rgba(5,176,99,0.25); /* 自选分时下跌 / 国金策略跌 */
+  --CB22:rgba(85,85,94,0.25); /* 自选分时平 */
+  --CB23:rgba(249,56,56,0); /* 自选分时上涨渐变端 */
+  --CB24:rgba(5,176,99,0); /* 自选分时下跌渐变端 */
+  --CB25:rgba(85,85,94,0); /* 自选分时平渐变端 */
+  --CB26:rgba(255,255,255,0); /* 自选个股列表涨跌背景渐变端 */
+  --CB28:#E3FAF9; /* 市场情绪-大盘情绪-偏低背景 */
+  --CB29:rgba(249,56,56,0.1); /* 国金策略指数色值展示卡片背景 */
+  --CB30:rgba(249,56,56,0.15); /* 国金策略指数色值展示卡片背景 */
+  --CB31:rgba(249,56,56,0.2); /* 国金策略指数色值展示卡片背景 */
+  --CB32:rgba(5,176,99,0.1); /* 国金策略指数色值展示卡片背景 */
+  --CB33:rgba(5,176,99,0.15); /* 国金策略指数色值展示卡片背景 */
+  --CB34:rgba(5,176,99,0.2); /* 国金策略指数色值展示卡片背景 */
+  --CB38:#F6FBFF; /* 智能体相关的通用渐变背景色 */
+  --CB39:#FFF9FF; /* 智能体相关的通用渐变背景色 */
+  --CB40:#F3F5FF; /* 智能体相关的通用渐变背景色 */
+  --CB42:#F6F5FF; /* 智能体相关卡片浅紫渐变背景色 */
+}
+
+/* ===================================================
+ * 深色模式覆盖(仅 39 个 token 需切换,其余不变)
+ * =================================================== */
+[data-theme="dark"] {
+  --CT1:var(--H1); /* 主要文本 / 标题 */
+  --CT2:#BBBBBB; /* 大面积主要文本的黑肤特殊处理（例：资讯） */
+  --CT3:var(--H7); /* 次要文本 / 副标题 */
+  --CT5:var(--H6); /* 弱文本 / 失效文本 */
+  --CS3:var(--H7); /* 平灰 */
+  --CL1:var(--H14); /* 一级分割线 / 默认描边 */
+  --CL2:var(--H14); /* 常规分割线 */
+  --CL9:var(--H5); /* 分时图背景 */
+  --CN12:var(--R11); /* 浅色主按钮背景色 */
+  --CN13:var(--R12); /* 浅色主按钮背景色 - 按下 */
+  --CN14:var(--H9); /* 灰色辅助按钮背景色 */
+  --CN15:var(--H13); /* 灰色辅助按钮背景色 - 按下 */
+  --CI1:var(--H1); /* 主要图标 */
+  --CI2:var(--H7); /* 次要图标，搭配次要文本 */
+  --CI4:var(--H8); /* 弱图标 / 失效图标，搭配弱文本及失效文本 */
+  --CB1:var(--H11); /* 卡片背景色 */
+  --CB2:var(--H9); /* 页面背景色 */
+  --CB3:#1C1E2D; /* 二层卡片 / 二级未选中 Tab */
+  --CB35:#1C1E2D; /* 瓷片区卡片背景 */
+  --CB41:#1C1E2D; /* 用于常规文字模块背景 */
+  --CB7:#282A35; /* 三层卡片 / 需要提亮特殊处理模块 */
+  --CB8:#282A35; /* 浅色浮层 */
+  --CB4:var(--R11); /* 红色标签背景 */
+  --CB43:var(--R12); /* 红色标签背景（深） */
+  --CB5:var(--O11); /* 橙色标签背景 */
+  --CB44:var(--O12); /* 橙色标签背景（深） */
+  --CB6:var(--B11); /* 蓝色标签背景 */
+  --CB45:var(--B12); /* 蓝色标签背景（深） */
+  --CB9:var(--G11); /* 绿色标签背景 */
+  --CB37:#2D2724; /* 金色标签背景 */
+  --CB17:var(--H5); /* 自选 / 行情图表蓝色走势线背景色 */
+  --CB22:rgba(135,135,141,0.25); /* 自选分时平 */
+  --CB25:rgba(135,135,141,0); /* 自选分时平渐变端 */
+  --CB26:rgba(22,24,36,0); /* 自选个股列表涨跌背景渐变端 */
+  --CB28:#062B31; /* 市场情绪-大盘情绪-偏低背景 */
+  --CB38:#281B28; /* 智能体相关的通用渐变背景色 */
+  --CB39:#1D2032; /* 智能体相关的通用渐变背景色 */
+  --CB40:#1C1E2D; /* 智能体相关的通用渐变背景色 */
+  --CB42:#302F50; /* 智能体相关卡片浅紫渐变背景色 */
+}</style>
+  <style>/* 国金证券设计系统 · IconFont 图标字体
+   用法:引入本文件后,用 <i class="iconfont icon-xxx"></i>;
+   颜色用 color 控制(继承 currentColor),大小用 font-size 控制。 */
+@font-face {
+  font-family: "iconfont";
+  src: url("../../../_shared/8c96ae0aa187a23d08e13420.woff2") format("woff2");
+  font-display: block;
+}
+.iconfont {
+  font-family: "iconfont" !important;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+}
+.icon-tianjia:before { content: "\e631"; }
+.icon-qiehuanheiban:before { content: "\e632"; }
+.icon-shibai:before { content: "\e633"; }
+.icon-shuoming:before { content: "\e634"; }
+.icon-shixinjiantou-shang:before { content: "\e635"; }
+.icon-licaishouye:before { content: "\e636"; }
+.icon-huanyihuan:before { content: "\e637"; }
+.icon-gengduo:before { content: "\e638"; }
+.icon-shezhi:before { content: "\e639"; }
+.icon-guanbi:before { content: "\e63a"; }
+.icon-jiesuo:before { content: "\e63b"; }
+.icon-changwaizhuanchangnei:before { content: "\e609"; }
+.icon-dingtoujisuanqi:before { content: "\e63c"; }
+.icon-cebianlan:before { content: "\e63d"; }
+.icon-biaotouguanli:before { content: "\e63e"; }
+.icon-chenggong:before { content: "\e63f"; }
+.icon-biaodelianjie:before { content: "\e640"; }
+.icon-dingyue:before { content: "\e641"; }
+.icon-bangzhu:before { content: "\e642"; }
+.icon-bianji:before { content: "\e643"; }
+.icon-qiehuanbaiban:before { content: "\e61b"; }
+.icon-honglizaitouzi:before { content: "\e61d"; }
+.icon-xiaoxi:before { content: "\e61e"; }
+.icon-shouyijisuanqi:before { content: "\e61f"; }
+.icon-fenxiang:before { content: "\e620"; }
+.icon-pengyouquan:before { content: "\e621"; }
+.icon-guanhuaibanqiehuan:before { content: "\e622"; }
+.icon-rili:before { content: "\e623"; }
+.icon-pinglun:before { content: "\e624"; }
+.icon-zhiding:before { content: "\e625"; }
+.icon-sousuo:before { content: "\e626"; }
+.icon-xianshi:before { content: "\e627"; }
+.icon-shixinjiantou-you:before { content: "\e628"; }
+.icon-shouqi:before { content: "\e629"; }
+.icon-weixin:before { content: "\e62a"; }
+.icon-shijian:before { content: "\e62b"; }
+.icon-guanzhu:before { content: "\e62c"; }
+.icon-jiazixuan:before { content: "\e62d"; }
+.icon-qupinglun:before { content: "\e62e"; }
+.icon-shixinjiantou-zuo:before { content: "\e62f"; }
+.icon-saoyisao:before { content: "\e630"; }
+.icon-suoding:before { content: "\e60b"; }
+.icon-zhihuitou:before { content: "\e60c"; }
+.icon-tongzhi:before { content: "\e60d"; }
+.icon-tiaozhuangengduo-juzhongduiqi:before { content: "\e60e"; }
+.icon-zhankai:before { content: "\e60f"; }
+.icon-zixuanzijin:before { content: "\e610"; }
+.icon-xianjinfenhong:before { content: "\e611"; }
+.icon-shixinjiantou-xia:before { content: "\e612"; }
+.icon-tiaozhuangengduo-youduiqi:before { content: "\e613"; }
+.icon-zixuanzixun:before { content: "\e614"; }
+.icon-sousuoguanbi:before { content: "\e615"; }
+.icon-tuichu:before { content: "\e616"; }
+.icon-yincang:before { content: "\e617"; }
+.icon-shezixuan:before { content: "\e60a"; }
+.icon-guandian:before { content: "\e618"; }
+.icon-shoucang:before { content: "\e619"; }
+.icon-shanchuzixuan:before { content: "\e61a"; }
+</style>
+  <style>
+    @font-face{font-family:GJType;src:url("../../../_shared/7fc07001243281e3d360c92b.ttf") format("truetype");font-weight:400;font-display:swap}
+    @font-face{font-family:GJType;src:url("../../../_shared/685a7b6089958f90f1f15b7b.ttf") format("truetype");font-weight:500;font-display:swap}
+    *{box-sizing:border-box}
+    html{background:var(--CB2);scroll-behavior:smooth}
+    body{margin:0;color:var(--CT1);font-family:var(--font-sans);-webkit-font-smoothing:antialiased}
+    button{font:inherit}
+    .app{width:750px;min-height:100vh;margin:0 auto;background:var(--CB2);overflow:hidden}
+    .top{position:relative;background:var(--CB1)}
+    .gj-statusbar{height:88px;padding:0 40px;display:flex;align-items:center;justify-content:space-between;color:var(--CT1)}
+    .gj-sb-time{font-family:var(--font-num);font-size:30px;font-weight:500;font-variant-numeric:tabular-nums}
+    .gj-sb-right{display:flex;align-items:center;gap:12px}
+    .gj-sb-5g{font-family:var(--font-num);font-size:28px;font-weight:500}
+    .gj-sb-signal rect,.gj-sb-battery rect{fill:currentColor}
+    .gj-sb-battery rect[fill="none"]{fill:none;stroke:currentColor}
+    .gj-tnav-bar{height:88px;padding:20px 24px;display:flex;align-items:center;justify-content:space-between;position:relative}
+    .back{border:0;background:transparent;color:var(--CT1);width:48px;height:48px;display:grid;place-items:center;padding:0;cursor:pointer}
+    .back .iconfont{font-size:48px;line-height:1}
+    .gj-tnav-title{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:36px;line-height:1.05;font-weight:500;white-space:nowrap}
+    .header-wash{height:136px;position:relative;overflow:hidden;background:linear-gradient(115deg,var(--CB6),var(--CB1))}
+    .header-wash::before,.header-wash::after{content:"";position:absolute;border-radius:50%;pointer-events:none}
+    .header-wash::before{width:300px;height:300px;right:-50px;top:-190px;background:var(--CB45);opacity:.55}
+    .header-wash::after{width:230px;height:230px;left:-80px;bottom:-185px;background:var(--CB1);opacity:.7}
+    .hero-copy{position:relative;z-index:1;padding:32px 24px 0}
+    .hero-copy strong{display:block;font-size:32px;line-height:48px;font-weight:500}
+    .hero-copy span{display:block;margin-top:2px;font-size:24px;line-height:36px;color:var(--CT3)}
+    .panel{padding:24px 24px 100px;display:flex;flex-direction:column;gap:24px}
+    .month{margin:0 0 2px 8px;font-size:36px;line-height:54px;font-weight:500}
+    .timeline{display:flex;flex-direction:column}
+    .event{display:grid;grid-template-columns:15px minmax(0,1fr);column-gap:24px;position:relative}
+    .axis{position:relative;display:flex;flex-direction:column;align-items:center;width:15px;align-self:stretch}
+    .dot{width:15px;height:15px;flex:0 0 15px;border-radius:50%;background:var(--CB4);border:1px solid var(--CL3);position:relative;margin-top:15px}
+    .dot::after{content:"";position:absolute;width:9px;height:9px;left:2px;top:2px;border-radius:50%;background:var(--CP0)}
+    .line{width:1px;min-height:24px;flex:1;background:repeating-linear-gradient(to bottom,var(--CP0) 0 4px,transparent 4px 8px)}
+    .event:last-child .line{display:none}
+    .event-body{min-width:0;padding-bottom:48px}
+    .event:last-child .event-body{padding-bottom:0}
+    .date{height:45px;color:var(--CT4);font-family:var(--font-num);font-size:24px;line-height:45px;font-variant-numeric:tabular-nums}
+    .service-card{min-height:152px;border:1px solid var(--CL2);border-radius:var(--r-16);padding:20px;position:relative;overflow:hidden;background:var(--CB1)}
+    .service-card::after{content:"";position:absolute;right:-48px;bottom:-92px;width:210px;height:210px;border-radius:50%;background:var(--CB1);opacity:.4;pointer-events:none}
+    .service-card.alert{background:linear-gradient(120deg,var(--CB4),var(--CB1))}
+    .service-card.notice{background:linear-gradient(120deg,var(--CB6),var(--CB1))}
+    .service-card.warm{background:linear-gradient(120deg,var(--CB5),var(--CB1))}
+    .service-card.neutral{background:linear-gradient(120deg,var(--CB41),var(--CB1))}
+    .card-head{display:flex;align-items:center;gap:12px;position:relative;z-index:1}
+    .symbol{width:34px;height:34px;border-radius:var(--r-8);display:grid;place-items:center;background:var(--CB1);color:var(--CF3);flex:0 0 auto}
+    .symbol .iconfont{font-size:26px;line-height:1}
+    .alert .symbol{color:var(--CF1)}
+    .warm .symbol{color:var(--CF2)}
+    .card-label{font-size:26px;line-height:39px;font-weight:500;color:var(--CT1)}
+    .card-content{position:relative;z-index:1;margin:14px 0 0;font-size:28px;line-height:42px;color:var(--CT1);font-weight:400;word-break:break-word}
+    .card-content.has-arrow{padding-right:36px}
+    .arrow{position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:30px;color:var(--CT4);z-index:1;line-height:1}
+    .card-foot{position:relative;z-index:1;display:flex;gap:10px;align-items:baseline;margin-top:13px;color:var(--CT4);font-size:24px;line-height:36px}
+    .card-foot strong{color:var(--CT3);font-weight:400}
+    .num{font-family:var(--font-num);font-variant-numeric:tabular-nums}
+    .route{display:inline-block;margin-left:auto;color:var(--CF3);font-size:24px;white-space:nowrap}
+    .target-card{outline:3px solid var(--CL5);outline-offset:5px;animation:focusfade 2.2s ease-out forwards}
+    @keyframes focusfade{0%,45%{outline-color:var(--CL5)}100%{outline-color:transparent}}
+    @media (min-width:751px){body{padding:40px 0}.app{min-height:1334px;border:1px solid var(--CL2);border-radius:var(--r-32)}}
+    @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.target-card{animation:none}}
+  </style>
+<style id="m01-review-layout">
+.m01-review-marker{position:fixed;z-index:99999;border:2px solid white;border-radius:50%;background:#a51f36;color:white;width:26px;height:26px;font:600 11px Arial;box-shadow:0 2px 6px #0003;cursor:pointer;padding:0}
+.m01-review-focus{outline:3px solid #e8a132!important;outline-offset:3px}
+
+html,body{width:100%!important;margin:0!important;padding:0!important;overflow-x:hidden!important;background:#f3f4f8!important}
+.app{width:750px!important;max-width:750px!important;min-height:0!important;margin:0 auto!important}
+</style></head>
+<body data-m01-page="timeline">
+  <div class="app" data-level="2">
+    <header class="top">
+      <div class="gj-statusbar" aria-hidden="true">
+        <span class="gj-sb-time">9:25</span>
+        <span class="gj-sb-right">
+          <svg width="40" height="26" viewBox="0 0 22 14" fill="none" class="gj-sb-signal"><rect x="0" y="8.5" width="3.5" height="5.5" rx="1"/><rect x="6" y="6" width="3.5" height="8" rx="1"/><rect x="12" y="3" width="3.5" height="11" rx="1"/><rect x="18" y="0" width="3.5" height="14" rx="1"/></svg>
+          <span class="gj-sb-5g">5G</span>
+          <svg width="56" height="26" viewBox="0 0 28 13" fill="none" class="gj-sb-battery"><rect x="0.5" y="0.8" width="24" height="11.5" rx="3" stroke-width="1" fill="none" opacity="0.4"/><rect x="2.3" y="2.6" width="19.5" height="7.9" rx="1.6"/><rect x="25.8" y="4" width="1.8" height="5" rx="0.9" opacity="0.4"/></svg>
+        </span>
+      </div>
+      <div class="gj-tnav-bar">
+        <button class="back" type="button" aria-label="返回" onclick="window.closeAccountService()"><i class="iconfont icon-tuichu" aria-hidden="true"></i></button>
+        <div class="gj-tnav-title">账户服务</div>
+      </div>
+      <div class="header-wash"><div class="hero-copy"><strong>与您有关的理财服务</strong><span>按发生时间查看服务信息</span></div></div>
+    </header>
+
+    <main>
+      <section id="m01Timeline" class="panel" aria-label="账户服务时间线">
+        <h2 class="month">11月</h2>
+        <div class="timeline"><article class="event" id="event-risk"><div class="axis"><span class="dot"></span><span class="line"></span></div><div class="event-body"><div class="date">11-08</div><div class="service-card notice"><div class="card-head"><span class="card-label">订单确认</span></div><p class="card-content">您持有的产品风险等级调整了</p><div class="card-foot">前海开源中证A5…风险等级已上调为R4</div></div></div></article>
+          <article class="event" id="event-deduction"><div class="axis"><span class="dot"></span><span class="line"></span></div><div class="event-body"><div class="date">11-08</div><div class="service-card alert"><div class="card-head"><span class="symbol"><i class="iconfont icon-tongzhi" aria-hidden="true"></i></span><span class="card-label">扣款失败提醒</span></div><p class="card-content">您的示例基金A跟投计划今日扣款失败，原因是账户资金不足。</p><div class="card-foot"><span>跟投计划</span><strong>扣款未成功</strong></div></div></div></article>
+          <article class="event" id="event-pause"><div class="axis"><span class="dot"></span><span class="line"></span></div><div class="event-body"><div class="date">11-07</div><div class="service-card notice"><div class="card-head"><span class="symbol"><i class="iconfont icon-tongzhi" aria-hidden="true"></i></span><span class="card-label">暂停赎回</span></div><p class="card-content has-arrow">示例基金B已暂停赎回，具体恢复时间请关注公告。</p><span class="arrow iconfont icon-shixinjiantou-you" aria-hidden="true"></span><div class="card-foot"><span>示例基金B</span><span class="route">查看公告</span></div></div></div></article>
+          <article class="event" id="event-permission"><div class="axis"><span class="dot"></span><span class="line"></span></div><div class="event-body"><div class="date">11-04</div><div class="service-card warm"><div class="card-head"><span class="symbol"><i class="iconfont icon-rili" aria-hidden="true"></i></span><span class="card-label">权限到期提醒</span></div><p class="card-content">您的私募合格投资者权限将于 <span class="num">11-09</span> 到期，请及时关注。</p><div class="card-foot"><span>私募合格投资者权限</span><strong class="num">11-09 到期</strong></div></div></div></article>
+        </div>
+        <h2 class="month">10月</h2>
+        <div class="timeline">
+          <article class="event" id="event-order"><div class="axis"><span class="dot"></span><span class="line"></span></div><div class="event-body"><div class="date">10-28</div><div class="service-card notice"><div class="card-head"><span class="symbol"><i class="iconfont icon-tongzhi" aria-hidden="true"></i></span><span class="card-label">订单确认</span></div><p class="card-content has-arrow">您提交的示例基金C购买申请已确认。</p><span class="arrow iconfont icon-shixinjiantou-you" aria-hidden="true"></span><div class="card-foot"><span>确认份额</span><strong class="num">1,531.35 份</strong><span class="route">查看订单</span></div></div></div></article>
+          <article class="event" id="event-dividend"><div class="axis"><span class="dot"></span><span class="line"></span></div><div class="event-body"><div class="date">10-19</div><div class="service-card neutral"><div class="card-head"><span class="symbol"><i class="iconfont icon-xianjinfenhong" aria-hidden="true"></i></span><span class="card-label">分红到账</span></div><p class="card-content">示例基金D分红已到账。</p><div class="card-foot"><span>分红金额</span><strong class="num">128.60 元</strong></div></div></div></article>
+          <article class="event" id="event-manager"><div class="axis"><span class="dot"></span><span class="line"></span></div><div class="event-body"><div class="date">10-12</div><div class="service-card neutral"><div class="card-head"><span class="symbol"><i class="iconfont icon-tongzhi" aria-hidden="true"></i></span><span class="card-label">管理人变更</span></div><p class="card-content">示例基金E的基金经理发生变更，请关注公告内容。</p><div class="card-foot"><span>示例基金E</span></div></div></div></article>
+        </div>
+        <h2 class="month">09月</h2>
+        <div class="timeline">
+          <article class="event" id="event-milestone"><div class="axis"><span class="dot"></span><span class="line"></span></div><div class="event-body"><div class="date">09-26</div><div class="service-card warm"><div class="card-head"><span class="symbol"><i class="iconfont icon-shouyijisuanqi" aria-hidden="true"></i></span><span class="card-label">收益里程碑</span></div><p class="card-content">示例基金F持仓收益率首次突破 <span class="num">10%</span>。</p><div class="card-foot"><span>累计盈利</span><strong class="num">1,286.40 元</strong></div></div></div></article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+<script>document.addEventListener('keydown',function(e){if(e.key==='Escape')window.closeAccountService()});</script><script type="application/json" id="m01-review-map">{"version": 1, "workflowMode": "review-center-readonly", "reviewRequirementAnchors": ["asset-card", "asset-expand", "service-display", "timeline"], "annotations": [{"id": "ANN-m01-collapsed-asset", "pageKey": "m01-collapsed", "title": "资产卡", "visible": true, "reviewSectionId": "asset-card", "number": "01", "target": {"selector": "#holdingUi", "strategy": "id"}, "reviewRegion": {"id": "region-m01-collapsed-asset", "title": "资产卡", "requirementAnchor": "asset-card", "visibleLanding": true, "visibleText": "我的理财持仓"}}, {"id": "ANN-m01-collapsed-service", "pageKey": "m01-collapsed", "title": "账户服务消息", "visible": true, "reviewSectionId": "service-display", "number": "02", "target": {"selector": "#accountServices", "strategy": "id"}, "reviewRegion": {"id": "region-m01-collapsed-service", "title": "账户服务消息", "requirementAnchor": "service-display", "visibleLanding": true, "visibleText": "订单"}}, {"id": "ANN-m01-expanded-asset", "pageKey": "m01-expanded", "title": "资产卡", "visible": true, "reviewSectionId": "asset-card", "number": "03", "target": {"selector": "#holdingUi", "strategy": "id"}, "reviewRegion": {"id": "region-m01-expanded-asset", "title": "资产卡", "requirementAnchor": "asset-card", "visibleLanding": true, "visibleText": "我的理财持仓"}}, {"id": "ANN-m01-expanded-categories", "pageKey": "m01-expanded", "title": "资产分类", "visible": true, "reviewSectionId": "asset-expand", "number": "04", "target": {"selector": "#assetDetails", "strategy": "id"}, "reviewRegion": {"id": "region-m01-expanded-categories", "title": "资产分类", "requirementAnchor": "asset-expand", "visibleLanding": true, "visibleText": "现金理财"}}, {"id": "ANN-m01-expanded-service", "pageKey": "m01-expanded", "title": "账户服务消息", "visible": true, "reviewSectionId": "service-display", "number": "05", "target": {"selector": "#accountServices", "strategy": "id"}, "reviewRegion": {"id": "region-m01-expanded-service", "title": "账户服务消息", "requirementAnchor": "service-display", "visibleLanding": true, "visibleText": "订单"}}, {"id": "ANN-m01-timeline-timeline", "pageKey": "m01-timeline", "title": "账户服务时间线", "visible": true, "reviewSectionId": "timeline", "number": "06", "target": {"selector": "#m01Timeline", "strategy": "id"}, "reviewRegion": {"id": "region-m01-timeline-timeline", "title": "账户服务时间线", "requirementAnchor": "timeline", "visibleLanding": true, "visibleText": "11月"}}]}</script><script>(() => {
+  'use strict';
+  const cfg = JSON.parse(document.getElementById('m01-review-map').textContent);
+  const query = new URLSearchParams(location.search);
+  const isTimeline = document.body.dataset.m01Page === 'timeline';
+  const $ = s => document.querySelector(s);
+  const detail = $('#assetDetails');
+  let pageKey = isTimeline ? 'm01-timeline' : query.get('state') === 'expanded' ? 'm01-expanded' : 'm01-collapsed';
+  const post = data => parent.postMessage(data, '*');
+  function navigate(state, eventId = '') {
+    if (parent !== window) post({type: 'm01-review:navigate', state, eventId});
+    else location.href = state === 'timeline' ? 'timeline.html#' + eventId : 'home.html?state=' + state;
+  }
+  if (!isTimeline) {
+    $(pageKey === 'm01-expanded' ? '#expandedBtn' : '#collapsedBtn').click();
+    detail.querySelector('.f78')?.remove();
+    $('#accountServices').addEventListener('click', e => {
+      e.preventDefault(); e.stopImmediatePropagation(); navigate('timeline', 'event-risk');
+    }, true);
+    const summary = $('#holdingUi');
+    summary.style.touchAction = 'pan-x';
+    let start;
+    summary.addEventListener('pointerdown', e => { start = {x:e.clientX,y:e.clientY}; summary.setPointerCapture?.(e.pointerId); });
+    summary.addEventListener('pointerup', e => {
+      if (start && e.clientY-start.y > 32 && e.clientY-start.y > Math.abs(e.clientX-start.x)*1.5) $('#expandedBtn').click();
+      start = null;
+    });
+    summary.addEventListener('pointercancel', () => {start=null;});
+    new MutationObserver(() => {
+      pageKey = detail.hidden ? 'm01-collapsed' : 'm01-expanded';
+      post({type:'m01-review:state-changed',pageKey}); render(); fit();
+    }).observe(detail,{attributes:true,attributeFilter:['hidden']});
+  } else {
+    window.closeAccountService = () => navigate('return');
+    $('.back').onclick = window.closeAccountService;
+    if (location.hash) requestAnimationFrame(() => document.getElementById(decodeURIComponent(location.hash.slice(1)))?.scrollIntoView({block:'center'}));
+  }
+  function fit() {
+    const scale = Math.min((innerWidth - 24)/750, .68);
+    if (isTimeline) $('.app').style.zoom = String(scale);
+    else {
+      document.documentElement.style.setProperty('--preview-scale',String(scale));
+      const height = $('#assetHeader').offsetHeight + 24;
+      $('#phone').style.height = height + 'px';
+      $('#appScroll').style.height = height + 'px';
+      $('#phoneMount').style.width = 750 * scale + 'px';
+      $('#phoneMount').style.height = height * scale + 'px';
+    }
+    position();
+  }
+  let markers=[];
+  function render() {
+    markers.forEach(m=>m.button.remove()); markers=[];
+    cfg.annotations.filter(a=>a.pageKey===pageKey).forEach(a=>{
+      const target=$(a.target.selector); if(!target || target.hidden)return;
+      const button=document.createElement('button');
+      button.type='button'; button.className='m01-review-marker';button.textContent=a.number;
+      button.setAttribute('aria-label',a.number+' '+a.title);
+      button.onclick=()=>post({type:'review-center:annotation-selected',annotationId:a.id,pageKey});
+      document.body.append(button); markers.push({button,target});
+    });
+    position();
+  }
+  function position() {
+    markers.forEach(({button,target})=>{
+      const r=target.getBoundingClientRect();
+      button.hidden=!(r.width&&r.height)||r.bottom<0||r.top>innerHeight;
+      button.style.left=Math.max(2,r.left-12)+'px';
+      button.style.top=Math.max(4,r.top+6)+'px';
+    });
+  }
+  addEventListener('message', e=>{
+    if(e.source!==parent || e.data?.type!=='review-center:focus-annotation' || e.data.pageKey!==pageKey)return;
+    const a=cfg.annotations.find(a=>a.id===e.data.annotationId&&a.pageKey===pageKey);
+    if(!a)return;
+    const target=$(a.target.selector);if(!target)return;
+    document.querySelectorAll('.m01-review-focus').forEach(el=>el.classList.remove('m01-review-focus'));
+    target.classList.add('m01-review-focus');target.scrollIntoView({block:'center',behavior:'smooth'});
+  });
+  addEventListener('resize',()=>requestAnimationFrame(fit));
+  addEventListener('scroll',position,true);
+  render();requestAnimationFrame(fit);document.fonts?.ready.then(fit);
+})();
+</script></body>
+</html>
