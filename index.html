@@ -448,6 +448,10 @@
       cursor: pointer;
     }
 
+    .m04-scenario-tools { width:100%; display:flex; flex-wrap:wrap; gap:6px; align-items:center; }
+    .m04-scenario-tools select { min-width:0; max-width:100%; font:inherit; font-size:12px; padding:5px; border:1px solid #ccc; background:#fff; }
+    .m04-scenario-tools small { flex-basis:100%; font-size:11px; color:#666; line-height:1.5; }
+    #m04ScenarioRun[hidden] { display:none; }
     .state-btn:last-child { border-right: 0; }
     .state-btn.is-active { color: #fff; background: var(--ink); }
 
@@ -802,7 +806,7 @@
                 <tr><td>M02-B 宫格区</td><td>宫格展示示例 v0.1</td><td>仅常用理财服务宫格已接入</td><td>宫格正式需求 v1.0</td><td>宫格规则已确认，阅读效果待评审；小宝服务区见独立条目</td></tr>
                 <tr><td>M02-A/C 小宝服务区</td><td>结构候选 v0.2</td><td>32 个状态只读评审</td><td>完整相关说明派生自 PRD v1.61</td><td>结构待评审；非最终 UI 或共享推荐实现验收</td></tr>
                 <tr><td>M03 精选推荐</td><td>正常列表线框稿 v0.1</td><td>中台线框稿 v0.11</td><td>卡片、运营、排序、首页更新与统计说明派生自 PRD v1.58</td><td>正常列表左右对照待确认；非完整状态验收</td></tr>
-                <tr data-module="M04"><td><strong>M04 热点机会</strong></td><td>冻结 V4</td><td><strong>V4.3 本期范围候选</strong></td><td><strong>v8.2</strong></td><td>热点条展示、点击定位及标注已同步；待评审</td></tr>
+                <tr data-module="M04"><td><strong>M04 热点机会</strong></td><td>冻结 V4</td><td><strong>V4.3 本期范围候选</strong></td><td><strong>v8.7</strong></td><td>字段、缺失数据、刷新与返回演示已同步；待评审</td></tr>
                 <tr><td>M06 自主选基</td><td>M06 v0.1</td><td>325个登记入口；只读评审映射</td><td>正式 Living Spec v1.6</td><td>已接入待复核；真实页面与数据联调待验收</td></tr>
                 <tr><td>M07 理财首页小宝语音球</td><td>冻结 V4（历史参考）</td><td>本期不做，后续完善</td><td>后续完善</td><td>不纳入本期需求评审与验收</td></tr>
               </tbody>
@@ -827,19 +831,20 @@
                 <button class="state-btn" type="button" data-preview-state="failed">加载失败</button>
                 <button class="state-btn" type="button" data-preview-state="hotspot-failed">热点条失败</button>
               </div>
+              <div class="m04-scenario-tools"><select id="m04Scenario" aria-label="更多评审场景"><option value="normal">更多评审场景</option><option value="missing-metrics">指标缺失</option><option value="missing-identity">板块信息缺失</option><option value="missing-hotspot">热点提示不完整</option><option value="refresh-preserve">刷新：保留阅读状态</option><option value="refresh-added">刷新：新增板块</option><option value="refresh-removed">刷新：板块退出</option><option value="refresh-empty">刷新：分类变空</option><option value="return-present">返回：原板块仍在</option><option value="return-removed">返回：原板块退出</option><option value="return-empty">返回：原分类变空</option></select><button id="m04ScenarioRun" class="state-btn" type="button" hidden>执行场景</button><small id="m04ScenarioHint" role="status"></small></div>
             </header>
 
             <div class="prototype-stage">
               <div class="phone-wrap">
                 <div class="phone-frame">
-                  <iframe id="m04Preview" data-src="../wealth-home-business-consensus-interactive-v4.3.html?review-center=m04&amp;review-state=normal&amp;review-ui=20261116-m04-v82" title="热点机会模块聚焦高保真原型"></iframe>
+                  <iframe id="m04Preview" data-src="../wealth-home-business-consensus-interactive-v4.3.html?review-center=m04&amp;review-state=normal&amp;review-ui=20261118-m04-v87" title="热点机会模块聚焦高保真原型"></iframe>
                 </div>
               </div>
             </div>
           </section>
 
           <section class="requirements-pane has-detail-document" aria-label="热点机会完整需求说明">
-            <iframe class="requirements-detail-frame" id="requirementsDetailFrame" data-src="./m04-requirements-detail.html?v=20261116-v82" title="热点机会产品评审说明"></iframe>
+            <iframe class="requirements-detail-frame" id="requirementsDetailFrame" data-src="./m04-requirements-detail.html?v=20261118-v87" title="热点机会产品评审说明"></iframe>
           </section>
         </div>
       </section>
@@ -1128,15 +1133,27 @@
       }
     });
 
-    document.querySelectorAll("[data-preview-state]").forEach(button => {
-      button.addEventListener("click", () => {
-        const state = button.dataset.previewState;
-        document.querySelectorAll("[data-preview-state]").forEach(item => item.classList.toggle("is-active", item === button));
-        const source = `../wealth-home-business-consensus-interactive-v4.3.html?review-center=m04&review-state=${state}&review-ui=20261116-m04-v82`;
-        previewFrame.src = source;
-      });
-    });
-
+    const m04ScenarioSelect = document.getElementById("m04Scenario");
+    const m04ScenarioRun = document.getElementById("m04ScenarioRun");
+    const m04ScenarioHint = document.getElementById("m04ScenarioHint");
+    const m04StateIds = ["normal","empty","failed","hotspot-failed",...Array.from(m04ScenarioSelect.options).map(option=>option.value)];
+    function chooseM04Scenario(state, reload = true) {
+      if (!m04StateIds.includes(state)) state = "normal";
+      document.querySelectorAll("[data-preview-state]").forEach(button => button.classList.toggle("is-active", button.dataset.previewState === state));
+      m04ScenarioSelect.value = Array.from(m04ScenarioSelect.options).some(option=>option.value === state) ? state : "normal";
+      const refresh = state.startsWith("refresh-"), returning = state.startsWith("return-");
+      m04ScenarioRun.hidden = !refresh && !returning;
+      m04ScenarioRun.textContent = refresh ? "模拟刷新" : "模拟从详情返回";
+      m04ScenarioHint.textContent = refresh ? "先展开或收起卡片、滚动列表，再模拟刷新，观察阅读状态。" : returning ? "先点击一只基金，再模拟从详情返回；此处不制作 App 现有详情页。" : "";
+      const source = `../wealth-home-business-consensus-interactive-v4.3.html?review-center=m04&review-state=${state}&review-ui=20261118-m04-v87`;
+      previewFrame.dataset.src = source;
+      if (reload) previewFrame.src = source;
+      const url = new URL(location.href); url.searchParams.set("m04-state", state); history.replaceState(null,"",url);
+    }
+    document.querySelectorAll("[data-preview-state]").forEach(button => button.addEventListener("click",()=>chooseM04Scenario(button.dataset.previewState)));
+    m04ScenarioSelect.addEventListener("change",()=>chooseM04Scenario(m04ScenarioSelect.value));
+    m04ScenarioRun.addEventListener("click",()=>previewFrame.contentWindow?.postMessage({type:"wealth-m04:run-scenario"},"*"));
+    chooseM04Scenario(new URLSearchParams(location.search).get("m04-state") || "normal", false);
 
     window.addEventListener("hashchange", () => activateModule(location.hash.slice(1) || "overview", false));
     activateModule(location.hash.replace("#", "") || "overview", false);
