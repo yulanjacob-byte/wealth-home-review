@@ -2059,6 +2059,8 @@
 
   function init() {
     loadData().then(function (data) {
+      // The iframe may have been unloaded while its annotation request was pending.
+      if (!document.body || !document.documentElement) return;
       state.data = data;
       state.pageKey = detectPageKey();
       loadToolbarPreferences();
