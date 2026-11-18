@@ -837,7 +837,7 @@
             <div class="prototype-stage">
               <div class="phone-wrap">
                 <div class="phone-frame">
-                  <iframe id="m04Preview" data-src="../wealth-home-business-consensus-interactive-v4.3.html?review-center=m04&amp;review-state=normal&amp;review-ui=20261118-m04-v87" title="热点机会模块聚焦高保真原型"></iframe>
+                  <iframe id="m04Preview" data-src="../wealth-home-business-consensus-interactive-v4.3.html?review-center=m04&amp;review-state=normal&amp;review-ui=20261118-m04-v87-r2" title="热点机会模块聚焦高保真原型"></iframe>
                 </div>
               </div>
             </div>
@@ -1145,7 +1145,7 @@
       m04ScenarioRun.hidden = !refresh && !returning;
       m04ScenarioRun.textContent = refresh ? "模拟刷新" : "模拟从详情返回";
       m04ScenarioHint.textContent = refresh ? "先展开或收起卡片、滚动列表，再模拟刷新，观察阅读状态。" : returning ? "先点击一只基金，再模拟从详情返回；此处不制作 App 现有详情页。" : "";
-      const source = `../wealth-home-business-consensus-interactive-v4.3.html?review-center=m04&review-state=${state}&review-ui=20261118-m04-v87`;
+      const source = `../wealth-home-business-consensus-interactive-v4.3.html?review-center=m04&review-state=${state}&review-ui=20261118-m04-v87-r2`;
       previewFrame.dataset.src = source;
       if (reload) previewFrame.src = source;
       const url = new URL(location.href); url.searchParams.set("m04-state", state); history.replaceState(null,"",url);
